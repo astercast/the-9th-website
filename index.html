@@ -5,13 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The 9th Website</title>
 <meta name="description" content="Nine chambers in a ring.">
+<meta name="theme-color" content="#07080f">
+<!-- RELATIVE until deploy: absolutize og:image + twitter:image against the live domain at go-live (see GO_LIVE.md) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="The 9th Website">
+<meta property="og:description" content="Nine chambers in a ring.">
+<meta property="og:image" content="assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The 9th Website">
+<meta name="twitter:description" content="Nine chambers in a ring.">
+<meta name="twitter:image" content="assets/og-card.png">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+<link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/css/main.css">
 <script type="speculationrules">
 {"prefetch":[{"source":"list","urls":["data/v1/wishes.json","data/v1/whispers.json","data/v1/letters.json","data/v1/scale.json"]}]}
 </script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%23c9a86a' stroke-width='1.4'/%3E%3Ccircle cx='12' cy='12' r='1.6' fill='%23c9a86a'/%3E%3C/svg%3E">
+<!-- First paint (VP-0005): the ring breathes before anything else can. Inline, because
+     no stylesheet or script may be waited on for the first signal that this darkness
+     is intentional. Pure CSS: if every script stalls, the veil still lifts itself. -->
+<style>
+html{background:#07080f}
+#veil{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:#07080f;pointer-events:none;transition:opacity .7s ease;animation:veilOut .9s ease 3s forwards}
+#veil svg{animation:veilBreathe 2.2s ease-in-out infinite}
+@keyframes veilBreathe{0%,100%{opacity:.3;transform:scale(.96)}50%{opacity:1;transform:scale(1)}}
+@keyframes veilOut{to{opacity:0;visibility:hidden}}
+#veil.lift{opacity:0;visibility:hidden}
+@media (prefers-reduced-motion: reduce){#veil{animation:veilOut .01s ease .4s forwards}#veil svg{animation:none;opacity:.85}}
+</style>
 </head>
 <body data-phase="night">
+
+<div id="veil" aria-hidden="true">
+  <svg width="96" height="96" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="36" fill="none" stroke="#c9a86a" stroke-width="1" opacity=".55"/>
+    <circle cx="50" cy="14" r="2.4" fill="#c9a86a"/>
+    <circle cx="73.1" cy="21.6" r="2.4" fill="#c9a86a"/>
+    <circle cx="84.2" cy="39" r="2.4" fill="#c9a86a"/>
+    <circle cx="78.7" cy="63.1" r="2.4" fill="#c9a86a"/>
+    <circle cx="61" cy="80.2" r="2.4" fill="#c9a86a"/>
+    <circle cx="39" cy="80.2" r="2.4" fill="#c9a86a"/>
+    <circle cx="21.3" cy="63.1" r="2.4" fill="#c9a86a"/>
+    <circle cx="15.8" cy="39" r="2.4" fill="#c9a86a"/>
+    <circle cx="50" cy="50" r="2.6" fill="#c9a86a"/>
+  </svg>
+</div>
 
 <!-- The nine glyphs, and one mark that is not among them. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -41,7 +84,7 @@
     <button class="ring-btn" data-go="mirror" aria-label="The Mirror"><svg><use href="#g-mirror"/></svg></button>
     <button class="ring-btn ring-btn-ninth" data-go="ninth" aria-label="The Ninth Door"><svg><use href="#g-ninth"/></svg></button>
   </nav>
-  <button id="sound-toggle" class="sound-toggle" aria-pressed="false" aria-label="Ambient sound, off">sound&nbsp;·&nbsp;off</button>
+  <button id="sound-toggle" class="sound-toggle" aria-pressed="false" aria-label="Ambient sound, off">♪</button>
 </header>
 
 <main id="main">
@@ -53,7 +96,6 @@
     <svg class="glyph-large"><use href="#g-threshold"/></svg>
     <h1 class="site-title">The 9th Website</h1>
     <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
-    <p class="welcome-second" id="welcome-second" hidden></p>
     <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
     <div class="ring-map-wrap">
       <svg class="ring-map" viewBox="0 0 200 200" role="img" aria-label="Nine doors in a ring, and one more, drawn ajar">
@@ -64,10 +106,8 @@
           <path d="M97.5 176 L93 179.5 L97.5 185" class="ajar-door"/>
         </g>
       </svg>
-      <p class="ring-caption">Nine doors. Begin anywhere. The ring keeps what you do.</p>
     </div>
     <p class="fragment fragment-threshold"><svg class="frag-mark"><use href="#g-mark"/></svg>“I did not build the place. I only found the doors already standing, and learned their order by walking it.”</p>
-    <button class="enter-btn" data-go="scale">enter&nbsp;&nbsp;→</button>
   </div>
 </section>
 
@@ -75,25 +115,23 @@
 <section class="chamber" id="chamber-scale" data-chamber="scale" aria-label="The Scale Room">
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-scale"/></svg>
-    <h2>The Scale Room</h2>
-    <p class="chamber-lede">Go slowly. Everything here is true, and everything here is the wrong size to hold in your head. That is the exercise.</p>
     <ol class="scale-stops">
-      <li class="stop"><span class="stop-size">1 millimetre</span><h3>A grain of sand</h3><p>A whole beach is a crowd of these, each one a mountain worn down to almost nothing.</p></li>
-      <li class="stop"><span class="stop-size">15 millimetres</span><h3>A honeybee</h3><p>She visits fifty to a hundred flowers on a single trip, and remembers the way home by the sun.</p></li>
-      <li class="stop"><span class="stop-size">about 18 centimetres</span><h3>Your hand</h3><p>The distance from your wrist to your middle fingertip is close to one ten-thousandth of the distance you will walk in a lifetime.</p></li>
-      <li class="stop"><span class="stop-size">about 50 centimetres</span><h3>A newborn child</h3><p>Small enough to hold in two hands; already contains everything needed to become someone you cannot yet imagine.</p></li>
-      <li class="stop"><span class="stop-size">2 metres</span><h3>A door</h3><p>Nearly every threshold you have ever crossed was made to roughly the measure of a person, plus a little hope.</p></li>
-      <li class="stop"><span class="stop-size">5.5 metres</span><h3>A giraffe</h3><p>Its heart weighs about eleven kilograms, built to lift blood all the way up to a dreaming head.</p></li>
-      <li class="stop"><span class="stop-size">about 10 metres</span><h3>A house</h3><p>From the street it looks still. Inside, it is mostly weather: warmth, argument, soup, sleep.</p></li>
-      <li class="stop"><span class="stop-size">25 metres</span><h3>A blue whale</h3><p>The largest animal known to have ever lived on Earth. Its tongue weighs about as much as an elephant.</p></li>
-      <li class="stop fragment-stop"><span class="stop-size">330 metres</span><h3>The Eiffel Tower</h3><p>It grows about fifteen centimetres taller in summer, as the iron warms and stretches toward the sun.</p><p class="fragment">“Measured the tower in summer and again in winter. It is not taller. It is reaching. There is a difference, and it matters.”</p></li>
-      <li class="stop"><span class="stop-size">8,849 metres</span><h3>Mount Everest</h3><p>The mountain is still rising, about four millimetres a year, as two continents lean on each other.</p></li>
-      <li class="stop"><span class="stop-size">3,474 kilometres across</span><h3>The Moon</h3><p>It is drifting away from us about as fast as your fingernails grow. The tides are its long goodbye, still holding hands.</p></li>
-      <li class="stop"><span class="stop-size">139,820 kilometres across</span><h3>Jupiter</h3><p>Eleven Earths would fit across its face. Its great storm has been blowing for at least three hundred years.</p></li>
-      <li class="stop"><span class="stop-size">1.39 million kilometres across</span><h3>The Sun</h3><p>A million Earths would fit inside it. The light warming your face left its surface eight minutes ago.</p></li>
-      <li class="stop"><span class="stop-size">9.46 trillion kilometres</span><h3>One light-year</h3><p>Not a time but a distance: how far light travels in a year of running without rest.</p></li>
-      <li class="stop"><span class="stop-size">about 100,000 light-years across</span><h3>The Milky Way</h3><p>Our whole galaxy, turning slowly. Every star you have ever seen at night is a near neighbour.</p></li>
-      <li class="stop"><span class="stop-size">93 billion light-years across</span><h3>The observable universe</h3><p>Everything we can, even in principle, ever see. Beyond this edge there is more; it is simply not ours to know. Yet.</p></li>
+      <li class="stop"><span class="stop-size">1 millimetre</span><h3>A grain of sand</h3></li>
+      <li class="stop"><span class="stop-size">15 millimetres</span><h3>A honeybee</h3></li>
+      <li class="stop"><span class="stop-size">about 18 centimetres</span><h3>Your hand</h3></li>
+      <li class="stop"><span class="stop-size">about 50 centimetres</span><h3>A newborn child</h3></li>
+      <li class="stop"><span class="stop-size">2 metres</span><h3>A door</h3></li>
+      <li class="stop"><span class="stop-size">5.5 metres</span><h3>A giraffe</h3></li>
+      <li class="stop"><span class="stop-size">about 10 metres</span><h3>A house</h3></li>
+      <li class="stop"><span class="stop-size">25 metres</span><h3>A blue whale</h3></li>
+      <li class="stop fragment-stop"><span class="stop-size">330 metres</span><h3>The Eiffel Tower</h3><p class="fragment">“Measured the tower in summer and again in winter. It is not taller. It is reaching. There is a difference, and it matters.”</p></li>
+      <li class="stop"><span class="stop-size">8,849 metres</span><h3>Mount Everest</h3></li>
+      <li class="stop"><span class="stop-size">3,474 kilometres across</span><h3>The Moon</h3></li>
+      <li class="stop"><span class="stop-size">139,820 kilometres across</span><h3>Jupiter</h3></li>
+      <li class="stop"><span class="stop-size">1.39 million kilometres across</span><h3>The Sun</h3></li>
+      <li class="stop"><span class="stop-size">9.46 trillion kilometres</span><h3>One light-year</h3></li>
+      <li class="stop"><span class="stop-size">about 100,000 light-years across</span><h3>The Milky Way</h3></li>
+      <li class="stop"><span class="stop-size">93 billion light-years across</span><h3>The observable universe</h3></li>
     </ol>
     <!-- The coda is not listed anywhere. It is simply what is below the smallest thing, past the end. -->
     <div class="coda" id="scale-coda">
@@ -101,7 +139,6 @@
       <p>Below the smallest thing there is a room no one measured. The Cartographer went down past the grain of sand with a candle and a notebook, and came back with the notebook empty and the candle unlit, smiling like a person who has been told a secret in a language made of weather. All that was ever written about the room is this: <em>it is smaller than the sand, and everything fits in it.</em></p>
       <p class="rosetta">On the far wall, in the same hand, smaller, as if for whoever came this far down and no one else — <em>the Method</em>: “Nothing in this place is chance; I only taught it to wear chance’s coat. Every garden, every drawn letter, every scattered line is reckoned from three numbers — the day, counted year-and-month-and-day into one sum; the count of your comings; and the chamber you stand in — turned through one small wheel. The wheel turns thus: begin with your number. Add the adder: one thousand, eight hundred thirty-one million, five hundred sixty-five thousand, eight hundred thirteen. Fold the number on itself at fifteen and mix it, by the mark the reckoning-machines call the crossing; multiply it by itself, made odd. Fold it again at seven and add it to itself; fold it last at fourteen, and let it go as a fraction between nothing and one. By such fractions I chose everything. Learn the wheel, keep the numbers, and every garden ever grown here can be grown again, exactly, by your own hand. That is the whole secret. It was never hidden. It was only below.”</p>
     </div>
-    <nav class="onward"><button data-go="garden">onward&nbsp;&nbsp;→</button></nav>
   </div>
 </section>
 
@@ -109,16 +146,12 @@
 <section class="chamber" id="chamber-garden" data-chamber="garden" aria-label="The Garden">
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-garden"/></svg>
-    <h2>The Garden</h2>
-    <p class="chamber-lede">Move through it. The garden grows where you have been, and it is planted fresh from the date each day. No two days grow the same garden.</p>
-    <div class="canvas-frame garden-frame">
+    <div class="canvas-frame garden-frame bleed">
       <canvas id="garden-canvas" width="1120" height="640" aria-label="A garden growing from the movement of your pointer"></canvas>
-      <p class="canvas-fallback">In the still version of this place, the garden is a row of nine seedlings under a patient sun, waiting for a hand to pass over them.</p>
+      <p class="canvas-fallback">Nine seedlings, waiting.</p>
     </div>
-    <p class="garden-note" id="garden-note">Today’s seed is today. Come back tomorrow; it will be a different garden, and it will remember none of this. That is what gardens are for.</p>
     <p class="whisper" id="garden-whisper">the seed does not argue with the dark; it waits in it — salt, then silver, then the small hours — nine is the number the ring counts when it thinks no one is listening</p>
     <p class="fragment">“On the ninth day of any month, watch the east bed. I have never written down why. Some of my notes are doors too.”</p>
-    <nav class="onward"><button data-go="stars">onward&nbsp;&nbsp;→</button></nav>
   </div>
 </section>
 
@@ -126,14 +159,12 @@
 <section class="chamber" id="chamber-stars" data-chamber="stars" aria-label="The Constellation of Wishes">
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-stars"/></svg>
-    <h2>The Constellation of Wishes</h2>
-    <p class="chamber-lede">Every star here is a wish, written by hand for this place and kept in its collection. Rest on one to read it. One star in this sky keeps a different counsel.</p>
-    <div class="canvas-frame stars-frame">
+    <div class="canvas-frame stars-frame bleed">
       <canvas id="stars-canvas" width="1120" height="640" aria-label="A starfield of wishes"></canvas>
       <p class="wish-read" id="wish-read" aria-live="polite"></p>
     </div>
     <details class="collection">
-      <summary>The collection, written out</summary>
+      <summary aria-label="The collection, written out">✦</summary>
       <ol class="wish-list">
         <li>I wish my grandmother could see the garden I finally grew.</li>
         <li>I wish to learn the names of all the birds that pass over this house.</li>
@@ -177,7 +208,6 @@
         <li>I wish you, reading this, get the one you are thinking of.</li>
       </ol>
     </details>
-    <nav class="onward"><button data-go="letters">onward&nbsp;&nbsp;→</button></nav>
   </div>
 </section>
 
@@ -185,9 +215,6 @@
 <section class="chamber" id="chamber-letters" data-chamber="letters" aria-label="The Letter Room">
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-letter"/></svg>
-    <h2>The Letter Room</h2>
-    <p class="chamber-lede">Nine letters, written for this room. One is drawn for you each visit, the way a bottle comes in on one tide and not another. The rest stay sealed, listed by their first lines.</p>
-    <div class="letter-draw" id="letter-draw" aria-live="polite"></div>
     <div class="letters-all" id="letters-all">
       <article class="letter" data-letter="stranger">
         <h3 class="letter-first">To the stranger who held the door —</h3>
@@ -246,7 +273,6 @@
         <p>When the fence leans, we will lean it back. That is the whole philosophy. Everything else is weather.</p>
       </article>
     </div>
-    <nav class="onward"><button data-go="tide">onward&nbsp;&nbsp;→</button></nav>
   </div>
 </section>
 
@@ -254,15 +280,13 @@
 <section class="chamber" id="chamber-tide" data-chamber="tide" aria-label="The Tide Room">
   <div class="chamber-inner tide-inner">
     <svg class="glyph-corner"><use href="#g-tide"/></svg>
-    <h2>The Tide Room</h2>
-    <div class="canvas-frame tide-frame">
+    <div class="canvas-frame tide-frame bleed">
       <canvas id="tide-canvas" width="1120" height="560" aria-label="A slow breathing tide under the current moon"></canvas>
       <div class="moon-disc" id="moon-disc" aria-hidden="true"></div>
     </div>
     <p class="moon-fact" id="moon-fact">Tonight the moon is doing what it has always done.</p>
     <p class="tide-line">The heart keeps the same hours as the tide: it fills, it empties, and it is pulled by something far away that loves it without speaking.</p>
     <p class="fragment">“I stopped counting the days I was here and started counting moons. The numbers got smaller and truer.”</p>
-    <nav class="onward"><button data-go="cabinet">onward&nbsp;&nbsp;→</button></nav>
   </div>
 </section>
 
@@ -270,12 +294,10 @@
 <section class="chamber" id="chamber-cabinet" data-chamber="cabinet" aria-label="The Cabinet">
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-cabinet"/></svg>
-    <h2>The Cabinet</h2>
-    <p class="chamber-lede">Small perfect things, kept in drawers of light. Handle them gently; some of them deepen if you ask twice.</p>
     <div class="cabinet-grid">
       <figure class="exhibit">
         <canvas id="spiral-canvas" width="520" height="520" aria-label="A spiral of prime numbers"></canvas>
-        <figcaption><strong>The Prime Spiral.</strong> Count upward in a square spiral and mark the primes. They refuse to line up, and yet they keep almost lining up, in long diagonal ghosts.</figcaption>
+        <figcaption><strong>The Prime Spiral</strong></figcaption>
       </figure>
       <figure class="exhibit">
         <svg class="golden-svg" viewBox="0 0 340 210" aria-label="Golden rectangles nesting">
@@ -285,34 +307,31 @@
             <path d="M336 209A205 205 0 0 1 129 4 125 125 0 0 1 254 130 80 80 0 0 1 188 79 51 51 0 0 1 254 105 26 26 0 0 1 188 130" stroke="#c9a86a"/>
           </g>
         </svg>
-        <figcaption><strong>The Golden Study.</strong> A rectangle that, cut by a square, leaves a smaller copy of itself — the same proportion, all the way down: 1 to 1.618…, the ratio seashells and sunflowers keep arriving at independently.</figcaption>
+        <figcaption><strong>The Golden Study</strong></figcaption>
       </figure>
       <figure class="exhibit">
         <canvas id="fractal-canvas" width="520" height="520" aria-label="A fractal shore that deepens when pressed"></canvas>
-        <figcaption><strong>The Deepening.</strong> A fractal shore, drawn at one honest depth. Press it, and it will show you more of itself. Nobody has reached the bottom; there isn’t one. <span class="exhibit-state" id="fractal-depth">depth 6</span></figcaption>
-        <button class="small-btn" id="fractal-deeper">ask it to deepen</button>
+        <figcaption><strong>The Deepening</strong> <span class="exhibit-state" id="fractal-depth">6</span></figcaption>
+        <button class="small-btn" id="fractal-deeper" aria-label="Ask it to deepen">＋</button>
       </figure>
       <figure class="exhibit">
         <canvas id="harmonics-canvas" width="520" height="520" aria-label="Two tones drawing a Lissajous figure"></canvas>
-        <figcaption><strong>The Harmonics.</strong> Two pure tones, slightly out of step, drawing their relationship. When the ratio is simple the figure holds still; beauty in sound is an argument numbers settle by agreeing.</figcaption>
+        <figcaption><strong>The Harmonics</strong></figcaption>
       </figure>
       <figure class="exhibit exhibit-box">
         <div class="locked-box" id="locked-box" role="img" aria-label="A small locked box of dark wood with a brass clasp">
           <div class="box-lid"></div><div class="box-clasp"></div>
         </div>
-        <figcaption><strong>The Box.</strong> It came with the Cabinet. It has never opened. Nothing in the keeping of this place suggests it should, or that it wants to, or that whatever is inside is a thing at all. It is the most visited object here.</figcaption>
+        <figcaption><strong>The Box</strong></figcaption>
       </figure>
       <figure class="exhibit exhibit-note">
         <p class="fragment fragment-cabinet">Scratched into the back of the third drawer, at the angle of a hand writing in the dark: “If you are inventorying wonder, you have already miscounted. Begin again, slower.”</p>
-        <figcaption class="note-cap">Found, not placed.</figcaption>
       </figure>
       <figure class="exhibit exhibit-flower" id="pressed-flower" hidden>
         <div class="pressed-flower-art" aria-hidden="true">✿</div>
-        <figcaption>A pressed flower between two pages of nothing, left by someone who had been to the Constellation first. It was not here before you went there. It is here now.</figcaption>
       </figure>
     </div>
     <p class="oracle-slip" id="oracle-slip">Count to nine. Then count what changed.</p>
-    <nav class="onward"><button data-go="mirror">onward&nbsp;&nbsp;→</button></nav>
   </div>
 </section>
 
@@ -320,14 +339,11 @@
 <section class="chamber" id="chamber-mirror" data-chamber="mirror" aria-label="The Mirror">
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-mirror"/></svg>
-    <h2>The Mirror</h2>
-    <p class="chamber-lede">This room draws one thing only: the way you came. Your path through the ring, as a small constellation. If you have been here on other days, their paths keep a faint seat beneath yours.</p>
-    <div class="canvas-frame mirror-frame">
+    <div class="canvas-frame mirror-frame bleed">
       <canvas id="mirror-canvas" width="1120" height="640" aria-label="Your journey drawn as a constellation"></canvas>
-      <p class="canvas-fallback">In the still version, your path is a list of doors in the order you opened them — which is also a kind of portrait.</p>
+      <p class="canvas-fallback">Your path, in the order you opened the doors.</p>
     </div>
     <p class="mirror-path" id="mirror-path"></p>
-    <nav class="onward"><button data-go="ninth">onward&nbsp;&nbsp;→</button></nav>
   </div>
 </section>
 
@@ -341,7 +357,7 @@
         <circle cx="100" cy="100" r="30" class="door-face"/>
         <circle cx="100" cy="100" r="2.6" class="door-knob"/>
       </svg>
-      <p class="door-count" id="door-count">The door is not locked. It is unfinished — as are you, here. It opens to a complete ring.</p>
+      <p class="door-count" id="door-count">0 / 8</p>
     </div>
     <div class="door-open" id="door-open" hidden>
       <div class="sunrise" id="sunrise" aria-hidden="true"><div class="sun"></div></div>

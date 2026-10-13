@@ -21,6 +21,14 @@ Status: **working repo only. Not deployed. No `-live` repo exists; none to be cr
 - Build minutes: no build command; seconds per deploy on the Standard machine (never Turbo).
 - First degradation point: none identified at any plausible traffic. The site has no per-request computation worth the name.
 
+## Wave 2 additions (2026-10-13)
+
+- [x] Text Ration (CANON §XII): visible words counted per chamber before/after; no instructions, introductions, or mechanic labels remain; navigation is glyph/symbol only.
+- [x] First paint (VP-0005): inline breathing-ring veil; chambers never fade in from black; the veil lifts itself by CSS even if scripts stall.
+- [x] OG card placed (`assets/og-card.png`) with relative `og:`/`twitter:` meta; absolutizing at deploy is a named step in `GO_LIVE.md`.
+- [x] Icon set placed (ring and point only — the ninth glyph is not used); `theme-color` = `#07080f`; `robots.txt` minimal allow-all.
+- [x] `GO_LIVE.md` authored (QA-005).
+
 ## Before any future live push
 
 - [ ] Re-run no-JS read-through of all nine chambers.

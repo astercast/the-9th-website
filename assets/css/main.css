@@ -1,4 +1,4 @@
-/* The 9th Website — wave 1.
+/* The 9th Website — wave 1, rationed at wave 2.
    Materials: type, geometry, light, number. Nothing here chases a trend. */
 
 @property --glow-x { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
@@ -60,23 +60,23 @@ svg use{pointer-events:none}
 .chamber + .chamber{border-top:1px solid var(--line)}
 html.js .chamber{display:none;border-top:0;min-height:100svh}
 html.js .chamber.active{display:block;animation:chamberIn .8s ease both}
-@keyframes chamberIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* Wave 2 (VP-0005): a chamber never fades in from black. The veil carries the
+   first seconds; the chamber itself is simply there, settling by a breath. */
+@keyframes chamberIn{from{opacity:1;transform:translateY(10px)}to{opacity:1;transform:none}}
 html.still .chamber.active{animation:none}
 html.still *,html.still *::before,html.still *::after{transition-duration:.001s !important}
 .chamber-inner{max-width:760px;margin:0 auto;position:relative}
-.chamber-lede{color:var(--ink-dim);font-size:1.06em;max-width:34em}
 .glyph-corner{position:absolute;top:-34px;right:0;width:34px;height:34px;color:var(--gold-soft)}
 .glyph-large{width:64px;height:64px;color:var(--gold);display:block;margin:0 auto 10px}
-.onward{margin-top:64px;text-align:center}
-.onward button,.enter-btn,.small-btn{
+.small-btn{
   background:none;border:1px solid var(--gold-soft);color:var(--gold);
   border-radius:999px;padding:12px 30px;font-size:14px;letter-spacing:.14em;
   transition:background .35s,color .35s;
 }
-.onward button:hover,.enter-btn:hover,.small-btn:hover{background:var(--gold);color:#14101f}
+.small-btn:hover{background:var(--gold);color:#14101f}
 .small-btn{padding:8px 18px;font-size:12.5px;margin-top:10px}
 .fragment{
-  color:var(--ink-dim);font-style:italic;font-size:.92em;max-width:32em;
+  color:#cdc4ae;font-style:italic;font-size:.92em;max-width:32em;
   border-left:1px solid var(--gold-soft);padding-left:16px;margin:44px auto;
 }
 .frag-mark{width:17px;height:17px;color:var(--gold-soft);vertical-align:-3px;margin-right:8px}
@@ -101,7 +101,6 @@ body[data-phase="night"]{--sky-top:#04050c;--sky-mid:#0a0d20;--sky-low:#131a33;-
 .threshold-inner{padding-top:5vh}
 .site-title{font-size:clamp(38px,6.5vw,64px);margin:.1em 0 .3em;letter-spacing:.015em}
 .welcome{font-size:clamp(20px,2.6vw,27px);max-width:24em;margin:0.6em auto}
-.welcome-second{color:var(--gold);font-style:italic}
 .midnight-line{color:#bcd0ff;font-style:italic;animation:breathe 4s ease-in-out infinite}
 .ring-map-wrap{margin:48px auto 8px;width:min(300px,70vw)}
 .ring-map{width:100%;height:auto}
@@ -110,9 +109,7 @@ body[data-phase="night"]{--sky-top:#04050c;--sky-mid:#0a0d20;--sky-low:#131a33;-
 .ring-map-door.lit{fill:var(--gold)}
 .ajar-dark{fill:#000}
 .ajar-door{fill:none;stroke:var(--gold-soft);stroke-width:1}
-.ring-caption{color:var(--ink-dim);font-size:.85em;font-style:italic}
 .fragment-threshold{text-align:left}
-.enter-btn{margin-top:28px}
 
 /* ---------- Scale Room ---------- */
 .scale-stops{list-style:none;margin:56px 0 0;padding:0;counter-reset:stop}
@@ -139,7 +136,6 @@ html.js .stop.in{opacity:1;transform:none}
 
 /* ---------- Garden ---------- */
 .garden-frame canvas{background:linear-gradient(to bottom,#0a0f14,#0c130d)}
-.garden-note{color:var(--ink-dim);font-style:italic;max-width:34em}
 .whisper{font-style:italic;color:#b3a88f;text-align:center;max-width:30em;margin:38px auto 0;font-size:.95em;line-height:1.9}
 .oracle-slip{font-family:var(--sans);letter-spacing:.18em;font-size:.78em;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:30px}
 
@@ -160,7 +156,6 @@ html.js .stop.in{opacity:1;transform:none}
 @media(max-width:640px){.wish-list{columns:1}}
 
 /* ---------- Letters ---------- */
-.letter-draw:empty{display:none}
 .letter{
   background:linear-gradient(175deg,#12101d,#0d0c16);
   border:1px solid var(--line);border-radius:4px;
@@ -214,7 +209,6 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
 }
 .box-clasp::after{content:"";position:absolute;left:50%;top:9px;width:6px;height:6px;border-radius:50%;background:var(--gold);transform:translateX(-50%)}
 .fragment-cabinet{margin:6px 0;border:0;padding:0}
-.note-cap{font-family:var(--sans);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim)}
 .pressed-flower-art{font-size:56px;color:#b76e79;text-align:center;line-height:1.4}
 
 /* ---------- Mirror ---------- */
@@ -244,6 +238,51 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
 @keyframes sunriseRise{to{transform:translate(-50%,-120px)}}
 .passage p{font-size:clamp(20px,2.5vw,25px);line-height:1.75;max-width:33em;margin:0 auto;text-align:left}
 .passage .final-line{margin-top:2.2em;color:var(--gold);font-size:1em;text-align:left}
+
+/* ---------- Wave 2: the ration's compositions ----------
+   Presence replaces text: full-bleed scenes, a descent instead of a list,
+   numerals where sentences stood. Nothing here explains; it stands. */
+
+/* full-bleed scenes: the canvas leaves the column and takes the whole width */
+.bleed{width:100vw;margin-left:calc(50% - 50vw);margin-top:6px}
+.bleed canvas{border-radius:0}
+/* the Tide and the Mirror carry a readout line beneath the scene; their
+   canvases are height-capped so the line stays on the same screen */
+.tide-frame canvas,.mirror-frame canvas{height:62vh}
+
+/* the Threshold fits one screen: glyph, one line, the ring, one fragment */
+.threshold-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100svh - 120px);padding-top:0}
+.threshold-inner .ring-map-wrap{margin:26px auto 2px;width:min(228px,58vw)}
+.threshold-inner .fragment-threshold{margin:26px auto 0}
+.welcome{color:var(--ink)}
+
+/* the Powers Stair is a descent: stops grow in size and in silence between
+   them, grain of sand at a whisper, the universe at a shout of space */
+.scale-stops{margin-top:26px}
+.stop h3{line-height:1.15}
+.scale-stops .stop:nth-child(-n+4){padding:30px 6px}
+.scale-stops .stop:nth-child(-n+4) h3{font-size:clamp(22px,3vw,28px)}
+.scale-stops .stop:nth-child(n+5):nth-child(-n+8){padding:52px 6px}
+.scale-stops .stop:nth-child(n+5):nth-child(-n+8) h3{font-size:clamp(28px,3.6vw,36px)}
+.scale-stops .stop:nth-child(n+9):nth-child(-n+12){padding:78px 6px}
+.scale-stops .stop:nth-child(n+9):nth-child(-n+12) h3{font-size:clamp(34px,4.4vw,46px)}
+.scale-stops .stop:nth-child(n+13){padding:110px 6px}
+.scale-stops .stop:nth-child(n+13) h3{font-size:clamp(42px,5.6vw,60px)}
+.coda{margin-top:130px}
+
+/* numerals stand where sentences stood */
+.door-count{font-family:var(--sans);font-size:clamp(24px,3.4vw,32px);letter-spacing:.34em;color:var(--gold);font-style:normal;margin:30px auto 0}
+.mirror-path{font-family:var(--sans);letter-spacing:.34em;color:var(--gold);font-style:normal;font-size:.95em;min-height:1.4em}
+.moon-fact{font-family:var(--sans);letter-spacing:.22em;text-transform:uppercase;font-size:.82em;color:var(--gold)}
+
+/* symbol-only chrome */
+.sound-toggle{font-size:15px;line-height:1;padding:7px 11px}
+.collection summary{list-style:none;text-align:center;font-size:20px;color:var(--gold);letter-spacing:0}
+.collection summary::-webkit-details-marker{display:none}
+.exhibit figcaption{text-align:center}
+.exhibit .small-btn{align-self:center;margin-top:0}
+#chamber-ninth .door-ring{width:min(430px,86vw)}
+.ninth-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100svh - 150px);padding-top:0}
 
 /* ---------- footer space ---------- */
 main{padding-bottom:40px}

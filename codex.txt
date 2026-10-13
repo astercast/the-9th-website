@@ -5,6 +5,10 @@ Every word the site carries, kept in plain text, in ring order.
 If the rendering ever dies, the words remain words.
 This file is linked from nowhere on the site. It is here to be found.
 
+Wave 2 addendum (2026-10-13): the pages now show a ration of these words
+(the Text Ration, Canon XII). Nothing was removed from this Codex. What
+the site withholds, the Codex keeps; the difference is part of the work.
+
 
 I. THE THRESHOLD
 ----------------

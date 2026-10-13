@@ -7,6 +7,8 @@ document.documentElement.classList.add("js");
 /* ?still — a harness accommodation for screenshots and study: freezes the place mid-breath. */
 var STILL=/[?&]still\b/.test(location.search);
 if(STILL) document.documentElement.classList.add("still");
+/* ?veil — study mode for the first paint (VP-0005): holds the breathing ring on screen. */
+var VEIL=/[?&]veil\b/.test(location.search);
 
 var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches || STILL;
 var CHAMBERS = ["threshold","scale","garden","stars","letters","tide","cabinet","mirror","ninth"];
@@ -48,7 +50,7 @@ function glyphsComplete(){ return otherEightDone() && STORE.get("coda",false); }
       sky.style.setProperty("--glow-y", ((e.clientY-r.top)/r.height*100)+"%");
     });
   }
-  var w=document.getElementById("welcome-line"), w2=document.getElementById("welcome-second");
+  var w=document.getElementById("welcome-line");
   var lines={
     dawn:"The light is just arriving, and so are you.",
     day:"Broad daylight, and the place is still keeping its secrets.",
@@ -57,7 +59,7 @@ function glyphsComplete(){ return otherEightDone() && STORE.get("coda",false); }
   };
   if(visits>=9){ w.textContent="Nine times now. The place has stopped pretending it doesn't know you."; }
   else if(visits>=27){ w.textContent="The ring keeps your seat the way a shore keeps the shape of the tide."; }
-  else if(visits>=2){ w.textContent="You came back. Places notice that kind of thing."; if(w2){w2.hidden=false; w2.textContent="Your earlier path is kept in the Mirror, faintly, under the new one.";} }
+  else if(visits>=2){ w.textContent="You came back. Places notice that kind of thing."; }
   else { w.textContent=lines[phase]; }
   function midnight(){
     var n=new Date(), on = n.getHours()===0 && n.getMinutes()===0;
@@ -117,6 +119,13 @@ function initChamber(c){
 
 /* start: the chamber named in the address, or the Threshold */
 (function start(){
+  /* The first paint has already spoken (the breathing ring, inline in the head).
+     Now that the place itself is standing, lift the veil. (VP-0005) */
+  var veil=document.getElementById("veil");
+  if(veil){
+    if(VEIL){ veil.style.animation="none"; }
+    else { veil.style.animation="none"; veil.classList.add("lift"); setTimeout(function(){ veil.remove(); },800); }
+  }
   var fromHash=(location.hash||"").slice(1);
   enteredBoot(fromHash);
   function enteredBoot(c){
@@ -220,10 +229,6 @@ function initGarden(){
     var r=cv.getBoundingClientRect();
     makeFlower((e.clientX-r.left)/r.width*W, H, false,false,false); if(REDUCED) render(0);
   });
-  if(isNinth){
-    var note=document.getElementById("garden-note");
-    if(note) note.textContent="Today is the ninth day. Something golden is growing in the east bed. The Cartographer noticed it first, and never once wrote down why.";
-  }
   /* The Scattered Leaves: authored pieces, chance arrangement — never the same sentence twice */
   leaves().then(function(data){
     var el=document.getElementById("garden-whisper"); if(!el||!data.whispers) return;
@@ -305,13 +310,6 @@ function initLetters(){
       if(holder && holder!==drawn){ holder.classList.add("drawn"); }
     }
   }
-  var shelf=document.getElementById("letter-draw");
-  if(shelf){
-    var note=document.createElement("p");
-    note.className="chamber-lede";
-    note.textContent="Drawn for this visit: “"+drawn.querySelector(".letter-first").textContent+"” — the rest stay sealed below, by their first lines.";
-    shelf.appendChild(note);
-  }
 }
 
 /* ---------- The Tide Room (The Synodic Reckoning + The Long Breath) ---------- */
@@ -320,7 +318,7 @@ function initTide(){
   var fact=document.getElementById("moon-fact");
   var names=[[1.84,"new"],[5.53,"waxing crescent"],[9.22,"first quarter"],[12.91,"waxing gibbous"],[16.61,"full"],[20.30,"waning gibbous"],[23.99,"last quarter"],[27.68,"waning crescent"],[29.53,"new"]];
   var name="full"; for(var i=0;i<names.length;i++){ if(mp.age<names[i][0]){ name=names[i][1]; break; } }
-  if(fact) fact.textContent="Tonight the moon is "+name+", "+Math.round(mp.illum*100)+"% lit — computed here, from the moon itself, by the old reckoning: 29.53 days from new to new.";
+  if(fact) fact.textContent=name+" · "+Math.round(mp.illum*100)+"%";
   var disc=document.getElementById("moon-disc");
   if(disc){
     /* dark overlay slides away as illumination grows: waxing reveals from the right, waning from the left */
@@ -385,7 +383,7 @@ function initCabinet(){
       tri(x,y,h,d-1); tri(x+h,y,h,d-1); tri(x+h/2,y+h,h,d-1);
     }
     tri(30,S-40,S-60,depth);
-    var lbl=document.getElementById("fractal-depth"); if(lbl) lbl.textContent="depth "+depth;
+    var lbl=document.getElementById("fractal-depth"); if(lbl) lbl.textContent=String(depth);
   }
   drawFractal();
   var deeper=document.getElementById("fractal-deeper");
@@ -474,8 +472,8 @@ function drawMirror(){
   }
   var label=document.getElementById("mirror-path");
   if(label){
-    var names={threshold:"the Threshold",scale:"the Scale Room",garden:"the Garden",stars:"the Constellation",letters:"the Letter Room",tide:"the Tide Room",cabinet:"the Cabinet",mirror:"the Mirror",ninth:"the Ninth Door"};
-    label.textContent = sessionPath.length? "This visit, so far: "+sessionPath.map(function(c){return names[c];}).join(" → ") : "";
+    /* the path, as numbers only — the ring's own order, no sentence around it */
+    label.textContent = sessionPath.length? sessionPath.map(function(c){return CHAMBERS.indexOf(c)+1;}).join("  →  ") : "";
   }
 }
 /* keep this visit's path for future ghosts */
@@ -509,7 +507,7 @@ function drawDoor(){
   } else {
     var n=CHAMBERS.slice(0,8).filter(isVisited).length;
     var dc=document.getElementById("door-count");
-    if(dc) dc.textContent="The door is not locked. It is unfinished — as are you, here. "+n+" of its eight companions have been visited. It opens to a complete ring.";
+    if(dc) dc.textContent=n+" / 8";
   }
 }
 
@@ -520,7 +518,7 @@ function drawDoor(){
   function stop(){ nodes.forEach(function(n){ try{ n.stop?n.stop():n.disconnect(); }catch(e){} }); nodes=[]; if(actx){ actx.close(); actx=null; } }
   btn.addEventListener("click",function(){
     var on=btn.getAttribute("aria-pressed")==="true";
-    if(on){ stop(); btn.setAttribute("aria-pressed","false"); btn.textContent="sound · off"; return; }
+    if(on){ stop(); btn.setAttribute("aria-pressed","false"); btn.setAttribute("aria-label","Ambient sound, off"); return; }
     var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
     actx=new AC();
     var master=actx.createGain(); master.gain.value=.05; master.connect(actx.destination);
@@ -533,7 +531,7 @@ function drawDoor(){
       o.connect(gn); gn.connect(master); o.start(); lfo.start();
       nodes.push(o,lfo);
     });
-    btn.setAttribute("aria-pressed","true"); btn.textContent="sound · on";
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("aria-label","Ambient sound, on");
   });
 })();
 })();

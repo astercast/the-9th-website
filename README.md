@@ -9,5 +9,6 @@ No build step, no dependencies, no trackers, no external requests. Hand-written 
 - `data/v1/` — the site's written collections: 40 wishes, 9 letters, 16 facts of scale, the Scattered Leaves fragment sets.
 - `api/health.js` — the fleet's one server function (prepared for deployment; this repo is a working repo and is not deployed).
 - `LIVE_CHECKLIST.md` — the free-tier and go-live audit.
+- `GO_LIVE.md` — the deploy document: plain files, the durability rules as deploy-time checks, and the deploy-time step that absolutizes the social-card URLs.
 
 Working track only. There is no `-live` repo for this site, and none is to be created without the owner's explicit order.

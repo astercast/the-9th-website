@@ -220,3 +220,20 @@ Some text on this site reads as random, scattered, dreamlike. That is art, and i
 - **Where it may live:** the Garden's whispers (three pieces per visit, drawn without replacement — *live, wave 1*, set of 28); the Cabinet's oracle slips (one per opening — *live, wave 1*, set of 9). Roadmapped locales: marginalia in the Letter Room that rearranges between visits; fallen words under the Wishfield — words, not wishes, that drift.
 - Named in the registry as **The Scattered Leaves**: leaves are pages, and leaves are what gardens drop. Both readings are intended.
 
+---
+
+## XII. Amendment — The Text Ration (wave 2, 2026-10-13)
+
+Recorded per the discipline of this document: nothing above is struck. This section narrows how much of the canon the pages may *show*.
+
+**The Ration. The site shows a fraction of its words. The Codex keeps them all.**
+
+1. **No explanation survives.** No instructions, no introductions, no labels that explain a mechanic — no "hover to", no "begin anywhere", no sentence that tells the visitor how the place works. Chambers are entered, not introduced. How the place works is found by walking it, or not found.
+2. **Navigation is glyph and symbol only.** The ring, the marks, numerals, a single note for the sound. Words never point; there are no buttons that say where they go.
+3. **Presence replaces text.** Symbol, light, number, scale, silence. Where an earlier wave described, the rationed site shows; where it showed, it implies. Compositions approach one element in a vast space, and the descents and full-bleed scenes carry what prose carried.
+4. **Artifacts are exempt, and whole.** The wishes, the letters, the Door's passage, the Cartographer's fragments, the Coda and its Rosetta are not chrome and are never rationed, abridged, or summarised on the pages. Everything explanatory *around* an artifact is stripped; the artifact stands alone.
+5. **The measure.** Counted at arrival (script on, first visit, sealed things sealed, the ring incomplete): a chamber shows only the words its artifacts require; the site's own voice — everything that is not artifact, number, or symbol — tends to zero. Wave 2's per-chamber counts are recorded in the WAVELOG. A future wave that raises a chamber's count must say why in its record, or be cut back.
+6. **The gap is the mystery.** The site rations; the Codex remembers (see the Master Code, Durability). A scholar who finds the Codex finds words the pages never showed. That difference is deliberate, and permanent.
+
+The First Law governs the ration as it governs everything: less text, and every surviving word carries more meaning. Timeless subjects only; darkness present, never victorious; questions posed, never preached; warmth beats cleverness.
+
