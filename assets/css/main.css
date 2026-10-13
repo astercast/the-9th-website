@@ -133,6 +133,11 @@ html.js .stop.in{opacity:1;transform:none}
 .coda p{max-width:34em;margin:14px auto;font-style:italic}
 .coda .rosetta{font-size:.86em;color:#8d8474;max-width:36em;font-style:normal;border-top:1px solid var(--line);padding-top:26px;margin-top:34px}
 .coda-mark{width:22px;height:22px}
+/* The Winter Notes (wave 3, Depth 27): found below the Rosetta from the
+   twenty-seventh visit. Signed with the Cartographer's Mark inverted —
+   the grammar's remembered position, used here for the first time. */
+.winter-note{border-top:1px solid var(--line);padding-top:26px;margin-top:34px}
+.winter-note .frag-mark{transform:scaleY(-1)}
 
 /* ---------- Garden ---------- */
 .garden-frame canvas{background:linear-gradient(to bottom,#0a0f14,#0c130d)}
@@ -140,7 +145,14 @@ html.js .stop.in{opacity:1;transform:none}
 .oracle-slip{font-family:var(--sans);letter-spacing:.18em;font-size:.78em;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:30px}
 
 /* ---------- Constellation ---------- */
-.stars-frame canvas{background:radial-gradient(120% 100% at 50% 0%, #0b1026, #05060f)}
+/* Wave 3: the sky moved to the frame itself, so the Wishfield Nebula can
+   drift beneath the stars on its own canvas. If no script ever runs, the
+   frame's sky is what remains — the first stage of the fallback chain. */
+.stars-frame{background:radial-gradient(120% 100% at 50% 0%, #0b1026, #05060f)}
+.stars-frame canvas{background:transparent}
+#nebula-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#stars-canvas{position:relative;z-index:1}
+.wish-read{z-index:2}
 .wish-read{
   position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
   width:min(92%,540px);text-align:center;margin:0;padding:12px 18px;border-radius:8px;
