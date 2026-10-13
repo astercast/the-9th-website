@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 9th Website</title>
+<meta name="description" content="Nine chambers in a ring.">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="speculationrules">
+{"prefetch":[{"source":"list","urls":["data/v1/wishes.json","data/v1/whispers.json","data/v1/letters.json","data/v1/scale.json"]}]}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='none' stroke='%23c9a86a' stroke-width='1.4'/%3E%3Ccircle cx='12' cy='12' r='1.6' fill='%23c9a86a'/%3E%3C/svg%3E">
+</head>
+<body data-phase="night">
+
+<!-- The nine glyphs, and one mark that is not among them. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="g-threshold" viewBox="0 0 24 24"><path d="M3 20.5h18M6.5 20.5v-8a5.5 5.5 0 0 1 11 0v8" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="g-scale" viewBox="0 0 24 24"><path d="M4 20a8 8 0 0 1 8-8M4 15.5A12.5 12.5 0 0 1 16.5 3M4 20h.01" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="4" cy="20" r="1.3" fill="currentColor"/></symbol>
+    <symbol id="g-garden" viewBox="0 0 24 24"><path d="M12 21v-9M12 12c0-3.5-2.8-5-6.5-5 0 3.8 2.3 5.6 6.5 5zm0 0c0-3.5 2.8-5 6.5-5 0 3.8-2.3 5.6-6.5 5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="g-stars" viewBox="0 0 24 24"><path d="M12 3l1.8 7.2L21 12l-7.2 1.8L12 21l-1.8-7.2L3 12l7.2-1.8z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="g-letter" viewBox="0 0 24 24"><path d="M12 4l7 8-7 8-7-8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="g-tide" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 16.5c2.5-2 5-2 7.5 0s5 2 7.5 0M3 20.5c2.5-2 5-2 7.5 0s5 2 7.5 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" transform="translate(1.5 -1)"/></symbol>
+    <symbol id="g-cabinet" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10.5" r="1.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M12 12.3v3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="g-mirror" viewBox="0 0 24 24"><path d="M8 4a9 9 0 0 0 0 16M16 4a9 9 0 0 1 0 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 5v14" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 2.6" stroke-linecap="round"/></symbol>
+    <symbol id="g-ninth" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 1.8v2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/></symbol>
+    <symbol id="g-mark" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M11 2.5v17M2.5 11h17M15.8 15.8L21 21" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-head">
+  <nav class="ring" aria-label="The ring of chambers">
+    <button class="ring-btn" data-go="threshold" aria-label="The Threshold"><svg><use href="#g-threshold"/></svg></button>
+    <button class="ring-btn" data-go="scale" aria-label="The Scale Room"><svg><use href="#g-scale"/></svg></button>
+    <button class="ring-btn" data-go="garden" aria-label="The Garden"><svg><use href="#g-garden"/></svg></button>
+    <button class="ring-btn" data-go="stars" aria-label="The Constellation of Wishes"><svg><use href="#g-stars"/></svg></button>
+    <button class="ring-btn" data-go="letters" aria-label="The Letter Room"><svg><use href="#g-letter"/></svg></button>
+    <button class="ring-btn" data-go="tide" aria-label="The Tide Room"><svg><use href="#g-tide"/></svg></button>
+    <button class="ring-btn" data-go="cabinet" aria-label="The Cabinet"><svg><use href="#g-cabinet"/></svg></button>
+    <button class="ring-btn" data-go="mirror" aria-label="The Mirror"><svg><use href="#g-mirror"/></svg></button>
+    <button class="ring-btn ring-btn-ninth" data-go="ninth" aria-label="The Ninth Door"><svg><use href="#g-ninth"/></svg></button>
+  </nav>
+  <button id="sound-toggle" class="sound-toggle" aria-pressed="false" aria-label="Ambient sound, off">sound&nbsp;·&nbsp;off</button>
+</header>
+
+<main id="main">
+
+<!-- I · THE THRESHOLD -->
+<section class="chamber" id="chamber-threshold" data-chamber="threshold" aria-label="The Threshold">
+  <div class="threshold-sky" id="threshold-sky" aria-hidden="true"></div>
+  <div class="chamber-inner threshold-inner">
+    <svg class="glyph-large"><use href="#g-threshold"/></svg>
+    <h1 class="site-title">The 9th Website</h1>
+    <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
+    <p class="welcome-second" id="welcome-second" hidden></p>
+    <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
+    <div class="ring-map-wrap">
+      <svg class="ring-map" viewBox="0 0 200 200" role="img" aria-label="Nine doors in a ring, and one more, drawn ajar">
+        <circle cx="100" cy="100" r="78" class="ring-map-circle"/>
+        <g id="ring-map-doors"></g>
+        <g class="ajar" aria-hidden="true">
+          <rect x="97.5" y="176" width="5" height="9" class="ajar-dark"/>
+          <path d="M97.5 176 L93 179.5 L97.5 185" class="ajar-door"/>
+        </g>
+      </svg>
+      <p class="ring-caption">Nine doors. Begin anywhere. The ring keeps what you do.</p>
+    </div>
+    <p class="fragment fragment-threshold"><svg class="frag-mark"><use href="#g-mark"/></svg>“I did not build the place. I only found the doors already standing, and learned their order by walking it.”</p>
+    <button class="enter-btn" data-go="scale">enter&nbsp;&nbsp;→</button>
+  </div>
+</section>
+
+<!-- II · THE SCALE ROOM -->
+<section class="chamber" id="chamber-scale" data-chamber="scale" aria-label="The Scale Room">
+  <div class="chamber-inner">
+    <svg class="glyph-corner"><use href="#g-scale"/></svg>
+    <h2>The Scale Room</h2>
+    <p class="chamber-lede">Go slowly. Everything here is true, and everything here is the wrong size to hold in your head. That is the exercise.</p>
+    <ol class="scale-stops">
+      <li class="stop"><span class="stop-size">1 millimetre</span><h3>A grain of sand</h3><p>A whole beach is a crowd of these, each one a mountain worn down to almost nothing.</p></li>
+      <li class="stop"><span class="stop-size">15 millimetres</span><h3>A honeybee</h3><p>She visits fifty to a hundred flowers on a single trip, and remembers the way home by the sun.</p></li>
+      <li class="stop"><span class="stop-size">about 18 centimetres</span><h3>Your hand</h3><p>The distance from your wrist to your middle fingertip is close to one ten-thousandth of the distance you will walk in a lifetime.</p></li>
+      <li class="stop"><span class="stop-size">about 50 centimetres</span><h3>A newborn child</h3><p>Small enough to hold in two hands; already contains everything needed to become someone you cannot yet imagine.</p></li>
+      <li class="stop"><span class="stop-size">2 metres</span><h3>A door</h3><p>Nearly every threshold you have ever crossed was made to roughly the measure of a person, plus a little hope.</p></li>
+      <li class="stop"><span class="stop-size">5.5 metres</span><h3>A giraffe</h3><p>Its heart weighs about eleven kilograms, built to lift blood all the way up to a dreaming head.</p></li>
+      <li class="stop"><span class="stop-size">about 10 metres</span><h3>A house</h3><p>From the street it looks still. Inside, it is mostly weather: warmth, argument, soup, sleep.</p></li>
+      <li class="stop"><span class="stop-size">25 metres</span><h3>A blue whale</h3><p>The largest animal known to have ever lived on Earth. Its tongue weighs about as much as an elephant.</p></li>
+      <li class="stop fragment-stop"><span class="stop-size">330 metres</span><h3>The Eiffel Tower</h3><p>It grows about fifteen centimetres taller in summer, as the iron warms and stretches toward the sun.</p><p class="fragment">“Measured the tower in summer and again in winter. It is not taller. It is reaching. There is a difference, and it matters.”</p></li>
+      <li class="stop"><span class="stop-size">8,849 metres</span><h3>Mount Everest</h3><p>The mountain is still rising, about four millimetres a year, as two continents lean on each other.</p></li>
+      <li class="stop"><span class="stop-size">3,474 kilometres across</span><h3>The Moon</h3><p>It is drifting away from us about as fast as your fingernails grow. The tides are its long goodbye, still holding hands.</p></li>
+      <li class="stop"><span class="stop-size">139,820 kilometres across</span><h3>Jupiter</h3><p>Eleven Earths would fit across its face. Its great storm has been blowing for at least three hundred years.</p></li>
+      <li class="stop"><span class="stop-size">1.39 million kilometres across</span><h3>The Sun</h3><p>A million Earths would fit inside it. The light warming your face left its surface eight minutes ago.</p></li>
+      <li class="stop"><span class="stop-size">9.46 trillion kilometres</span><h3>One light-year</h3><p>Not a time but a distance: how far light travels in a year of running without rest.</p></li>
+      <li class="stop"><span class="stop-size">about 100,000 light-years across</span><h3>The Milky Way</h3><p>Our whole galaxy, turning slowly. Every star you have ever seen at night is a near neighbour.</p></li>
+      <li class="stop"><span class="stop-size">93 billion light-years across</span><h3>The observable universe</h3><p>Everything we can, even in principle, ever see. Beyond this edge there is more; it is simply not ours to know. Yet.</p></li>
+    </ol>
+    <!-- The coda is not listed anywhere. It is simply what is below the smallest thing, past the end. -->
+    <div class="coda" id="scale-coda">
+      <svg class="frag-mark coda-mark"><use href="#g-mark"/></svg>
+      <p>Below the smallest thing there is a room no one measured. The Cartographer went down past the grain of sand with a candle and a notebook, and came back with the notebook empty and the candle unlit, smiling like a person who has been told a secret in a language made of weather. All that was ever written about the room is this: <em>it is smaller than the sand, and everything fits in it.</em></p>
+      <p class="rosetta">On the far wall, in the same hand, smaller, as if for whoever came this far down and no one else — <em>the Method</em>: “Nothing in this place is chance; I only taught it to wear chance’s coat. Every garden, every drawn letter, every scattered line is reckoned from three numbers — the day, counted year-and-month-and-day into one sum; the count of your comings; and the chamber you stand in — turned through one small wheel. The wheel turns thus: begin with your number. Add the adder: one thousand, eight hundred thirty-one million, five hundred sixty-five thousand, eight hundred thirteen. Fold the number on itself at fifteen and mix it, by the mark the reckoning-machines call the crossing; multiply it by itself, made odd. Fold it again at seven and add it to itself; fold it last at fourteen, and let it go as a fraction between nothing and one. By such fractions I chose everything. Learn the wheel, keep the numbers, and every garden ever grown here can be grown again, exactly, by your own hand. That is the whole secret. It was never hidden. It was only below.”</p>
+    </div>
+    <nav class="onward"><button data-go="garden">onward&nbsp;&nbsp;→</button></nav>
+  </div>
+</section>
+
+<!-- III · THE GARDEN -->
+<section class="chamber" id="chamber-garden" data-chamber="garden" aria-label="The Garden">
+  <div class="chamber-inner">
+    <svg class="glyph-corner"><use href="#g-garden"/></svg>
+    <h2>The Garden</h2>
+    <p class="chamber-lede">Move through it. The garden grows where you have been, and it is planted fresh from the date each day. No two days grow the same garden.</p>
+    <div class="canvas-frame garden-frame">
+      <canvas id="garden-canvas" width="1120" height="640" aria-label="A garden growing from the movement of your pointer"></canvas>
+      <p class="canvas-fallback">In the still version of this place, the garden is a row of nine seedlings under a patient sun, waiting for a hand to pass over them.</p>
+    </div>
+    <p class="garden-note" id="garden-note">Today’s seed is today. Come back tomorrow; it will be a different garden, and it will remember none of this. That is what gardens are for.</p>
+    <p class="whisper" id="garden-whisper">the seed does not argue with the dark; it waits in it — salt, then silver, then the small hours — nine is the number the ring counts when it thinks no one is listening</p>
+    <p class="fragment">“On the ninth day of any month, watch the east bed. I have never written down why. Some of my notes are doors too.”</p>
+    <nav class="onward"><button data-go="stars">onward&nbsp;&nbsp;→</button></nav>
+  </div>
+</section>
+
+<!-- IV · THE CONSTELLATION OF WISHES -->
+<section class="chamber" id="chamber-stars" data-chamber="stars" aria-label="The Constellation of Wishes">
+  <div class="chamber-inner">
+    <svg class="glyph-corner"><use href="#g-stars"/></svg>
+    <h2>The Constellation of Wishes</h2>
+    <p class="chamber-lede">Every star here is a wish, written by hand for this place and kept in its collection. Rest on one to read it. One star in this sky keeps a different counsel.</p>
+    <div class="canvas-frame stars-frame">
+      <canvas id="stars-canvas" width="1120" height="640" aria-label="A starfield of wishes"></canvas>
+      <p class="wish-read" id="wish-read" aria-live="polite"></p>
+    </div>
+    <details class="collection">
+      <summary>The collection, written out</summary>
+      <ol class="wish-list">
+        <li>I wish my grandmother could see the garden I finally grew.</li>
+        <li>I wish to learn the names of all the birds that pass over this house.</li>
+        <li>I wish the letter I never sent had been sent.</li>
+        <li>I wish for one more ordinary Tuesday with him.</li>
+        <li>I wish my hands remember how to make bread the way hers did.</li>
+        <li>I wish the sea stays exactly as wild as it is.</li>
+        <li>I wish to be less afraid of beginning again.</li>
+        <li>I wish my daughter laughs at the same jokes when she is forty.</li>
+        <li>I wish someone finds the photograph I lost in 1998.</li>
+        <li>I wish for rain on the night we plant the orchard.</li>
+        <li>I wish to hear my father’s voice one more time, saying nothing important.</li>
+        <li>I wish the stray cat on our street chooses us.</li>
+        <li>I wish I could thank the stranger who pushed my car in the snow.</li>
+        <li>I wish the stars were this clear from my father’s porch.</li>
+        <li>I wish to finish the song before the summer ends.</li>
+        <li>I wish my brother calls first, just once.</li>
+        <li>I wish the old oak outlives all of us.</li>
+        <li>I wish to swim in water so cold it makes me honest.</li>
+        <li>I wish the library keeps the copy with her handwriting in it.</li>
+        <li>I wish to be forgiven for the year I went quiet.</li>
+        <li>I wish my son keeps his terrible, wonderful singing voice.</li>
+        <li>I wish there is always one more page after the last page.</li>
+        <li>I wish the night train still passes at the hour I can’t sleep.</li>
+        <li>I wish to hold a newborn and feel time stop being a debt.</li>
+        <li>I wish the harbour lights never learn to hurry.</li>
+        <li>I wish my mother dances at my wedding, slowly, twice.</li>
+        <li>I wish to understand one true thing about the moon.</li>
+        <li>I wish the bench by the river keeps our initials under the paint.</li>
+        <li>I wish everyone I love sleeps well tonight, all at once, everywhere.</li>
+        <li>I wish to grow old in a house with a loud kettle.</li>
+        <li>I wish the map we drew as children turns out to be accurate.</li>
+        <li>I wish I could give my younger self a warm meal and no advice.</li>
+        <li>I wish the choir down the street never disbands.</li>
+        <li>I wish for snow on the morning nobody has to drive.</li>
+        <li>I wish the last word of the story is a kind one.</li>
+        <li>I wish my garden feeds one person I will never meet.</li>
+        <li>I wish to stand somewhere with no signal and not reach for my pocket.</li>
+        <li>I wish the dog waits by the gate forever, in the good way dogs wait.</li>
+        <li>I wish to see the earth from far away and still choose it.</li>
+        <li>I wish you, reading this, get the one you are thinking of.</li>
+      </ol>
+    </details>
+    <nav class="onward"><button data-go="letters">onward&nbsp;&nbsp;→</button></nav>
+  </div>
+</section>
+
+<!-- V · THE LETTER ROOM -->
+<section class="chamber" id="chamber-letters" data-chamber="letters" aria-label="The Letter Room">
+  <div class="chamber-inner">
+    <svg class="glyph-corner"><use href="#g-letter"/></svg>
+    <h2>The Letter Room</h2>
+    <p class="chamber-lede">Nine letters, written for this room. One is drawn for you each visit, the way a bottle comes in on one tide and not another. The rest stay sealed, listed by their first lines.</p>
+    <div class="letter-draw" id="letter-draw" aria-live="polite"></div>
+    <div class="letters-all" id="letters-all">
+      <article class="letter" data-letter="stranger">
+        <h3 class="letter-first">To the stranger who held the door —</h3>
+        <p>You held the door on the coldest day of the year, and you were not even going my way. I have thought about it more than seems reasonable. My hands were full, my heart was fuller of worse things, and you simply stood there, patient as furniture, until I passed.</p>
+        <p>I never learned your name. That is the strange arithmetic of kindness: the people who change the weather of a day are so often the ones we cannot thank. So I am thanking the air instead, and anyone standing in it. If a stranger holds a door for you this week, it might be the same weather, moving on.</p>
+      </article>
+      <article class="letter" data-letter="future-self">
+        <h3 class="letter-first">Dear future self, on an ordinary morning —</h3>
+        <p>Sit down a moment. The tea is only warm, but that will do.</p>
+        <p>Everything you are afraid of losing is already teaching you how much of it was love. That is not a small thing to know. Most people go their whole lives calling it fear.</p>
+        <p>You will lose some of it. You will also find, in the losing, that your hands were built for holding more than one thing at a time: the grief, and the groceries, and somebody’s small warm hand crossing the street.</p>
+        <p>Write back when you can. I am rooting for you in the tense you are not using yet.</p>
+      </article>
+      <article class="letter" data-letter="ocean">
+        <h3 class="letter-first">To the ocean, which was here first —</h3>
+        <p>I stood at the shore in the hour when the light gives up politely, and the water did what it has done longer than anything on land has been alive to watch. It came in. It went out. It did not explain itself, and I found I did not need it to.</p>
+        <p>People ask what the sea means. I think the sea is what meaning looks like before we get our hands on it.</p>
+        <p>Come and stand here sometime. Bring nothing to solve. The tide will do its old work on your thoughts, the way it does on stones: kindly, and over time.</p>
+      </article>
+      <article class="letter" data-letter="teacher">
+        <h3 class="letter-first">Dear Mrs. A—, wherever you are teaching now —</h3>
+        <p>You taught a room of tired fourteen-year-olds that a sentence could be a place to live. I was the quiet one by the window. I am not quiet anymore, and it is partly your doing.</p>
+        <p>I still have the book you pressed on me, the one you said I was not ready for. You were right about that too; I grew into it the way you knew I would.</p>
+        <p>Teachers plant things in weather they will never stand in. Consider this a report from your climate: it is raining here, gently, and everything you planted is up.</p>
+        <p class="margin-note">In the margin, in a different hand: “She kept the book. They always keep the book. — C.”</p>
+      </article>
+      <article class="letter" data-letter="moon">
+        <h3 class="letter-first">To the moon, a regular correspondent —</h3>
+        <p>I have started leaving the porch light on for you, which is foolish, because you are made of light half the month anyway. But habit is a kind of prayer, and I am out of the other kind.</p>
+        <p>You have seen every version of me: the one dancing in a kitchen, the one crying into a sink at 3 a.m., the one who finally, finally slept. You never once looked away. There are friends I cannot say that about.</p>
+        <p>Next month, same window. I will bring the good blanket. You bring the silver.</p>
+      </article>
+      <article class="letter" data-letter="drifted">
+        <h3 class="letter-first">For the friend who drifted —</h3>
+        <p>I am writing to the gap in the group photograph, which is to say, to you.</p>
+        <p>We were a constellation once; nobody told us stars drift. If you are well, let the drift be forgiven. If you are not well, let this reach you like a hand on a shoulder in a crowd: brief, certain, gone before it can embarrass either of us.</p>
+        <p>The song we liked came on in a shop last week. I stayed until it finished. That is all. That is the whole letter, really.</p>
+      </article>
+      <article class="letter" data-letter="next">
+        <h3 class="letter-first">To whoever lives here next —</h3>
+        <p>You do not know me, and if the system works, you never will. This house will be somebody else’s kitchen someday, and my handwriting will be under the third stair, where the board lifts.</p>
+        <p>Here is what I can tell you from upstream: the light in the back room is best in October. The pipes sing in January; it is not a fault, it is a feature we learned to love. Someone small once grew an inch a year against the pantry door, and we painted over it, and I am sorry about that most of all.</p>
+        <p>Live loudly in the mornings. The house likes it.</p>
+        <p class="postscript" data-returning hidden>P.S. You came back. So did I. Some letters are just doors that learned patience.</p>
+      </article>
+      <article class="letter" data-letter="morning">
+        <h3 class="letter-first">To the morning, who keeps forgiving us —</h3>
+        <p>You are the most underpraised accomplice. Every garden, every apology, every second first impression I have ever made began with you rinsing the slate.</p>
+        <p>I have met you in hospital corridors and on mountain tops, in the fluorescent hour of airports, holding terrible coffee like a sacrament. You never ask what the night did. You simply begin, again, as if beginning were easy, as if you had not watched me fail at it for years.</p>
+        <p>It is not easy. I know. Thank you for pretending it is, until it is.</p>
+      </article>
+      <article class="letter" data-letter="garden">
+        <h3 class="letter-first">To the garden, and its keeper —</h3>
+        <p>This is to say I have eaten none of the plums, because they are yours, and because watching you wait for them all summer has become one of my summer’s pleasures.</p>
+        <p>Grow slow things. Grow more than you need. Grow one row for the neighbours you have not met and one for the bees, who are the only honest critics.</p>
+        <p>When the fence leans, we will lean it back. That is the whole philosophy. Everything else is weather.</p>
+      </article>
+    </div>
+    <nav class="onward"><button data-go="tide">onward&nbsp;&nbsp;→</button></nav>
+  </div>
+</section>
+
+<!-- VI · THE TIDE ROOM -->
+<section class="chamber" id="chamber-tide" data-chamber="tide" aria-label="The Tide Room">
+  <div class="chamber-inner tide-inner">
+    <svg class="glyph-corner"><use href="#g-tide"/></svg>
+    <h2>The Tide Room</h2>
+    <div class="canvas-frame tide-frame">
+      <canvas id="tide-canvas" width="1120" height="560" aria-label="A slow breathing tide under the current moon"></canvas>
+      <div class="moon-disc" id="moon-disc" aria-hidden="true"></div>
+    </div>
+    <p class="moon-fact" id="moon-fact">Tonight the moon is doing what it has always done.</p>
+    <p class="tide-line">The heart keeps the same hours as the tide: it fills, it empties, and it is pulled by something far away that loves it without speaking.</p>
+    <p class="fragment">“I stopped counting the days I was here and started counting moons. The numbers got smaller and truer.”</p>
+    <nav class="onward"><button data-go="cabinet">onward&nbsp;&nbsp;→</button></nav>
+  </div>
+</section>
+
+<!-- VII · THE CABINET -->
+<section class="chamber" id="chamber-cabinet" data-chamber="cabinet" aria-label="The Cabinet">
+  <div class="chamber-inner">
+    <svg class="glyph-corner"><use href="#g-cabinet"/></svg>
+    <h2>The Cabinet</h2>
+    <p class="chamber-lede">Small perfect things, kept in drawers of light. Handle them gently; some of them deepen if you ask twice.</p>
+    <div class="cabinet-grid">
+      <figure class="exhibit">
+        <canvas id="spiral-canvas" width="520" height="520" aria-label="A spiral of prime numbers"></canvas>
+        <figcaption><strong>The Prime Spiral.</strong> Count upward in a square spiral and mark the primes. They refuse to line up, and yet they keep almost lining up, in long diagonal ghosts.</figcaption>
+      </figure>
+      <figure class="exhibit">
+        <svg class="golden-svg" viewBox="0 0 340 210" aria-label="Golden rectangles nesting">
+          <g fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="4" y="4" width="332" height="205"/>
+            <path d="M129 4v205M129 130h207M254 130V4M254 79H129M188 79v51M188 105h66"/>
+            <path d="M336 209A205 205 0 0 1 129 4 125 125 0 0 1 254 130 80 80 0 0 1 188 79 51 51 0 0 1 254 105 26 26 0 0 1 188 130" stroke="#c9a86a"/>
+          </g>
+        </svg>
+        <figcaption><strong>The Golden Study.</strong> A rectangle that, cut by a square, leaves a smaller copy of itself — the same proportion, all the way down: 1 to 1.618…, the ratio seashells and sunflowers keep arriving at independently.</figcaption>
+      </figure>
+      <figure class="exhibit">
+        <canvas id="fractal-canvas" width="520" height="520" aria-label="A fractal shore that deepens when pressed"></canvas>
+        <figcaption><strong>The Deepening.</strong> A fractal shore, drawn at one honest depth. Press it, and it will show you more of itself. Nobody has reached the bottom; there isn’t one. <span class="exhibit-state" id="fractal-depth">depth 6</span></figcaption>
+        <button class="small-btn" id="fractal-deeper">ask it to deepen</button>
+      </figure>
+      <figure class="exhibit">
+        <canvas id="harmonics-canvas" width="520" height="520" aria-label="Two tones drawing a Lissajous figure"></canvas>
+        <figcaption><strong>The Harmonics.</strong> Two pure tones, slightly out of step, drawing their relationship. When the ratio is simple the figure holds still; beauty in sound is an argument numbers settle by agreeing.</figcaption>
+      </figure>
+      <figure class="exhibit exhibit-box">
+        <div class="locked-box" id="locked-box" role="img" aria-label="A small locked box of dark wood with a brass clasp">
+          <div class="box-lid"></div><div class="box-clasp"></div>
+        </div>
+        <figcaption><strong>The Box.</strong> It came with the Cabinet. It has never opened. Nothing in the keeping of this place suggests it should, or that it wants to, or that whatever is inside is a thing at all. It is the most visited object here.</figcaption>
+      </figure>
+      <figure class="exhibit exhibit-note">
+        <p class="fragment fragment-cabinet">Scratched into the back of the third drawer, at the angle of a hand writing in the dark: “If you are inventorying wonder, you have already miscounted. Begin again, slower.”</p>
+        <figcaption class="note-cap">Found, not placed.</figcaption>
+      </figure>
+      <figure class="exhibit exhibit-flower" id="pressed-flower" hidden>
+        <div class="pressed-flower-art" aria-hidden="true">✿</div>
+        <figcaption>A pressed flower between two pages of nothing, left by someone who had been to the Constellation first. It was not here before you went there. It is here now.</figcaption>
+      </figure>
+    </div>
+    <p class="oracle-slip" id="oracle-slip">Count to nine. Then count what changed.</p>
+    <nav class="onward"><button data-go="mirror">onward&nbsp;&nbsp;→</button></nav>
+  </div>
+</section>
+
+<!-- VIII · THE MIRROR -->
+<section class="chamber" id="chamber-mirror" data-chamber="mirror" aria-label="The Mirror">
+  <div class="chamber-inner">
+    <svg class="glyph-corner"><use href="#g-mirror"/></svg>
+    <h2>The Mirror</h2>
+    <p class="chamber-lede">This room draws one thing only: the way you came. Your path through the ring, as a small constellation. If you have been here on other days, their paths keep a faint seat beneath yours.</p>
+    <div class="canvas-frame mirror-frame">
+      <canvas id="mirror-canvas" width="1120" height="640" aria-label="Your journey drawn as a constellation"></canvas>
+      <p class="canvas-fallback">In the still version, your path is a list of doors in the order you opened them — which is also a kind of portrait.</p>
+    </div>
+    <p class="mirror-path" id="mirror-path"></p>
+    <nav class="onward"><button data-go="ninth">onward&nbsp;&nbsp;→</button></nav>
+  </div>
+</section>
+
+<!-- IX · THE NINTH DOOR -->
+<section class="chamber" id="chamber-ninth" data-chamber="ninth" aria-label="The Ninth Door">
+  <div class="chamber-inner ninth-inner">
+    <div class="door-state" id="door-closed">
+      <svg class="door-ring" viewBox="0 0 200 200" aria-label="A ring of nine glyphs around a closed door">
+        <circle cx="100" cy="100" r="86" class="door-ring-circle"/>
+        <g id="door-glyphs"></g>
+        <circle cx="100" cy="100" r="30" class="door-face"/>
+        <circle cx="100" cy="100" r="2.6" class="door-knob"/>
+      </svg>
+      <p class="door-count" id="door-count">The door is not locked. It is unfinished — as are you, here. It opens to a complete ring.</p>
+    </div>
+    <div class="door-open" id="door-open" hidden>
+      <div class="sunrise" id="sunrise" aria-hidden="true"><div class="sun"></div></div>
+      <div class="passage">
+        <p>Here is the whole of it, and it fits in one breath: the dark is real. It was here before the first door was hung, and it will be here after the last one closes, and it does not need your permission, or your fear. What it cannot abide is a person standing in the middle of it with their compassion still lit — not the soft kind, not the decorative kind, but the stubborn kind that holds a door for a stranger on the coldest day of the year and means it. You are made of the same fire as the stars you wished on; some of their light is in your bones even now, still deciding what to become. Let it become this: a heart that has seen the true size of everything — the whale, the storm on Jupiter, the moon's long goodbye — and chooses, anyway, on purpose, with its eyes open, not to give in. Everything else is weather. This one thing is the climate. Stand still in it. The tide is not in a hurry, and neither, anymore, are you.</p>
+        <p class="final-line" id="final-line" hidden>And the one who charted all of this left the last note unwritten, because it is yours: <em>the tenth door is wherever you go next, and it is already ajar.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
