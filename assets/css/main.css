@@ -202,6 +202,15 @@ html.js .letters-all.sealed .letter.drawn .margin-note{display:block}
 html.js .letters-all.sealed .letter.drawn{padding:clamp(26px,5vw,52px);box-shadow:0 24px 60px rgba(0,0,0,.35)}
 html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0 .8em}
 
+/* The Letter Marginalia (wave 6): readers' margin notes standing below the
+   letters — small, in other hands, each at its own slight remove from the
+   margin, the way real marginalia never quite aligns. They arrive from
+   the data only; without script the room stands exactly as before. */
+.letter-marginalia{margin:56px auto 8px;max-width:34em;padding:0 6px}
+.margin-leaf{font-style:italic;color:#a99e83;font-size:.86em;line-height:1.6;margin:0 0 20px;max-width:26em}
+.margin-leaf:nth-child(2){margin-left:12%}
+.margin-leaf:nth-child(3){margin-left:5%}
+
 /* ---------- Tide ---------- */
 .tide-frame canvas{background:linear-gradient(to bottom,#080b18,#0a1224)}
 .moon-disc{

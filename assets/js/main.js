@@ -1,5 +1,6 @@
 /* The 9th Website — wave 1; the Text Ration, wave 2; the Deepening, wave 3;
-   the Second Coda, wave 4; the Second Rosetta, wave 5.
+   the Second Coda, wave 4; the Second Rosetta, wave 5; the Letter
+   Marginalia, wave 6.
    Everything here is enhancement. The place reads whole without it.
    No external requests. Memory lives only in the visitor's browser. */
 (function(){
@@ -603,6 +604,35 @@ function initLetters(){
       if(holder && holder!==drawn){ holder.classList.add("drawn"); }
     }
   }
+  /* The Letter Marginalia (wave 6, canon §III, §XI): the Scattered
+     Leaves' third locale — margin notes left in this room by readers who
+     came before. The pieces are authored (a set of 27, kept in the data
+     and in the Codex); only their arrangement is chance, and the chance
+     is the Reckoning's: three pieces per visit, drawn without
+     replacement, seed = D×23 + V×13 (recorded in the canon's Master
+     Code), so the margin rearranges between visits and any visit's
+     margin can be re-derived by a scholar who keeps the numbers. The
+     notes live in the data, not the page: an arrival never carries them,
+     and the ration is undisturbed. If the data cannot be read, the room
+     stands whole without them, exactly as waves 1–5 left it — the
+     fallback is the room itself. */
+  leaves().then(function(data){
+    if(!data.letterMarginalia || data.letterMarginalia.length<27) return;
+    if(document.getElementById("letter-marginalia")) return;
+    var host=all.parentNode; if(!host) return;
+    var r=mulberry32(daySeed()*23+visits*13);
+    var pool=data.letterMarginalia.slice(), picked=[];
+    for(var i=0;i<3 && pool.length;i++){ picked.push(pool.splice(Math.floor(r()*pool.length),1)[0]); }
+    var box=document.createElement("div");
+    box.className="letter-marginalia"; box.id="letter-marginalia";
+    picked.forEach(function(text){
+      var p=document.createElement("p");
+      p.className="margin-leaf";
+      p.textContent=text;
+      box.appendChild(p);
+    });
+    host.appendChild(box);
+  }).catch(function(){});
 }
 
 /* ---------- The Tide Room (The Synodic Reckoning + The Long Breath) ---------- */
