@@ -1,6 +1,6 @@
 /* The 9th Website — wave 1; the Text Ration, wave 2; the Deepening, wave 3;
    the Second Coda, wave 4; the Second Rosetta, wave 5; the Letter
-   Marginalia, wave 6.
+   Marginalia, wave 6; the Fallen Words, wave 7.
    Everything here is enhancement. The place reads whole without it.
    No external requests. Memory lives only in the visitor's browser. */
 (function(){
@@ -326,6 +326,40 @@ function initStars(){
   var cv=document.getElementById("stars-canvas"); if(!cv) return;
   var readEl=document.getElementById("wish-read");
   initNebula();
+  /* The Fallen Words (wave 7, canon §III, §XI): the Scattered Leaves'
+     fourth locale — words, not wishes, beneath the Wishfield: the words
+     a wish could not carry up, left drifting in the dark under the stars.
+     The pieces are authored (a set of 27, kept in the data and in the
+     Codex); only their arrangement is chance, and the chance is the
+     Reckoning's: nine pieces per visit, drawn without replacement,
+     seed = D×29 + V×17 (recorded in the canon's Master Code), so the
+     drift rearranges between visits and any visit's drift can be
+     re-derived by a scholar who keeps the numbers. The words live in
+     the data, not the page: an arrival never carries them, and the
+     ration is undisturbed. Their slow drift is CSS, and it is physics
+     only — it carries no content, as the canon permits; in the still
+     study mode and in calm mode they simply stand. If the data cannot
+     be read, the field stands whole without them, exactly as waves
+     1–6 left it — the fallback is the chamber itself. */
+  leaves().then(function(data){
+    if(!data.fallenWords || data.fallenWords.length<27) return;
+    if(document.getElementById("fallen-words")) return;
+    var host=document.querySelector("#chamber-stars .chamber-inner");
+    if(!host) return;
+    var r=mulberry32(daySeed()*29+visits*17);
+    var pool=data.fallenWords.slice(), picked=[];
+    for(var i=0;i<9 && pool.length;i++){ picked.push(pool.splice(Math.floor(r()*pool.length),1)[0]); }
+    var box=document.createElement("div");
+    box.className="fallen-words"; box.id="fallen-words";
+    picked.forEach(function(text){
+      var s=document.createElement("span");
+      s.className="fallen-word";
+      s.textContent=text;
+      box.appendChild(s);
+    });
+    var coll=host.querySelector(".collection");
+    if(coll) host.insertBefore(box, coll); else host.appendChild(box);
+  }).catch(function(){});
   fetch("data/v1/wishes.json").then(function(r){ return r.json(); }).then(function(data){
     build(data.wishes);
   }).catch(function(){ build([]); });

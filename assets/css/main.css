@@ -176,6 +176,18 @@ html.js .stop.in{opacity:1;transform:none}
 }
 .wish-read.show{opacity:1}
 .wish-read.wishless{color:#9fd8b4}
+/* The Fallen Words (wave 7): words, not wishes, drifting in the dark
+   beneath the field — small, dim, widely spaced, each on its own slow
+   drift. They arrive from the data only; without script the chamber
+   stands exactly as before. The drift is physics, not content: in the
+   still study mode it stops, and calm mode stills it below. */
+.fallen-words{margin:34px auto 4px;max-width:52em;padding:0 10px;display:flex;flex-wrap:wrap;gap:20px 38px;justify-content:center;text-align:center}
+.fallen-word{font-style:italic;color:#a99e83;font-size:.88em;line-height:1.5;animation:fallenDrift 11s ease-in-out infinite alternate}
+.fallen-word:nth-child(3n){animation-duration:14s;animation-delay:-4s}
+.fallen-word:nth-child(3n+1){animation-duration:9s;animation-delay:-2s}
+.fallen-word:nth-child(4n){animation-delay:-7s}
+@keyframes fallenDrift{from{transform:translate(0,0)}to{transform:translate(7px,5px)}}
+html.still .fallen-word{animation:none}
 .collection{margin-top:26px;border-top:1px solid var(--line);padding-top:18px}
 .collection summary{font-family:var(--sans);font-size:13px;letter-spacing:.16em;color:var(--ink-dim);cursor:pointer}
 .wish-list{columns:2;column-gap:44px;color:#d8d2c4;font-size:.94em}

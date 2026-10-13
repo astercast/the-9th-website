@@ -31,6 +31,7 @@ Nothing on this site is random. Everything that *looks* like chance is produced 
 - The Scattered Leaves, Garden (whisper pieces): seed = D×13 + V×7
 - The Scattered Leaves, Cabinet (oracle slip): seed = D×17 + V×3
 - The Scattered Leaves, Letter Room (the Letter Marginalia): seed = D×23 + V×13
+- The Scattered Leaves, Constellation (the Fallen Words): seed = D×29 + V×17
 - Pointer-grown flowers in the Garden: seed = D×3 + (number already grown)×101
 - The Wishfield Nebula (the motes' home positions beneath the stars): seed = D×11 + 5
 - The Winter Notes (which note is found, Depth 27): seed = D×19 + V×11
@@ -125,6 +126,7 @@ Named mechanics of the chambers (cite these names in WAVELOG and study):
 - **The Agreement** — the Cabinet's two tones drawing their Lissajous relationship; beauty as numbers agreeing.
 - **The Scattered Leaves** — chance text: authored fragments, arrangement by seeded chance. Governed by §XI.
 - **The Letter Marginalia** — the Scattered Leaves' third locale: margin notes left in the Letter Room by readers who came before — small, in other hands, each one a stranger's gratitude practised in the margin of another stranger's letter. Three stand in the room per visit, drawn without replacement by the Reckoning (seed = D×23 + V×13, see the Master Code); which three, and in what order, is the arrangement chance is allowed. The pieces are kept in the data and in the Codex, never in the page at arrival. *(Named wave 6.)*
+- **The Fallen Words** — the Scattered Leaves' fourth locale: words, not wishes, beneath the Wishfield — the words a wish could not carry up, too heavy, too plain, or too dear, left drifting in the dark under the stars, where the Nebula is. Each piece is a word or a few words, never a sentence; a wish asks, a fallen word simply remains. Nine stand beneath the field per visit, drawn without replacement by the Reckoning (seed = D×29 + V×17, see the Master Code); which nine, and in what order, is the arrangement chance is allowed. The pieces are kept in the data and in the Codex, never in the page at arrival. *(Named wave 7.)*
 - **The Winter Notes** — the Cartographer's second fragment set: six notes from the colder months of his charting, findable only at Depth 27, kept below the Rosetta in the Coda Below. *(Wave 3.)*
 - **The Kept Shape** — one plant the Garden keeps from the twenty-seventh visit, its form derived from the visitor's earliest recorded path; its heart carries that path as seed-dots. *(Wave 3.)*
 - **The Box** — see §VII.
@@ -240,9 +242,11 @@ Some text on this site reads as random, scattered, dreamlike. That is art, and i
 - **The pieces are authored; the arrangement is chance.** Every fragment is hand-written by a builder into `data/v1/` as a small curated set. Client-side seeded chance (the Dayseed and the visit count) decides selection, order, and placement. Nothing else does.
 - **Banned:** generated gibberish, lorem of any flavour, Markov sludge, word-salad assembled from the site's own prose. Seemingly random, never actually empty. A visitor should feel the strangeness of the arrangement *and* the humanness of every piece.
 - **Minimum authorship:** a chance-text locale ships only with a set of at least **27 pieces**. Small sets read as repetition; repetition reads as machinery.
-- **Where it may live:** the Garden's whispers (three pieces per visit, drawn without replacement — *live, wave 1*, set of 28); the Cabinet's oracle slips (one per opening — *live, wave 1*, set of 9); the Letter Room's marginalia (three pieces per visit, drawn without replacement, rearranging between visits — *live, wave 6*, set of 27). Roadmapped locales: fallen words under the Wishfield — words, not wishes, that drift.
+- **Where it may live:** the Garden's whispers (three pieces per visit, drawn without replacement — *live, wave 1*, set of 28); the Cabinet's oracle slips (one per opening — *live, wave 1*, set of 9); the Letter Room's marginalia (three pieces per visit, drawn without replacement, rearranging between visits — *live, wave 6*, set of 27); the fallen words beneath the Wishfield (nine pieces per visit, drawn without replacement, rearranging between visits — *live, wave 7*, set of 27). No roadmapped locale of the Leaves remains unbuilt.
 
 *Dated note (wave 6, 2026-10-13): the Letter Room marginalia is built — **The Letter Marginalia** (see §III). Its set holds exactly 27 authored pieces, meeting this section's minimum authorship on the day it ships; no smaller set was shipped and backfilled. The pieces are readers' margin notes, not explanations: they tell the visitor nothing about how the room works (§XII still governs); they are evidence that other readers were here, and were glad. The fallen-words locale under the Wishfield remains roadmapped and unbuilt.*
+
+*Dated note (wave 7, 2026-10-13): the fallen words beneath the Wishfield are built — **The Fallen Words** (see §III), the Scattered Leaves' fourth and last roadmapped locale. Its set holds exactly 27 authored pieces, meeting this section's minimum authorship on the day it ships; no smaller set was shipped and backfilled. The pieces are words, not wishes and not sentences: they explain nothing about the field above them (§XII still governs); they are what the wishes could not carry, kept in the same dark the Nebula keeps, and — grief words among them, outnumbered — they resolve the way everything here resolves. With this locale every place §XI named for the Leaves stands built.*
 - Named in the registry as **The Scattered Leaves**: leaves are pages, and leaves are what gardens drop. Both readings are intended.
 
 ---
