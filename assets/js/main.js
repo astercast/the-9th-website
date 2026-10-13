@@ -1,6 +1,7 @@
 /* The 9th Website — wave 1; the Text Ration, wave 2; the Deepening, wave 3;
    the Second Coda, wave 4; the Second Rosetta, wave 5; the Letter
-   Marginalia, wave 6; the Fallen Words, wave 7; the Tide Chord, wave 8.
+   Marginalia, wave 6; the Fallen Words, wave 7; the Tide Chord, wave 8;
+   the Long Letters and the Long Light, wave 9.
    Everything here is enhancement. The place reads whole without it.
    No external requests. Memory lives only in the visitor's browser. */
 (function(){
@@ -22,6 +23,8 @@ function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a
 function daySeed(){ var d=new Date(); return d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate(); }
 var leavesPromise=null;
 function leaves(){ if(!leavesPromise){ leavesPromise=fetch("data/v1/whispers.json").then(function(r){return r.json();}); } return leavesPromise; }
+var lettersPromise=null;
+function lettersData(){ if(!lettersPromise){ lettersPromise=fetch("data/v1/letters.json").then(function(r){return r.json();}); } return lettersPromise; }
 function moonPhase(date){
   var synodic=29.530588853;
   var known=Date.UTC(2000,0,6,18,14)/86400000;
@@ -671,6 +674,72 @@ function initLetters(){
       box.appendChild(p);
     });
     host.appendChild(box);
+  }).catch(function(){});
+  /* The Long Letters (wave 9, canon §III): the room's long form —
+     letters written at length, kept in the data and in the Codex, never
+     in the page at arrival, so the arrival measure stands: nine first
+     lines, one drawn. Per visit the Reckoning draws ONE long letter
+     whole to stand beneath the sealed nine (seed = D×37 + V×23,
+     recorded in the canon's Master Code); which one stands is the
+     arrangement chance is allowed, and any visit's letter can be
+     re-derived by a scholar who keeps the numbers. The shelf grows by
+     two per wave until the room holds twenty-seven letters in all.
+     Fewer than two written, the long form does not ship. If the data
+     cannot be read, the room stands whole without it, exactly as
+     waves 1–8 left it — the fallback is the room itself. */
+  lettersData().then(function(data){
+    if(!data.longLetters || data.longLetters.length<2) return;
+    if(document.getElementById("long-letter")) return;
+    var host=all.parentNode; if(!host) return;
+    var r=mulberry32(daySeed()*37+visits*23);
+    var pick=data.longLetters[Math.floor(r()*data.longLetters.length)];
+    var art=document.createElement("article");
+    art.className="letter long-letter"; art.id="long-letter";
+    art.setAttribute("data-letter", pick.id);
+    var h=document.createElement("h3");
+    h.className="letter-first"; h.textContent=pick.firstLine;
+    art.appendChild(h);
+    pick.body.forEach(function(text){
+      var p=document.createElement("p"); p.textContent=text; art.appendChild(p);
+    });
+    host.appendChild(art);
+    /* The Long Light (wave 9, canon §III, §X): the light the drawn
+       long letter stands in — a slow field of gold motes whose homes
+       are reckoned from the SAME stream that drew the letter (the
+       draws continue where the choosing left off), drawn by hand in
+       canvas inside the letter's frame. The drift is decorative
+       physics over reckoned homes, as the canon permits; in calm
+       mode one settled frame is drawn. Where canvas cannot be had,
+       the letter stands in the room's ordinary light, whole. */
+    var cv=document.createElement("canvas");
+    cv.className="long-light-canvas"; cv.id="long-light";
+    cv.setAttribute("aria-hidden","true");
+    art.insertBefore(cv, art.firstChild);
+    var ctx=cv.getContext && cv.getContext("2d");
+    if(!ctx) return;
+    var motes=[];
+    for(var i=0;i<110;i++){
+      motes.push({x:r(), y:r(), s:0.8+r()*2.0, a:0.10+r()*0.38, p:r()*6.2832});
+    }
+    function drawLight(t){
+      var W=art.clientWidth, H=art.clientHeight;
+      if(!W || !H) return;
+      if(cv.width!==W*2 || cv.height!==H*2){ cv.width=W*2; cv.height=H*2; }
+      ctx.clearRect(0,0,cv.width,cv.height);
+      var g=ctx.createRadialGradient(cv.width*0.5,0,0,cv.width*0.5,0,cv.height*0.85);
+      g.addColorStop(0,"rgba(201,168,106,0.10)"); g.addColorStop(1,"rgba(201,168,106,0)");
+      ctx.fillStyle=g; ctx.fillRect(0,0,cv.width,cv.height);
+      motes.forEach(function(m){
+        var dy=REDUCED?0:Math.sin(t/3400+m.p)*0.006;
+        var tw=REDUCED?1:0.72+0.28*Math.sin(t/2100+m.p*2.7);
+        ctx.beginPath();
+        ctx.arc(m.x*cv.width,(m.y+dy)*cv.height,m.s*2,0,6.2832);
+        ctx.fillStyle="rgba(216,190,132,"+(m.a*tw).toFixed(3)+")";
+        ctx.fill();
+      });
+    }
+    drawLight(0);
+    if(!REDUCED){ var fr=function(t){ if(current!=="letters"){requestAnimationFrame(fr);return;} drawLight(t); requestAnimationFrame(fr); }; requestAnimationFrame(fr); }
   }).catch(function(){});
 }
 

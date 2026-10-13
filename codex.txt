@@ -58,6 +58,20 @@ ration did not move: 752 words at arrival, as at waves 2, 3, 4, 5 and
 or in this Codex.
 
 
+Wave 9 addendum (2026-10-13): the Deepening, sixth movement. The
+Letter Room gains its long form: the Long Letters — letters written at
+length, kept whole in section V below. Two stand written; two more are
+added per wave until the room holds twenty-seven letters in all, the
+sealed nine of arrival among them. Per visit the Reckoning draws one
+long letter whole to stand beneath the sealed nine (seed = the
+dayseed times thirty-seven, plus the visit count times twenty-three).
+It stands in the Long Light: a slow field of gold motes, reckoned from
+the same stream that drew the letter and drawn by hand in canvas
+inside its frame, its halo derived from the site's gold by the alpha()
+function. The pages' ration did not move: 752 words at arrival, as at
+waves 2 through 8. The new words live in the data, at the Reckoning's
+choosing, or in this Codex.
+
 I. THE THRESHOLD
 ----------------
 The light is just arriving, and so are you. (dawn)
@@ -442,6 +456,112 @@ loudly in the mornings.
 them all.
 27. if you found this note, the room is working. pass the warmth on,
 unnamed.
+
+
+THE LONG LETTERS (the Letter Room's long form; letters written at
+length — three to four times the room's measure — kept here whole;
+two stand written, and two more are added per wave until the room
+holds twenty-seven letters in all. Per visit, one is drawn whole
+by the Reckoning to stand beneath the sealed nine, seed = the
+dayseed times thirty-seven plus the visit count times
+twenty-three. The one drawn stands in the Long Light: a slow
+field of gold motes whose homes are reckoned from the same stream
+that drew the letter, drawn by hand in canvas inside the letter's
+frame; the halo about it — its border, its ground tint, its
+outer glow — is derived from the site's gold, #c9a86a, by the
+alpha() function, which takes a colour and returns it with only
+its transparency changed: the border at thirty parts in a
+hundred of the gold, the ground at four and a half, the glow at
+eight. Where alpha() is not known, the same values stand written
+plainly, and the letter loses nothing.):
+
+A. UNDER THIS ROOF — "To the hands that raised this roof —"
+I do not know your names. I know your work the way you know weather: from
+inside it. The beam above the kitchen door is level. The stairs do not
+complain. Somewhere under the floor, a joist you set true before I was born
+is still holding its line, and holding me with it, every day, without being
+asked twice.
+
+You will never read this. That is the condition of your trade, and I have
+come to think it is the condition of most kindness: it is done for
+strangers, at full care, in the knowledge that the thanks, if it comes at
+all, will come too late and to the wrong address. So let this be the wrong
+address, gratefully wrong.
+
+I have tried to imagine the day you framed the back wall. Someone held the
+other end of the timber. Someone sang, or nobody did, and the hammering was
+music enough. One of you cut a board a finger short and cut another without
+being told. One of you was nineteen and certain the work was beneath him,
+and an older hand showed him, without a word, what beneath a house actually
+means: everything stands on it.
+
+Did you know a letter would be written in the room you were raising? Did you
+leave the wall plumb for a person you would never meet, out of nothing but
+the habit of doing it right when no inspector was coming? I live inside your
+answer. It is yes. It has been yes every morning, in the small sounds a
+well-made house makes instead of the sounds of giving up.
+
+There is a pencil mark on a stud behind the plaster — there always is;
+houses keep one signature that only demolition will ever read. I have
+decided not to need to see it. Some signatures are for the building. Mine is
+different: I keep the roof mended. I sweep the step you poured. When the
+fence leans, we lean it back — you taught me that without meeting me, the
+way honest work teaches everyone who lives inside it.
+
+Gratitude is supposed to be a feeling, I am told. This room disagrees. Here
+it is a practice, and you are among its first teachers: care done completely
+for people who will never know your names. I am practising. When I make a
+thing for strangers, I make it level. When I leave a thing behind, I leave
+it true.
+
+Sleep well, whoever you were, in whatever house is holding you now. This one
+is holding me. The beam is level, the stairs are quiet, and a stranger you
+never met is standing in your good work, saying thank you to the air — and
+meaning the air to carry it to you.
+
+B. THE CHAIR — "Dear grief, there is a chair for you —"
+You arrived the way weather arrives: without asking, in the middle of other
+plans. I spent the first season trying to be rid of you. I was polite about
+it, the way people are polite to a guest they hope will leave before supper.
+You stayed through supper. You stayed through winter. So I am writing to say
+what I should have said at the door: sit down. There is a chair for you. It
+has always been yours; I was only standing in front of it, pretending the
+room was smaller than it is.
+
+You are not the opposite of love. I know that now, and knowing it cost me
+the years it cost, so I will say it plainly for whoever is reading over my
+shoulder: you are love, continuing. You are what love does when the address
+it had is gone and it refuses — stubborn, faithful, unreasonable — to stop
+delivering itself. That is why you are heavy. What is carried for the
+beloved weighs what the beloved weighed.
+
+In the hard months I measured you. A morning when the chair stood empty for
+an hour felt like a victory, and then you would be in it again by noon,
+quiet as furniture, and I would call the whole day lost. I do not measure
+anymore. Some days you sit the whole day and the day is not lost. Some days
+you are gone by breakfast and I find, to my surprise, that I look for you —
+out of love's habit, not sorrow's; the way a house listens for a step it has
+known for years.
+
+You taught me the household arithmetic nobody teaches: that a heart is not a
+cup, emptied by pouring. It is a house. It can hold the feast and the empty
+chair at the same table, the song and the silence after it, and there is
+still room — this is your whole curriculum, grief — still room, at the same
+table, for joy to sit down without apologising for arriving.
+
+People ask when you will leave, as if your leaving were the happy ending. I
+have stopped wanting it. What I want is smaller and larger: that you and joy
+learn the house together, the way old residents do — taking turns at the
+window, neither one locking the other out. On the good days you nod at each
+other across the room. I have seen it. It is enough. It is, if I am honest,
+more than enough: it is a life.
+
+So stay, in your chair, as long as the love that sent you stays — which is
+to say, stay. I will keep the chair. I will keep the room large. And on the
+mornings when the light comes in and finds us both here, I will make tea for
+the house as it is: one cup for the living, one set down anyway, out of
+practice, out of gratitude — because a practice is how a feeling proves it
+means to last.
 
 
 VI. THE TIDE ROOM

@@ -223,6 +223,38 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
 .margin-leaf:nth-child(2){margin-left:12%}
 .margin-leaf:nth-child(3){margin-left:5%}
 
+/* The Long Letters (wave 9): the room's long form, drawn whole by the
+   Reckoning to stand beneath the sealed nine — an artifact at length,
+   in a warmer panel than the sealed letters carry, lit from within its
+   frame by the Long Light canvas. It arrives from the data only;
+   without script the room stands exactly as before. */
+.long-letter{
+  background:linear-gradient(175deg,#151221,#0d0c16);
+  background-color:rgba(201,168,106,.045);
+  border:1px solid rgba(201,168,106,.30);
+  box-shadow:0 24px 60px rgba(0,0,0,.35),0 0 90px rgba(201,168,106,.08);
+  overflow:hidden;
+}
+.long-letter .letter-first,.long-letter p{position:relative;z-index:1}
+.long-light-canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
+}
+
+/* The Long Light's halo, derived (wave 9; CANON §X, the alpha() trial):
+   the long letter's border, ground tint and outer glow restated from
+   the gold token itself by alpha(from var(--gold) / …), with values
+   identical to the core rules above, which stand beneath this block
+   and carry the letter whole in any browser that does not know
+   alpha() — the surface pushes, the core stands. */
+/* long-light:start */
+.long-letter{
+  border-color:alpha(from var(--gold) / 30%);
+  background-color:alpha(from var(--gold) / 4.5%);
+  box-shadow:0 24px 60px rgba(0,0,0,.35),0 0 90px alpha(from var(--gold) / 8%);
+}
+/* long-light:end */
+
 /* ---------- Tide ---------- */
 .tide-frame canvas{background:linear-gradient(to bottom,#080b18,#0a1224)}
 .moon-disc{
