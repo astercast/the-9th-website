@@ -129,13 +129,52 @@ No explanatory text was added anywhere; navigation remains glyph and symbol only
 
 ---
 
+## Wave 4 — Depth 81: The Second Coda (2026-10-13)
+
+**What was made.** The roadmap's next item, in its own order (items 1, 2 and 4 closed at wave 3): **Depth 81 — the Second Coda**, a room below the Coda Below, reachable only from the Mirror, holding the Cartographer's last fragment. Named in the canon before use, per the discipline: **The Ghost Figure** and **The Second Coda** entered the §III registry, the Master Code gained the gate's line, §V gained planted fact 9, and §VIII's Depth 81 entry stands live. One system, studyable and practicable both; no other chamber was touched.
+
+**The gate — two kept things must agree.** (1) The visitor stands at the eighty-first visit or beyond (the Depths of Return, §II rule 4: 1, 9, 27, 81). (2) **The Ghost Figure is complete**: the Mirror's kept ghost paths — the Ghost Ledger's record of previous visits, up to three paths — laid over one another have together stood in all nine chambers; every seat of the ring touched by at least one ghost. A scholar can reproduce the gate exactly from the `ninth.*` keys alone; a devotee can practice it: return, and walk the chambers your earlier selves have not stood in, until the figure your ghosts trace closes over the whole ring. Only then, descending in the Mirror past the path readout, is the room there. Nothing announces it, before or after (the ration, §XII).
+
+**The fragment.** One question — the only one the Cartographer ever asked outright in all his charting (canon §V, fact 9): *“Will you go back up the slow way, and stand a while in the dark with your kindness still lit, so that a stranger you will never meet can find the first door by it?”* It is not drawn and not chosen — there is one fragment, and the gate is kept state, never chance (the Master Code: no seed, because there is nothing to choose). Darkness is present in it — the dark, the stranger still outside — and does not win: the question's whole weight is a light kept lit for someone else (First Law). Like the Winter Notes it is data-carried (`data/v1/whispers.json`, `secondCoda`), never in the page at arrival; the Codex keeps it whole (its Mirror section, §VIII there). Its fallback chain, per §X discipline: script + data → the Mirror whole at arrival, exactly as waves 1–3 left it → the Codex, where the question survives as plain text if all rendering dies.
+
+**The Wishfield Nebula — unchanged, still test-bed resident.** The chain stands as wave 3 shipped it (WebGPU → Canvas 2D over the same reckoned homes → the written chamber); the Canvas 2D stage was not removed and the GPU stage was not graduated. This wave's captures show the chain's settled states (fallback stage in `stars-desktop.png`; a GPU-adapter launch under SwiftShader in `stars-nebula-gpuadapter.png`, taken by raw CDP capture after the harness's screenshot path timed out waiting on the software device's frames — the same software-GPU fragility wave 3 recorded). Real hardware remains unverified; graduation still waits on a real-hardware wave.
+
+**The Text Ration — held exactly.** The wave-2 counter, re-built and first calibrated against the published wave-2/3 table (it reproduces all nine chambers and the 752 total on the wave-3 tree), then run on this wave:
+
+| Chamber | Wave 3 | Wave 4 | Note |
+|---|---|---|---|
+| I Threshold | 38 | 38 | — |
+| II Scale Room | 370 | 370 | — |
+| III Garden | 59 | 59 | — |
+| IV Constellation | 1 | 1 | — |
+| V Letter Room | 176 | 176 | — |
+| VI Tide Room | 54 | 54 | — |
+| VII Cabinet | 51 | 51 | — |
+| VIII Mirror | 0 | 0 | the Second Coda is data-carried, depth-gated, never in the page |
+| IX Ninth Door | 3 | 3 | — |
+| **Total** | **752** | **752** | **no rise; no §XII.5 justification required** |
+
+No explanatory text was added anywhere; navigation remains glyph and symbol only. The Codex gained the wave's writing whole (4,297 → 4,484 words by `wc -w`, +187).
+
+**Verification (wave 4).** The gate, tested in the fleet's harness (Playwright headless Chromium, seeded `ninth.*` state, fresh contexts): at visit 81 with the Ghost Figure complete, the Second Coda stands in the Mirror carrying the question exactly as recorded in the Codex; at visit 81 with an incomplete figure it is absent; at visit 27 with a complete figure it is absent; at visit 80 with a complete figure it is absent — the boundary is exact on both conditions. Depth 27 regression: the Winter Notes still surface below the Rosetta at visit 27 (a note was drawn and read). Direct arrival at all nine chambers (fresh context per chamber): zero page errors everywhere. `node --check` passes; all four JSON files parse; `api/health.js` answers `{status:"ok", chambers:9, wishes:40, letters:9, scaleStops:16}` — counts unchanged, the collections whole. `Math.random` appears nowhere; zero dependencies, zero build step — unchanged. The artifacts register is unchanged — exactly three unresolved (the Box, the Wrong Star, the Ajar Door), all present in this wave's captures (the Box in the Cabinet, the Wrong Star's pale green in the Constellation, the Ajar Door drawn small at the ring's foot on the Threshold), none explained.
+
+**VP-0005 regression — re-run, holds.** With scripts stripped entirely: the veil's computed state measured `hidden/0` at 5.5 s (the CSS self-lift complete; the ~3 s sample read `visible/1` — the headless shell presents frames lazily, as wave 3's harness note recorded, so wall-clock sampling mid-lift is unreliable here; the settled capture and the 5.5 s state agree). The settled no-JS capture (`screenshots/nojs-true.png`) shows the whole place standing in HTML — static greeting, unlit ring, the fragment whole above the glyph bar; DOM checks confirm all nine letters, all forty wishes, the passage and the Final Line present in the document (behind the incomplete ring, as designed), the Coda and the Rosetta readable; the Winter Notes and the Second Coda correctly absent (both are depth, data-carried).
+
+**Screenshots (rotation 15 — the Progress Archive capture rotation).** Full set in `~/workspace/progress-archive/the-9th-website/rotation-015/` (26 files, dated 2026-10-13): all nine chambers at desktop 1440×900 and mobile 390×844 (`?still` study mode, a fresh browser context per chamber — hash-only navigation in one page does not reload, the wave-3 trap, stepped in once this wave during capture and routed around with fresh contexts), plus the veil study capture, the settled no-JS capture, both Nebula states, the Depth-27 Garden and Winter Note, and the Second Coda at desktop and mobile, scrolled to the page's foot where it stands whole above the glyph bar. The same set is kept under conventional names in `wave-004/`; the repo's `screenshots/` standard set was refreshed from it. Reviewed by eye against wave 3's set: Threshold — same composition; the sky is in its day phase this rotation (the time-of-day sky doing its recorded work; the greeting is the day line). Garden, Letters, Scale, Tide, Cabinet, Ninth Door — compositions unchanged; the Black Bloom stands; zero words on the Garden's first screen. Constellation — the Nebula's depth under the stars, the Wrong Star standing pale green (fallback stage). Mirror — unchanged at arrival; at Depth 81 it gains the room below the readout: ghost lines, the numeral, the Mark, one question.
+
+**Frontier set, wave 4 (each with its fallback, per CANON §X).** No new frontier technique was introduced — this wave deepens the core, and the core is what outlives the age. The Second Coda's own surface is kept-state gating over the existing Ghost Ledger (fallback chain recorded above). Waves 1–3 sets retained unchanged, including the Wishfield Nebula's three-stage chain and the breathing-ring veil's CSS self-lift.
+
+**Parked (recorded, blocking nothing).** The *joined* glyph position (roadmap item 5) remains reserved and unused — one grammar movement per wave at most, and wave 3 spent its movement on *inverted*. The second Rosetta (item 6), the Scattered Leaves locales (item 7), the tide-mode sound (item 8), the long letters (item 9) and the preservation beat (item 10) stand as roadmapped. WebGPU's real-hardware verification remains outstanding — the only item on this list that waits on a machine, not a decision.
+
+---
+
 ## The Deepening Roadmap
 
 In rough order; the canon outranks this list.
 
 1. **WebGPU frontier trial** — **done, wave 3.** The Wishfield Nebula shipped as stage one of its three-stage chain; verdict and evidence in the wave-3 entry. Remaining: a real-hardware verification pass before WebGPU can be called a graduation candidate.
 2. **Depth 27 — the Winter Notes** — **done, wave 3.** Six fragments, findable only from the 27th visit (below the Rosetta); the Garden keeps the Kept Shape from the visitor's earliest recorded path.
-3. **Depth 81 — the Second Coda:** a room below the Coda Below, reachable only from the Mirror, opening when the ghost paths complete a figure; contains the Cartographer's last fragment — the only question he ever asked outright.
+3. **Depth 81 — the Second Coda** — **done, wave 4.** A room below the Coda Below, reachable only from the Mirror, opening at the eighty-first visit when the ghost paths complete the Ghost Figure; contains the Cartographer's last fragment — the only question he ever asked outright. Gate, fragment, and evidence in the wave-4 entry.
 4. **September 9 — the Ninth Day** — **done, wave 3** (per canon §VI; verified against a mocked clock).
 5. **Glyph grammar, second movement:** the *inverted* (remembered) and *joined* (in conversation) positions are reserved in the grammar and unused. Introduce one per wave at most, recorded in the canon first.
 6. **The second Rosetta:** the Mirror is the reserved location (canon, Master Code). A plain-language restatement of the Reckoning, in the Cartographer's voice, findable in the ghost paths.

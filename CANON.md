@@ -34,6 +34,7 @@ Nothing on this site is random. Everything that *looks* like chance is produced 
 - The Wishfield Nebula (the motes' home positions beneath the stars): seed = D×11 + 5
 - The Winter Notes (which note is found, Depth 27): seed = D×19 + V×11
 - The Kept Shape (Garden, Depth 27): no seed of its own — derived from the visitor's earliest recorded path alone: each chamber's ring number, weighted by its place in the path, summed and turned through the wheel
+- The Second Coda (Depth 81): no seed — there is one fragment and nothing to choose. Its gate is not chance but kept state: the visit count and the recorded ghost paths (see §VIII)
 
 **The turning** (mulberry32, specified exactly; all arithmetic is unsigned 32-bit, multiplications wrap modulo 2³², `>>` is a logical shift, the result is a fraction in [0, 1)):
 
@@ -123,6 +124,8 @@ Named mechanics of the chambers (cite these names in WAVELOG and study):
 - **The Kept Shape** — one plant the Garden keeps from the twenty-seventh visit, its form derived from the visitor's earliest recorded path; its heart carries that path as seed-dots. *(Wave 3.)*
 - **The Box** — see §VII.
 - **The Ghost Ledger** — the Mirror's faint keeping of previous visits' paths beneath the new one.
+- **The Ghost Figure** — the figure the Mirror's kept ghost paths trace when they are laid over one another; it is complete when the kept paths together have stood in all nine chambers — every seat of the ring touched by at least one ghost. *(Named wave 4.)*
+- **The Second Coda** — the room below the Coda Below, reachable only from the Mirror, opening at Depth 81 when the Ghost Figure is complete; it holds the Cartographer's last fragment. *(Named wave 4.)*
 - **The Complete Ring** — the Door's opening condition.
 - **The Final Line** — the passage's last line, present only when all nine glyphs have been encountered (§IV).
 - **The Ajar Door** — see §VII.
@@ -160,6 +163,7 @@ The site's one recurring presence: an unnamed maker who charted the chambers bef
 6. C. never opened the Box, and held that not opening it was the whole of the keeping.
 7. C. left the Door's final line unwritten on purpose: it belongs to whoever completes the ring.
 8. C. noted that on the ninth day of any month, one should watch the Garden's east bed, and never wrote down why.
+9. C. asked one question outright in all his charting, and left it below everything else he wrote, where only a walker standing at Depth 81 with the Ghost Figure complete would ever come to read it. *(Planted wave 4; the question itself is kept whole in the Codex's Mirror section and in the Second Coda.)*
 
 Future fragments must be small, true-in-the-fiction, and imply more than they say. The philosophy they accumulate is compassion-as-defiance — coherent, never completed, never summarised (§I).
 
@@ -194,7 +198,7 @@ Things visitors do, repeatedly and on purpose. The site rarely names them; the c
 - **The Ninth-Day Bloom**: on the 9th of any month, the Garden grows one golden flower. *Live, wave 1.*
 - **The Complete Ring**: finishing all eight chambers and standing at the open Door. The only achievement this site keeps, and it keeps it only in your browser.
 - **Depth 27** *(live, wave 3)*: the Cartographer's second fragment set (the Winter Notes) becomes findable — one note per visit, below the Rosetta; the Garden begins keeping one plant-shape (the Kept Shape) shaped by your earliest recorded path.
-- **Depth 81** *(roadmap)*: the Second Coda — a room below the Coda Below, reachable only from the Mirror at the completion of the ghost figure; the Cartographer's last fragment — which is a question, and the only one he ever asked outright.
+- **Depth 81** *(live, wave 4)*: the Second Coda — a room below the Coda Below, reachable only from the Mirror. It opens when two kept things agree: the visitor stands at the eighty-first visit or beyond, and the Ghost Figure is complete — the Mirror's kept ghost paths, laid over one another, have together stood in all nine chambers. Inside is the Cartographer's last fragment: a single question, the only one he ever asked outright. It is not drawn and not chosen; there is one fragment, and the gate is kept state, never chance. Like the Winter Notes, it lives in the data and in the Codex, never in the page at arrival; the ration does not see it.
 - **September 9 — The Ninth Day** *(seeded)*: see §VI.
 
 ## IX. Museum Permanence

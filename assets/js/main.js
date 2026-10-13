@@ -1,4 +1,5 @@
-/* The 9th Website — wave 1; the Text Ration, wave 2; the Deepening, wave 3.
+/* The 9th Website — wave 1; the Text Ration, wave 2; the Deepening, wave 3;
+   the Second Coda, wave 4.
    Everything here is enhancement. The place reads whole without it.
    No external requests. Memory lives only in the visitor's browser. */
 (function(){
@@ -42,6 +43,16 @@ var mirrorTrail = [];                // the visitor's hand, drawn in the Mirror.
                                      // a #mirror arrival threw on this line's
                                      // absence and the room's readout never set.)
 function isVisited(c){ return visited.indexOf(c)!==-1; }
+/* The Ghost Figure (canon §III, named wave 4): the figure the Mirror's kept
+   ghost paths trace when laid over one another. It is complete when the kept
+   paths together have stood in all nine chambers — every seat of the ring
+   touched by at least one ghost. A pure reading of kept state: no chance,
+   no seed (canon, the Master Code). */
+function ghostFigureComplete(){
+  var seen={};
+  ghosts.forEach(function(g){ if(g) g.forEach(function(c){ seen[c]=true; }); });
+  return CHAMBERS.every(function(c){ return seen[c]; });
+}
 function otherEightDone(){ return CHAMBERS.slice(0,8).every(isVisited); }
 function glyphsComplete(){ return otherEightDone() && STORE.get("coda",false); }
 
@@ -709,6 +720,36 @@ function initCabinet(){
 /* mirrorTrail itself is declared with the early state, above — see the note there. */
 function initMirror(){
   var cv=document.getElementById("mirror-canvas"); if(!cv) return;
+  /* The Second Coda (Depth 81, canon §VIII): a room below the Coda Below,
+     reachable only from this room. It opens when two kept things agree —
+     the eighty-first visit has been reached, and the Ghost Figure is
+     complete. Inside is the Cartographer's last fragment: one question,
+     the only one he ever asked outright. It is not drawn and not chosen —
+     there is one fragment, and the gate is kept state, never chance
+     (canon, the Master Code). Like the Winter Notes it lives in the data,
+     not the page: an arrival never carries it, and the ration is
+     undisturbed. The Codex keeps it whole (its Mirror section), so if
+     every script dies, the question survives as words. */
+  if(visits>=81 && ghostFigureComplete()){
+    leaves().then(function(data){
+      if(!data.secondCoda) return;
+      if(document.getElementById("second-coda")) return;
+      var host=document.querySelector("#chamber-mirror .chamber-inner");
+      if(!host) return;
+      var room=document.createElement("div");
+      room.className="second-coda"; room.id="second-coda";
+      var mark=document.createElementNS("http://www.w3.org/2000/svg","svg");
+      mark.setAttribute("class","frag-mark coda-mark");
+      var use=document.createElementNS("http://www.w3.org/2000/svg","use");
+      use.setAttribute("href","#g-mark");
+      mark.appendChild(use);
+      var p=document.createElement("p");
+      p.appendChild(mark);
+      p.appendChild(document.createTextNode("“"+data.secondCoda+"”"));
+      room.appendChild(p);
+      host.appendChild(room);
+    }).catch(function(){});
+  }
   cv.addEventListener("pointermove",function(e){
     var r=cv.getBoundingClientRect();
     mirrorTrail.push({x:(e.clientX-r.left)/r.width, y:(e.clientY-r.top)/r.height});
