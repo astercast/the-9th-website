@@ -452,6 +452,27 @@ The heart keeps the same hours as the tide: it fills, it empties, and it is
 pulled by something far away that loves it without speaking.
 Fragment: "I stopped counting the days I was here and started counting moons.
 The numbers got smaller and truer."
+THE TIDE CHORD (this room's sound; it sounds only when the visitor has
+asked for sound, and the room is whole without it). The soft pad that
+can sound through the whole place changes its chord in this room: each
+of its four tones travels from a dark chord — D, F, A, D — toward its
+resting chord — G, B, D, G — carried by exactly the moon's
+illumination, the fraction the Synodic Reckoning computes above. At
+the new moon the chord stands low and minor; at the full moon it
+stands at the pad's full resting brightness; every moon between
+sounds between, and the tones glide rather than jump when the visitor
+enters or leaves. Above the chord one overtone sounds in this room
+only: the root, multiplied by a whole number the Reckoning chooses
+(seed: the day times thirty-one, plus the visit count times nineteen),
+swelling slowly at a rate the same reckoning sets, and falling silent
+when the visitor leaves the room. Nothing here is recorded sound;
+every tone is made, in the moment, by number — so any night's chord
+can be re-derived by a scholar who keeps the day, the visit count,
+and the moon.
+(The room's own styles are also kept in a scope of their own — a newer
+craft, scoped to this chamber alone, laid over the plain rules that
+carry the room whole where the newer craft is unknown. The surface
+pushes; the core stands.)
 
 
 VII. THE CABINET

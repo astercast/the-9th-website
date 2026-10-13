@@ -234,6 +234,24 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
 .tide-line{text-align:center;font-style:italic;color:var(--ink-dim);max-width:32em;margin:26px auto}
 @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
 
+/* The Tide Room's scoped styles (wave 8; CANON §X, the @scope trial):
+   the room's own rules restated inside @scope, contained to this
+   chamber alone, with values identical to the unscoped core above.
+   Where @scope is unknown the block is ignored and the core rules
+   carry the room whole — the surface pushes, the core stands. */
+/* tide-scope:start */
+@scope (#chamber-tide) {
+  :scope .tide-frame canvas{background:linear-gradient(to bottom,#080b18,#0a1224);height:62vh}
+  :scope .moon-disc{
+    position:absolute;top:34px;right:8%;width:74px;height:74px;border-radius:50%;
+    background:#e8e4d4;box-shadow:0 0 44px rgba(232,228,212,.35);overflow:hidden;
+  }
+  :scope .moon-disc::after{content:"";position:absolute;inset:0;border-radius:50%;background:#080b18;transform:translateX(var(--moon-shadow,30%))}
+  :scope .moon-fact{text-align:center;font-family:var(--sans);letter-spacing:.22em;text-transform:uppercase;font-size:.82em;color:var(--gold)}
+  :scope .tide-line{text-align:center;font-style:italic;color:var(--ink-dim);max-width:32em;margin:26px auto}
+}
+/* tide-scope:end */
+
 /* ---------- Cabinet ---------- */
 .cabinet-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
 @media(max-width:680px){.cabinet-grid{grid-template-columns:1fr}}

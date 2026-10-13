@@ -1,6 +1,6 @@
 /* The 9th Website — wave 1; the Text Ration, wave 2; the Deepening, wave 3;
    the Second Coda, wave 4; the Second Rosetta, wave 5; the Letter
-   Marginalia, wave 6; the Fallen Words, wave 7.
+   Marginalia, wave 6; the Fallen Words, wave 7; the Tide Chord, wave 8.
    Everything here is enhancement. The place reads whole without it.
    No external requests. Memory lives only in the visitor's browser. */
 (function(){
@@ -35,6 +35,9 @@ var visits = STORE.get("visits",0)+1; STORE.set("visits",visits);
 var visited = STORE.get("visited",[]);
 var sessionPath = [];               // chambers entered this visit, in order
 var ghosts = STORE.get("ghosts",[]); // previous visits' paths (Mirror)
+var onChamberEnter = null;           // set by the sound (the Tide Chord,
+                                     // wave 8): called with the chamber's
+                                     // name whenever the visitor enters one.
 var mirrorTrail = [];                // the visitor's hand, drawn in the Mirror.
                                      // Declared with the early state, not beside
                                      // initMirror: the Mirror can be the FIRST
@@ -117,6 +120,7 @@ function enter(c){
   var show=function(){
     document.querySelectorAll(".chamber").forEach(function(s){ s.classList.toggle("active", s.getAttribute("data-chamber")===c); });
     current=c; window.scrollTo(0,0);
+    if(onChamberEnter) onChamberEnter(c);
     if(!inited[c]){ inited[c]=true; initChamber(c); }
     if(c==="mirror") drawMirror();
     if(c==="ninth") drawDoor();
@@ -152,7 +156,8 @@ function initChamber(c){
     if(CHAMBERS.indexOf(c)===-1) c="threshold";
     sessionPath.push(c); markVisited(c);
     document.querySelectorAll(".chamber").forEach(function(s){ s.classList.toggle("active", s.getAttribute("data-chamber")===c); });
-    current=c; inited[c]=true; initChamber(c);
+    current=c; if(onChamberEnter) onChamberEnter(c);
+    inited[c]=true; initChamber(c);
     if(c==="ninth") drawDoor();
   }
 })();
@@ -929,27 +934,69 @@ function drawDoor(){
   }
 }
 
-/* ---------- ambient sound: generated tones only, off unless asked ---------- */
+/* ---------- ambient sound: generated tones only, off unless asked ----------
+   The Tide Chord (wave 8; CANON §III): in the Tide Room the pad's chord
+   follows the moon. Each tone is carried geometrically from a dark chord
+   toward the resting chord by exactly the moon's illumination (the
+   Synodic Reckoning, above); above it one overtone — the root multiplied
+   by a whole number the Seed Reckoning chooses (seed = D×31 + V×19) —
+   sounds only in that room. Silence is the fallback: the pad is off
+   unless the visitor asks, and every room is whole without it. */
 (function sound(){
   var btn=document.getElementById("sound-toggle"); if(!btn) return;
-  var actx=null, nodes=[];
-  function stop(){ nodes.forEach(function(n){ try{ n.stop?n.stop():n.disconnect(); }catch(e){} }); nodes=[]; if(actx){ actx.close(); actx=null; } }
+  var BASE=[196.00,246.94,293.66,392.00];   /* the resting chord: G–B–D–G */
+  var DARK=[146.83,174.61,220.00,293.66];   /* the dark chord: D–F–A–D */
+  var actx=null, nodes=[], partials=[], over=null, overMult=2;
+  function tideChord(){
+    var illum=moonPhase(new Date()).illum;
+    return BASE.map(function(f,i){
+      return Math.exp(Math.log(DARK[i]) + illum*(Math.log(f)-Math.log(DARK[i])));
+    });
+  }
+  function applyMode(inTide){
+    if(!actx) return;
+    var t=actx.currentTime;
+    var chord=inTide? tideChord() : BASE;
+    partials.forEach(function(p,i){ p.osc.frequency.setTargetAtTime(chord[i], t, 1.2); });
+    if(over){
+      if(inTide) over.osc.frequency.setTargetAtTime(chord[0]*overMult, t, 1.2);
+      over.gate.gain.setTargetAtTime(inTide? .12 : 0, t, inTide? 1.5 : .8);
+    }
+  }
+  onChamberEnter=function(c){ applyMode(c==="tide"); };
+  function stop(){
+    nodes.forEach(function(n){ try{ n.stop?n.stop():n.disconnect(); }catch(e){} });
+    nodes=[]; partials=[]; over=null;
+    if(actx){ actx.close(); actx=null; }
+  }
   btn.addEventListener("click",function(){
     var on=btn.getAttribute("aria-pressed")==="true";
     if(on){ stop(); btn.setAttribute("aria-pressed","false"); btn.setAttribute("aria-label","Ambient sound, off"); return; }
     var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
     actx=new AC();
     var master=actx.createGain(); master.gain.value=.05; master.connect(actx.destination);
-    [196.00,246.94,293.66,392.00].forEach(function(f,i){
+    BASE.forEach(function(f,i){
       var o=actx.createOscillator(), gn=actx.createGain();
       o.type="sine"; o.frequency.value=f;
       gn.gain.value=0; gn.gain.linearRampToValueAtTime(.25/(i+1.4), actx.currentTime+2.5+i*.7);
       var lfo=actx.createOscillator(), lg=actx.createGain();
       lfo.frequency.value=.05+i*.017; lg.gain.value=.05; lfo.connect(lg); lg.connect(gn.gain);
       o.connect(gn); gn.connect(master); o.start(); lfo.start();
-      nodes.push(o,lfo);
+      nodes.push(o,lfo); partials.push({osc:o});
     });
+    /* the reckoned overtone: root multiplied by 2, 3 or 4 as the
+       Reckoning draws, swelling at a reckoned rate, gated by the room */
+    var rng=mulberry32(daySeed()*31 + visits*19);
+    overMult=[2,3,4][Math.floor(rng()*3)];
+    var oo=actx.createOscillator(), swell=actx.createGain(), gate=actx.createGain();
+    oo.type="sine"; oo.frequency.value=BASE[0]*overMult;
+    swell.gain.value=.55; gate.gain.value=0;
+    var olfo=actx.createOscillator(), olg=actx.createGain();
+    olfo.frequency.value=.03+rng()*.04; olg.gain.value=.45; olfo.connect(olg); olg.connect(swell.gain);
+    oo.connect(swell); swell.connect(gate); gate.connect(master); oo.start(); olfo.start();
+    nodes.push(oo,olfo); over={osc:oo, gate:gate};
     btn.setAttribute("aria-pressed","true"); btn.setAttribute("aria-label","Ambient sound, on");
+    if(current==="tide") applyMode(true);
   });
 })();
 })();
