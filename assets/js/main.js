@@ -33,6 +33,14 @@ var visits = STORE.get("visits",0)+1; STORE.set("visits",visits);
 var visited = STORE.get("visited",[]);
 var sessionPath = [];               // chambers entered this visit, in order
 var ghosts = STORE.get("ghosts",[]); // previous visits' paths (Mirror)
+var mirrorTrail = [];                // the visitor's hand, drawn in the Mirror.
+                                     // Declared with the early state, not beside
+                                     // initMirror: the Mirror can be the FIRST
+                                     // chamber (a deep link), and the boot path
+                                     // reaches drawMirror before any later
+                                     // declaration could run. (Found wave 3:
+                                     // a #mirror arrival threw on this line's
+                                     // absence and the room's readout never set.)
 function isVisited(c){ return visited.indexOf(c)!==-1; }
 function otherEightDone(){ return CHAMBERS.slice(0,8).every(isVisited); }
 function glyphsComplete(){ return otherEightDone() && STORE.get("coda",false); }
@@ -698,7 +706,7 @@ function initCabinet(){
 }
 
 /* ---------- The Mirror (The Ghost Ledger) ---------- */
-var mirrorTrail=[];
+/* mirrorTrail itself is declared with the early state, above — see the note there. */
 function initMirror(){
   var cv=document.getElementById("mirror-canvas"); if(!cv) return;
   cv.addEventListener("pointermove",function(e){

@@ -31,6 +31,9 @@ Nothing on this site is random. Everything that *looks* like chance is produced 
 - The Scattered Leaves, Garden (whisper pieces): seed = D×13 + V×7
 - The Scattered Leaves, Cabinet (oracle slip): seed = D×17 + V×3
 - Pointer-grown flowers in the Garden: seed = D×3 + (number already grown)×101
+- The Wishfield Nebula (the motes' home positions beneath the stars): seed = D×11 + 5
+- The Winter Notes (which note is found, Depth 27): seed = D×19 + V×11
+- The Kept Shape (Garden, Depth 27): no seed of its own — derived from the visitor's earliest recorded path alone: each chamber's ring number, weighted by its place in the path, summed and turned through the wheel
 
 **The turning** (mulberry32, specified exactly; all arithmetic is unsigned 32-bit, multiplications wrap modulo 2³², `>>` is a logical shift, the result is a fraction in [0, 1)):
 
@@ -105,6 +108,7 @@ Named mechanics of the chambers (cite these names in WAVELOG and study):
 - **The Ninth Bloom** — one golden flower in the Garden, only on the 9th day of a month.
 - **The Black Bloom** — exactly one black flower in every Garden, never the largest. Darkness, present and outnumbered.
 - **The Wishfield** — the Constellation's twinkling star-per-wish field.
+- **The Wishfield Nebula** — the slow field of motes drifting beneath the Wishfield's stars: the dark between wishes, which is not empty. *(Wave 3; the WebGPU trial's subject — see §X.)*
 - **The Moonkeeper's Star** — a star in the Wishfield visible only near the full moon.
 - **The Wrong Star** — see §VII.
 - **The Sealed Draw** — one letter drawn per visit; the rest stay sealed by first line.
@@ -115,6 +119,8 @@ Named mechanics of the chambers (cite these names in WAVELOG and study):
 - **The Deepening** — the Cabinet fractal that gains depth when asked, without bottom.
 - **The Agreement** — the Cabinet's two tones drawing their Lissajous relationship; beauty as numbers agreeing.
 - **The Scattered Leaves** — chance text: authored fragments, arrangement by seeded chance. Governed by §XI.
+- **The Winter Notes** — the Cartographer's second fragment set: six notes from the colder months of his charting, findable only at Depth 27, kept below the Rosetta in the Coda Below. *(Wave 3.)*
+- **The Kept Shape** — one plant the Garden keeps from the twenty-seventh visit, its form derived from the visitor's earliest recorded path; its heart carries that path as seed-dots. *(Wave 3.)*
 - **The Box** — see §VII.
 - **The Ghost Ledger** — the Mirror's faint keeping of previous visits' paths beneath the new one.
 - **The Complete Ring** — the Door's opening condition.
@@ -140,6 +146,8 @@ Nine glyphs, one per chamber, drawn in one hand: hairline strokes, no fills exce
 
 **Reading:** glyphs are read clockwise from the Threshold. On the Door they light in ring order as chambers are visited.
 
+**First use of the inverted position (wave 3, 2026-10-13):** the Winter Notes are signed with the Cartographer's Mark inverted — *remembered*, as the grammar reserves it. No other use has been made of the position; the *joined* position remains reserved and unused.
+
 ## V. The Cartographer — Established Facts
 
 The site's one recurring presence: an unnamed maker who charted the chambers before the site existed. Written as fiction-poetry; never presented as a real person; signed **“C.”** or with the Unnumbered Mark. Facts once planted here never contradict later fragments. Planted, wave 1:
@@ -163,7 +171,8 @@ All client-side. All real time.
 - **The Ninth Bloom** — one golden flower grows in the Garden on the 9th day of any month, local time. *Live, wave 1.*
 - **The Midnight Minute** — during 00:00 local, the Threshold carries one extra line, and the Ajar Door's darkness deepens. *Live, wave 1.*
 - **The Returning Postscript** — in the Letter Room, on any visit after the first. *Live, wave 1.*
-- **The Ninth Day (September 9)** — seeded, not yet built: on Sept 9 the Garden grows nine golden flowers and the Moonkeeper's Star shows regardless of phase. Recorded here so no future wave contradicts it.
+- **The Ninth Day (September 9)** — ~~seeded, not yet built~~: on Sept 9 the Garden grows nine golden flowers and the Moonkeeper's Star shows regardless of phase. Recorded here so no future wave contradicts it.
+  *Dated note (wave 3, 2026-10-13): built. Verified against a mocked clock set to September 9 — nine goldens standing in the Garden's east beds and the Moonkeeper's Star at full brightness out of season; both absent on the control date.*
 - **The Full-Moon Watch** is a standing ritual (§VIII), not an event the site announces.
 
 ## VII. The Unanswered Artifacts
@@ -184,7 +193,7 @@ Things visitors do, repeatedly and on purpose. The site rarely names them; the c
 - **The Full-Moon Watch**: on full-moon nights the Wishfield gains the Moonkeeper's Star. Nothing announces it. You either looked up, or you didn't. *Live, wave 1.*
 - **The Ninth-Day Bloom**: on the 9th of any month, the Garden grows one golden flower. *Live, wave 1.*
 - **The Complete Ring**: finishing all eight chambers and standing at the open Door. The only achievement this site keeps, and it keeps it only in your browser.
-- **Depth 27** *(roadmap)*: the Cartographer's second fragment set (the Winter Notes) becomes findable; the Garden begins keeping one plant-shape shaped by your earliest path.
+- **Depth 27** *(live, wave 3)*: the Cartographer's second fragment set (the Winter Notes) becomes findable — one note per visit, below the Rosetta; the Garden begins keeping one plant-shape (the Kept Shape) shaped by your earliest recorded path.
 - **Depth 81** *(roadmap)*: the Second Coda — a room below the Coda Below, reachable only from the Mirror at the completion of the ghost figure; the Cartographer's last fragment — which is a question, and the only one he ever asked outright.
 - **September 9 — The Ninth Day** *(seeded)*: see §VI.
 
@@ -207,6 +216,8 @@ This site is the fleet's technique test bed. The research engine hunts the newes
 - Each wave, the WAVELOG names the newest technique in use **and its fallback**. If a builder cannot name both, the technique is not understood well enough to stay.
 
 Wave 1's frontier set, for the record: same-document View Transitions (fallback: instant chamber change, full meaning intact) · CSS scroll-driven animations on the Powers Stair (fallback: IntersectionObserver reveals) · registered `@property` custom properties for the Kept Light (fallback: static gradient) · Speculation Rules prefetch of the data collections (fallback: ordinary fetch on chamber entry) · Canvas 2D generative scenes (fallback: written descriptions, already in the HTML). WebGPU is named as the wave-2 candidate: a Garden or Wishfield scene, gated on the same degrade-to-meaning test.
+
+**Wave 3 addendum (2026-10-13) — the WebGPU trial, recorded.** The named trial was run: **the Wishfield Nebula**, a compute-shader field of 4,200 reckoned motes beneath the Wishfield's stars, with its fallback chain whole — WebGPU → Canvas 2D (the same reckoned homes as 120 soft sprites) → the written chamber (the frame's own sky above the written collection). **Verdict: the trial passes as an enhancement layer and ships as stage one of the chain.** Wherever an adapter answered, it initialized and submitted cleanly — adapter, device, both pipelines, compute and render — with zero validation errors; and every observed failure (no adapter, a stalled adapter, a device destroyed by the platform beneath it) handed the sky to the next stage without the chamber losing any of its meaning. Two defects the trial caught in the trial's own code are recorded in the WAVELOG (a vertex stage may not hold read-write storage; an unreferenced device is collected by the browser and reports itself lost). One limitation is recorded plainly: this machine has no GPU, and its software device (SwiftShader) is destroyed by the platform within seconds — reproduced with a minimal page holding one triangle — so the GPU stage's sustained rendering could not be screenshot-verified here; its brightness was set by computed parity with the fallback instead. Per this section's own rule, WebGPU does **not** yet graduate: it stays a test-bed resident until a wave verifies it on real hardware. The Nebula as a chamber mechanic is canon (see §III); the technique's fleet candidacy is unchanged.
 
 *Canon established at wave 1, 2026-10-13. Extend; never contradict.*
 
