@@ -146,6 +146,14 @@ html.js .stop.in{opacity:1;transform:none}
 .second-coda p{max-width:34em;margin:14px auto;font-style:italic}
 .second-coda .frag-mark{display:block;margin:0 auto 18px}
 
+/* The Second Rosetta (wave 5): the Method told a second time, found in the
+   Mirror's ghost paths. It stands below the Mirror's path readout in the
+   Coda's manner — a descent, the Mark above it — but nearer than the
+   Second Coda below it: learned before descended. */
+.second-rosetta{margin-top:110px;padding:40px 6px 8px;text-align:center;color:var(--ink-dim)}
+.second-rosetta p{max-width:36em;margin:14px auto;font-style:italic}
+.second-rosetta .frag-mark{display:block;margin:0 auto 18px}
+
 /* ---------- Garden ---------- */
 .garden-frame canvas{background:linear-gradient(to bottom,#0a0f14,#0c130d)}
 .whisper{font-style:italic;color:#b3a88f;text-align:center;max-width:30em;margin:38px auto 0;font-size:.95em;line-height:1.9}

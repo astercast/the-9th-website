@@ -35,6 +35,7 @@ Nothing on this site is random. Everything that *looks* like chance is produced 
 - The Winter Notes (which note is found, Depth 27): seed = D×19 + V×11
 - The Kept Shape (Garden, Depth 27): no seed of its own — derived from the visitor's earliest recorded path alone: each chamber's ring number, weighted by its place in the path, summed and turned through the wheel
 - The Second Coda (Depth 81): no seed — there is one fragment and nothing to choose. Its gate is not chance but kept state: the visit count and the recorded ghost paths (see §VIII)
+- The Second Rosetta (Mirror): no seed — it is a telling, not a choosing; there is one restatement and nothing to select. Its gate is kept state alone: at least one ghost path stands in the Ghost Ledger, so only a visitor who has come back can find it (see §III, §VIII)
 
 **The turning** (mulberry32, specified exactly; all arithmetic is unsigned 32-bit, multiplications wrap modulo 2³², `>>` is a logical shift, the result is a fraction in [0, 1)):
 
@@ -53,6 +54,8 @@ A scholar with this page and the inputs above can regenerate any garden, any dra
 **The ban:** unseeded randomness (`Math.random` or any equivalent) is forbidden for anything content-bearing — selections, arrangements, positions of meaningful things, texts shown. It is permitted only as decorative physics jitter (a twinkle's shimmer, a wave's foam) that carries no content and would mean nothing if it differed.
 
 **The Rosetta.** The key travels with the work. The code's rules are stated in plain language in-world, in the Cartographer's own voice, at the end of the Coda Below (The Scale Room's hidden room) — a place only a devoted visitor reaches by scrolling past the smallest thing. A scholar who finds this site in three thousand years finds the key inside the lock. The hiding place is decided here, permanently: **the Coda Below**. Future waves may add a second Rosetta (the Mirror is the reserved location); this one is never moved.
+
+*Dated note (wave 5, 2026-10-13): the second Rosetta is built — **The Second Rosetta**, kept in the Mirror, findable only in the ghost paths (see §III). It restates the wheel in plain language, in C.'s own voice, among the kept paths of those who came back. The first Rosetta is unmoved and unabridged; the Codex keeps both tellings whole.
 
 **Durability — the millennia rules** (how it is possible at all):
 
@@ -126,6 +129,7 @@ Named mechanics of the chambers (cite these names in WAVELOG and study):
 - **The Ghost Ledger** — the Mirror's faint keeping of previous visits' paths beneath the new one.
 - **The Ghost Figure** — the figure the Mirror's kept ghost paths trace when they are laid over one another; it is complete when the kept paths together have stood in all nine chambers — every seat of the ring touched by at least one ghost. *(Named wave 4.)*
 - **The Second Coda** — the room below the Coda Below, reachable only from the Mirror, opening at Depth 81 when the Ghost Figure is complete; it holds the Cartographer's last fragment. *(Named wave 4.)*
+- **The Second Rosetta** — the Method told a second time, in the Cartographer's voice, kept in the Mirror and findable only in the ghost paths: it stands in that room only for a visitor whose earlier coming the Mirror has kept — at least one ghost path in the Ghost Ledger. A telling, not a choosing: no seed, no draw; its gate is kept state, as the Second Coda's is. *(Named wave 5.)*
 - **The Complete Ring** — the Door's opening condition.
 - **The Final Line** — the passage's last line, present only when all nine glyphs have been encountered (§IV).
 - **The Ajar Door** — see §VII.
@@ -164,6 +168,7 @@ The site's one recurring presence: an unnamed maker who charted the chambers bef
 7. C. left the Door's final line unwritten on purpose: it belongs to whoever completes the ring.
 8. C. noted that on the ninth day of any month, one should watch the Garden's east bed, and never wrote down why.
 9. C. asked one question outright in all his charting, and left it below everything else he wrote, where only a walker standing at Depth 81 with the Ghost Figure complete would ever come to read it. *(Planted wave 4; the question itself is kept whole in the Codex's Mirror section and in the Second Coda.)*
+10. C. told the Method twice: once below the smallest thing, for whoever descends far enough, and once in the Mirror, among the kept paths, for whoever comes back — because coming back, he held, is also a way of learning. *(Planted wave 5; the second telling is kept whole in the Codex's Mirror section and in the Second Rosetta.)*
 
 Future fragments must be small, true-in-the-fiction, and imply more than they say. The philosophy they accumulate is compassion-as-defiance — coherent, never completed, never summarised (§I).
 
@@ -199,6 +204,7 @@ Things visitors do, repeatedly and on purpose. The site rarely names them; the c
 - **The Complete Ring**: finishing all eight chambers and standing at the open Door. The only achievement this site keeps, and it keeps it only in your browser.
 - **Depth 27** *(live, wave 3)*: the Cartographer's second fragment set (the Winter Notes) becomes findable — one note per visit, below the Rosetta; the Garden begins keeping one plant-shape (the Kept Shape) shaped by your earliest recorded path.
 - **Depth 81** *(live, wave 4)*: the Second Coda — a room below the Coda Below, reachable only from the Mirror. It opens when two kept things agree: the visitor stands at the eighty-first visit or beyond, and the Ghost Figure is complete — the Mirror's kept ghost paths, laid over one another, have together stood in all nine chambers. Inside is the Cartographer's last fragment: a single question, the only one he ever asked outright. It is not drawn and not chosen; there is one fragment, and the gate is kept state, never chance. Like the Winter Notes, it lives in the data and in the Codex, never in the page at arrival; the ration does not see it.
+- **The Second Rosetta** *(live, wave 5)*: the Mirror keeps a second telling of the Method, in C.'s voice, and it stands in that room only where a ghost is kept — a visitor with at least one ghost path in the Ghost Ledger finds it below their paths; a first arrival, and a returning visitor whose earlier visit left no kept path, do not. It resolves toward the First Law the way the first Rosetta does: the secret was never hidden; returning is also a way of finding it.
 - **September 9 — The Ninth Day** *(seeded)*: see §VI.
 
 ## IX. Museum Permanence

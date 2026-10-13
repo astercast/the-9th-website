@@ -1,5 +1,5 @@
 /* The 9th Website — wave 1; the Text Ration, wave 2; the Deepening, wave 3;
-   the Second Coda, wave 4.
+   the Second Coda, wave 4; the Second Rosetta, wave 5.
    Everything here is enhancement. The place reads whole without it.
    No external requests. Memory lives only in the visitor's browser. */
 (function(){
@@ -720,6 +720,37 @@ function initCabinet(){
 /* mirrorTrail itself is declared with the early state, above — see the note there. */
 function initMirror(){
   var cv=document.getElementById("mirror-canvas"); if(!cv) return;
+  /* The Second Rosetta (wave 5, canon §III): the Method told a second time,
+     in the Cartographer's voice, kept in this room and findable only in the
+     ghost paths — it stands here only when the Ghost Ledger holds at least
+     one kept path, so only a visitor who has come back can find it. It is a
+     telling, not a choosing: there is one restatement, nothing is drawn,
+     and no seed is spent on it; the gate is kept state alone (canon, the
+     Master Code). Like the Winter Notes and the Second Coda it lives in
+     the data, not the page: an arrival never carries it, and the ration is
+     undisturbed. The Codex keeps it whole (its Mirror section). This block
+     is registered before the Second Coda's, so when both stand, the
+     telling stands above the room below it — learned before descended. */
+  if(ghosts.length>=1){
+    leaves().then(function(data){
+      if(!data.secondRosetta) return;
+      if(document.getElementById("second-rosetta")) return;
+      var host=document.querySelector("#chamber-mirror .chamber-inner");
+      if(!host) return;
+      var room=document.createElement("div");
+      room.className="second-rosetta"; room.id="second-rosetta";
+      var mark=document.createElementNS("http://www.w3.org/2000/svg","svg");
+      mark.setAttribute("class","frag-mark coda-mark");
+      var use=document.createElementNS("http://www.w3.org/2000/svg","use");
+      use.setAttribute("href","#g-mark");
+      mark.appendChild(use);
+      var p=document.createElement("p");
+      p.appendChild(mark);
+      p.appendChild(document.createTextNode("“"+data.secondRosetta+"”"));
+      room.appendChild(p);
+      host.appendChild(room);
+    }).catch(function(){});
+  }
   /* The Second Coda (Depth 81, canon §VIII): a room below the Coda Below,
      reachable only from this room. It opens when two kept things agree —
      the eighty-first visit has been reached, and the Ghost Figure is
