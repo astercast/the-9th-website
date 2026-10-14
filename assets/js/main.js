@@ -1,7 +1,8 @@
 /* The 9th Website — wave 1; the Text Ration, wave 2; the Deepening, wave 3;
    the Second Coda, wave 4; the Second Rosetta, wave 5; the Letter
    Marginalia, wave 6; the Fallen Words, wave 7; the Tide Chord, wave 8;
-   the Long Letters and the Long Light, wave 9.
+   the Long Letters and the Long Light, wave 9; the authored field,
+   the unified glyph hand and the Long Light deepened, wave 10.
    Everything here is enhancement. The place reads whole without it.
    No external requests. Memory lives only in the visitor's browser. */
 (function(){
@@ -99,7 +100,7 @@ function glyphsComplete(){ return otherEightDone() && STORE.get("coda",false); }
     CHAMBERS.forEach(function(c,i){
       var a=-Math.PI/2 + i*(2*Math.PI/9);
       var x=100+78*Math.cos(a), y=100+78*Math.sin(a);
-      s+='<rect class="ring-map-door'+(isVisited(c)?" lit":"")+'" x="'+(x-2.5).toFixed(1)+'" y="'+(y-4).toFixed(1)+'" width="5" height="8" rx="2.5"/>';
+      s+='<path class="ring-map-door'+(isVisited(c)?" lit":"")+'" d="M '+(x-2.6).toFixed(1)+' '+(y+4.2).toFixed(1)+' V '+(y-1.2).toFixed(1)+' A 2.6 2.6 0 0 1 '+(x+2.6).toFixed(1)+' '+(y-1.2).toFixed(1)+' V '+(y+4.2).toFixed(1)+' Z"/>';
     });
     g.innerHTML=s;
   }
@@ -719,7 +720,7 @@ function initLetters(){
     if(!ctx) return;
     var motes=[];
     for(var i=0;i<110;i++){
-      motes.push({x:r(), y:r(), s:0.8+r()*2.0, a:0.10+r()*0.38, p:r()*6.2832});
+      motes.push({x:r(), y:r(), s:1.1+r()*2.6, a:0.30+r()*0.48, p:r()*6.2832});
     }
     function drawLight(t){
       var W=art.clientWidth, H=art.clientHeight;
@@ -727,13 +728,13 @@ function initLetters(){
       if(cv.width!==W*2 || cv.height!==H*2){ cv.width=W*2; cv.height=H*2; }
       ctx.clearRect(0,0,cv.width,cv.height);
       var g=ctx.createRadialGradient(cv.width*0.5,0,0,cv.width*0.5,0,cv.height*0.85);
-      g.addColorStop(0,"rgba(201,168,106,0.10)"); g.addColorStop(1,"rgba(201,168,106,0)");
+      g.addColorStop(0,"rgba(201,168,106,0.22)"); g.addColorStop(0.55,"rgba(201,168,106,0.07)"); g.addColorStop(1,"rgba(201,168,106,0)");
       ctx.fillStyle=g; ctx.fillRect(0,0,cv.width,cv.height);
       motes.forEach(function(m){
         var dy=REDUCED?0:Math.sin(t/3400+m.p)*0.006;
         var tw=REDUCED?1:0.72+0.28*Math.sin(t/2100+m.p*2.7);
         ctx.beginPath();
-        ctx.arc(m.x*cv.width,(m.y+dy)*cv.height,m.s*2,0,6.2832);
+        ctx.arc(m.x*cv.width,(m.y+dy)*cv.height,m.s*2.6,0,6.2832);
         ctx.fillStyle="rgba(216,190,132,"+(m.a*tw).toFixed(3)+")";
         ctx.fill();
       });
