@@ -424,7 +424,8 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
 
 /* symbol-only chrome */
 .sound-pill{font-size:15px;line-height:1;padding:7px 11px}
-.collection summary{list-style:none;text-align:center;font-size:20px;color:var(--gold);letter-spacing:0}
+.collection summary{list-style:none;text-align:center;font-size:20px;color:var(--gold);letter-spacing:0;padding:5.5px 0;margin:-5.5px 0}
+#fractal-deeper{padding:11.5px 18px;margin:-3.5px 0}
 .collection summary::-webkit-details-marker{display:none}
 .exhibit figcaption{text-align:left}
 .exhibit .small-btn{align-self:center;margin-top:0}
