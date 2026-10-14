@@ -346,7 +346,7 @@ Nine letters, written for this room. One is drawn for you each visit, the way a
 bottle comes in on one tide and not another. The rest stay sealed, listed by
 their first lines.
 
-1. THE DOOR — "To the stranger who held the door —"
+1. THE DOOR — "To the stranger who held the door:"
 You held the door on the coldest day of the year, and you were not even going
 my way. I have thought about it more than seems reasonable. My hands were full,
 my heart was fuller of worse things, and you simply stood there, patient as
@@ -356,7 +356,7 @@ people who change the weather of a day are so often the ones we cannot thank.
 So I am thanking the air instead, and anyone standing in it. If a stranger
 holds a door for you this week, it might be the same weather, moving on.
 
-2. ORDINARY MORNING — "Dear future self, on an ordinary morning —"
+2. ORDINARY MORNING — "Dear future self, on an ordinary morning:"
 Sit down a moment. The tea is only warm, but that will do.
 Everything you are afraid of losing is already teaching you how much of it was
 love. That is not a small thing to know. Most people go their whole lives
@@ -367,7 +367,7 @@ groceries, and somebody's small warm hand crossing the street.
 Write back when you can. I am rooting for you in the tense you are not using
 yet.
 
-3. HERE FIRST — "To the ocean, which was here first —"
+3. HERE FIRST — "To the ocean, which was here first:"
 I stood at the shore in the hour when the light gives up politely, and the
 water did what it has done longer than anything on land has been alive to
 watch. It came in. It went out. It did not explain itself, and I found I did
@@ -377,7 +377,7 @@ before we get our hands on it.
 Come and stand here sometime. Bring nothing to solve. The tide will do its old
 work on your thoughts, the way it does on stones: kindly, and over time.
 
-4. THE BOOK — "Dear Mrs. A—, wherever you are teaching now —"
+4. THE BOOK — "Dear Mrs. A, wherever you are teaching now:"
 You taught a room of tired fourteen-year-olds that a sentence could be a place
 to live. I was the quiet one by the window. I am not quiet anymore, and it is
 partly your doing.
@@ -387,9 +387,9 @@ Teachers plant things in weather they will never stand in. Consider this a
 report from your climate: it is raining here, gently, and everything you
 planted is up.
 In the margin, in a different hand: "She kept the book. They always keep the
-book. — C."
+book. C."
 
-5. SAME WINDOW — "To the moon, a regular correspondent —"
+5. SAME WINDOW — "To the moon, a regular correspondent:"
 I have started leaving the porch light on for you, which is foolish, because
 you are made of light half the month anyway. But habit is a kind of prayer, and
 I am out of the other kind.
@@ -398,7 +398,7 @@ into a sink at 3 a.m., the one who finally, finally slept. You never once
 looked away. There are friends I cannot say that about.
 Next month, same window. I will bring the good blanket. You bring the silver.
 
-6. THE PHOTOGRAPH — "For the friend who drifted —"
+6. THE PHOTOGRAPH — "For the friend who drifted:"
 I am writing to the gap in the group photograph, which is to say, to you.
 We were a constellation once; nobody told us stars drift. If you are well, let
 the drift be forgiven. If you are not well, let this reach you like a hand on a
@@ -406,7 +406,7 @@ shoulder in a crowd: brief, certain, gone before it can embarrass either of us.
 The song we liked came on in a shop last week. I stayed until it finished. That
 is all. That is the whole letter, really.
 
-7. THE STAIR — "To whoever lives here next —"
+7. THE STAIR — "To whoever lives here next:"
 You do not know me, and if the system works, you never will. This house will be
 somebody else's kitchen someday, and my handwriting will be under the third
 stair, where the board lifts.
@@ -418,7 +418,7 @@ Live loudly in the mornings. The house likes it.
 Postscript, which exists only for those who come back: "P.S. You came back. So
 did I. Some letters are just doors that learned patience."
 
-8. ACCOMPLICE — "To the morning, who keeps forgiving us —"
+8. ACCOMPLICE — "To the morning, who keeps forgiving us:"
 You are the most underpraised accomplice. Every garden, every apology, every
 second first impression I have ever made began with you rinsing the slate.
 I have met you in hospital corridors and on mountain tops, in the fluorescent
@@ -427,7 +427,7 @@ the night did. You simply begin, again, as if beginning were easy, as if you
 had not watched me fail at it for years.
 It is not easy. I know. Thank you for pretending it is, until it is.
 
-9. ONE ROW FOR THE BEES — "To the garden, and its keeper —"
+9. ONE ROW FOR THE BEES — "To the garden, and its keeper:"
 This is to say I have eaten none of the plums, because they are yours, and
 because watching you wait for them all summer has become one of my summer's
 pleasures.
@@ -493,7 +493,7 @@ hundred of the gold, the ground at four and a half, the glow at
 eight. Where alpha() is not known, the same values stand written
 plainly, and the letter loses nothing.):
 
-A. UNDER THIS ROOF — "To the hands that raised this roof —"
+A. UNDER THIS ROOF — "To the hands that raised this roof:"
 I do not know your names. I know your work the way you know weather: from
 inside it. The beam above the kitchen door is level. The stairs do not
 complain. Somewhere under the floor, a joist you set true before I was born
@@ -519,11 +519,11 @@ the habit of doing it right when no inspector was coming? I live inside your
 answer. It is yes. It has been yes every morning, in the small sounds a
 well-made house makes instead of the sounds of giving up.
 
-There is a pencil mark on a stud behind the plaster — there always is;
+There is a pencil mark on a stud behind the plaster, there always is;
 houses keep one signature that only demolition will ever read. I have
 decided not to need to see it. Some signatures are for the building. Mine is
 different: I keep the roof mended. I sweep the step you poured. When the
-fence leans, we lean it back — you taught me that without meeting me, the
+fence leans, we lean it back: you taught me that without meeting me, the
 way honest work teaches everyone who lives inside it.
 
 Gratitude is supposed to be a feeling, I am told. This room disagrees. Here
@@ -534,10 +534,10 @@ it true.
 
 Sleep well, whoever you were, in whatever house is holding you now. This one
 is holding me. The beam is level, the stairs are quiet, and a stranger you
-never met is standing in your good work, saying thank you to the air — and
+never met is standing in your good work, saying thank you to the air, and
 meaning the air to carry it to you.
 
-B. THE CHAIR — "Dear grief, there is a chair for you —"
+B. THE CHAIR — "Dear grief, there is a chair for you:"
 You arrived the way weather arrives: without asking, in the middle of other
 plans. I spent the first season trying to be rid of you. I was polite about
 it, the way people are polite to a guest they hope will leave before supper.
@@ -549,7 +549,7 @@ room was smaller than it is.
 You are not the opposite of love. I know that now, and knowing it cost me
 the years it cost, so I will say it plainly for whoever is reading over my
 shoulder: you are love, continuing. You are what love does when the address
-it had is gone and it refuses — stubborn, faithful, unreasonable — to stop
+it had is gone and it refuses, stubborn, faithful, unreasonable, to stop
 delivering itself. That is why you are heavy. What is carried for the
 beloved weighs what the beloved weighed.
 
@@ -557,28 +557,28 @@ In the hard months I measured you. A morning when the chair stood empty for
 an hour felt like a victory, and then you would be in it again by noon,
 quiet as furniture, and I would call the whole day lost. I do not measure
 anymore. Some days you sit the whole day and the day is not lost. Some days
-you are gone by breakfast and I find, to my surprise, that I look for you —
+you are gone by breakfast and I find, to my surprise, that I look for you:
 out of love's habit, not sorrow's; the way a house listens for a step it has
 known for years.
 
 You taught me the household arithmetic nobody teaches: that a heart is not a
 cup, emptied by pouring. It is a house. It can hold the feast and the empty
 chair at the same table, the song and the silence after it, and there is
-still room — this is your whole curriculum, grief — still room, at the same
+still room. This is your whole curriculum, grief: still room, at the same
 table, for joy to sit down without apologising for arriving.
 
 People ask when you will leave, as if your leaving were the happy ending. I
 have stopped wanting it. What I want is smaller and larger: that you and joy
-learn the house together, the way old residents do — taking turns at the
+learn the house together, the way old residents do: taking turns at the
 window, neither one locking the other out. On the good days you nod at each
 other across the room. I have seen it. It is enough. It is, if I am honest,
 more than enough: it is a life.
 
-So stay, in your chair, as long as the love that sent you stays — which is
+So stay, in your chair, as long as the love that sent you stays, which is
 to say, stay. I will keep the chair. I will keep the room large. And on the
 mornings when the light comes in and finds us both here, I will make tea for
 the house as it is: one cup for the living, one set down anyway, out of
-practice, out of gratitude — because a practice is how a feeling proves it
+practice, out of gratitude, because a practice is how a feeling proves it
 means to last.
 
 
