@@ -99,7 +99,12 @@ function glyphsComplete(){ return otherEightDone() && STORE.get("coda",false); }
     var s="";
     CHAMBERS.forEach(function(c,i){
       var a=-Math.PI/2 + i*(2*Math.PI/9);
-      var x=100+78*Math.cos(a), y=100+78*Math.sin(a);
+      /* The provocation (rotation 23): one door of the nine stands off the
+         ring - the second door (the Scale Room, at -50 degrees) at radius 90
+         where the other eight stand at 78. Placed by hand, fixed, identical
+         on every visit; no reckoning is involved and none may be added. */
+      var r=(i===1) ? 90 : 78;
+      var x=100+r*Math.cos(a), y=100+r*Math.sin(a);
       s+='<path class="ring-map-door'+(isVisited(c)?" lit":"")+'" d="M '+(x-2.6).toFixed(1)+' '+(y+4.2).toFixed(1)+' V '+(y-1.2).toFixed(1)+' A 2.6 2.6 0 0 1 '+(x+2.6).toFixed(1)+' '+(y-1.2).toFixed(1)+' V '+(y+4.2).toFixed(1)+' Z"/>';
     });
     g.innerHTML=s;
