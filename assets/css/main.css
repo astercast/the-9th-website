@@ -53,13 +53,23 @@ svg use{pointer-events:none}
   background:var(--gold);transform:translateX(-50%);
 }
 .ring-btn-ninth{color:var(--ink-dim)}
+/* R29 tap pass: the button's own box is the hit area, a full 44px square.
+   The pill a visitor sees is drawn by .sound-pill at its original size
+   (32.7x31 as measured), set into the box's anchored corner, so the bar
+   looks exactly as it did; only the tappable area grew, into the bar's
+   own padding and margins. On phones the box is anchored right:0/top:-1
+   and the pill keeps a 10px right margin, which puts the pill back on
+   its exact old spot (top:12, right:10) and aims the growth up and
+   right, away from the ninth door the pill already rests against. */
 .sound-toggle{
   position:absolute;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));
-  background:none;border:1px solid var(--line);border-radius:999px;color:var(--ink-dim);
-  font-size:12px;letter-spacing:.08em;padding:6px 12px;
+  width:44px;height:44px;padding:0;background:none;border:0;color:var(--ink-dim);
+  display:flex;align-items:flex-end;justify-content:flex-end;
 }
-.sound-toggle[aria-pressed="true"]{color:var(--gold);border-color:var(--gold-soft)}
-@media (max-width:560px){ .ring-btn{width:38px;height:46px;border-radius:19px 19px 5px 5px} .ring-btn svg{width:25px;height:25px} .sound-toggle{bottom:auto;top:12px;right:10px;font-size:11px;padding:5px 10px} }
+.sound-pill{display:block;border:1px solid var(--line);border-radius:999px;letter-spacing:.08em}
+.sound-toggle[aria-pressed="true"]{color:var(--gold)}
+.sound-toggle[aria-pressed="true"] .sound-pill{border-color:var(--gold-soft)}
+@media (max-width:560px){ .ring-btn{width:38px;height:46px;border-radius:19px 19px 5px 5px} .ring-btn svg{width:25px;height:25px} .sound-toggle{bottom:auto;top:-1px;right:0} .sound-pill{margin-right:10px} }
 @media (max-width:360px){ .ring-btn{width:31px;height:42px;border-radius:15px 15px 4px 4px} .ring-btn svg{width:22px;height:22px} }
 
 /* ---------- chambers ---------- */
@@ -413,7 +423,7 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
 .moon-fact{font-family:var(--sans);letter-spacing:.22em;text-transform:uppercase;font-size:.82em;color:var(--gold)}
 
 /* symbol-only chrome */
-.sound-toggle{font-size:15px;line-height:1;padding:7px 11px}
+.sound-pill{font-size:15px;line-height:1;padding:7px 11px}
 .collection summary{list-style:none;text-align:center;font-size:20px;color:var(--gold);letter-spacing:0}
 .collection summary::-webkit-details-marker{display:none}
 .exhibit figcaption{text-align:left}
