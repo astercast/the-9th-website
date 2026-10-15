@@ -84,8 +84,8 @@ function glyphsComplete(){ return otherEightDone() && STORE.get("coda",false); }
     dusk:"You came at the hour when everything is briefly gold.",
     night:"You came in the dark. The place respects that."
   };
-  if(visits>=9){ w.textContent="Nine times now. The place has stopped pretending it doesn't know you."; }
-  else if(visits>=27){ w.textContent="The ring keeps your seat the way a shore keeps the shape of the tide."; }
+  if(visits>=27){ w.textContent="The ring keeps your seat the way a shore keeps the shape of the tide."; }
+  else if(visits>=9){ w.textContent="Nine times now. The place has stopped pretending it doesn't know you."; }
   else if(visits>=2){ w.textContent="You came back. Places notice that kind of thing."; }
   else { w.textContent=lines[phase]; }
   function midnight(){

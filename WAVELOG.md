@@ -4,6 +4,17 @@ Museum records, one per wave: what was made, why, what it means in the canon, wh
 
 ---
 
+## Completeness Audit (2026-10-15)
+
+**The charge.** A full internal audit: every promise in this canon walked against the built tree at db52e49, promise by promise, by walking the build (headless Chromium, fixed clock, seeded localStorage states) and by replaying the Reckoning's streams in simulation. The full map stands in the landing record (`~/workspace/fleet-ops/wave-engine/landing-9th-completeness-2026-10-15.md`). Of the whole inventory, one behavior was promised and verifiably broken; it is fixed here. Two further items are named in that record for the parent's ruling and were not built.
+
+**The defect.** The Threshold's greeting ladder tested `visits>=9` before `visits>=27`, so the Depth 27 greeting ("The ring keeps your seat the way a shore keeps the shape of the tide.") could never be shown: every visitor at visit 27 or beyond received the ninth-visit line instead. Both lines already stood in the code and in the Codex; the order of the two tests was the whole defect. Verified broken at runtime before the fix (seeded visit 27, the ninth-visit line rendered; capture `threshold-v27-before.png` in the audit's archive folder).
+
+**The fix.** The two branches are swapped in `assets/js/main.js`, and nothing else: 2 lines changed, no word added, removed, or altered, file size identical (57,019 B). No seed formula, stream, or reckoned output is touched: the greeting consumes no draw from any stream.
+
+**Verified after.** Greetings at visits 1, 2, 9, 27, 81 each render their own line (visit 27 and 81 now render the Depth 27 line; capture `threshold-v27-after.png`). Determinism smoke: two independent fixed-clock loads at visit 1 drew the identical letter ("Dear future self, on an ordinary morning:"), and the visit-2 draw ("To the ocean, which was here first:") matches the pre-fix walk at the same inputs. Zero page errors. First-load weight unchanged: 159,963 B measured on the tree (the Phase 2 record's 159,975 B stands 12 B above the tree it describes: CSS 44,986 B and deep.js 17,168 B as built; recorded here so the numbers agree).
+
+---
 ## Phase 2 — The Massive Rework: the Deep (2026-10-15)
 
 **The charge.** The user's verdict on Phase 1, verbatim: "It looks really similar to how it did before bro I want massive rework to the site with full latest techniques like all the new stuff in creative pool that I gave you last night." A reskin was failure by that sentence. The order lifts the upgrade plan's dependency-free technique constraint (recorded in `DESIGN.md` §6); the canon beneath it (zero external requests, the Ration, the Master Code, §X's degrade test) stands untouched. Workshop only.
