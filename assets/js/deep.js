@@ -17,8 +17,22 @@
    illumination by the Synodic Reckoning (the Tide's glitter path), the
    phase of the day (the Threshold's fog), the count of doors opened
    (the Ninth's horizon), the visitor's own scroll (the Scale's
-   descent). The noise in the fields is physics, not content · it
-   would mean nothing if it differed, which the canon permits.
+   descent), and (the next pass, 2026-10-15) the visit count itself:
+   the strata deepen as the recorded count climbs toward the
+   twenty-seventh visit · a fifth octave of grain in the fields, the
+   motes standing thicker · a function of that recorded input alone,
+   and nothing at all on a first visit, so a scholar holding D and V
+   can re-derive any depth the field has ever shown. The noise in the
+   fields is physics, not content · it would mean nothing if it
+   differed, which the canon permits.
+
+   The door of light is anchored to the doorframe as rendered, not
+   to a fixed point of the screen: the driver measures the frame's
+   own rectangle and stands the light on its horizon line, so the
+   light stays inside the arch wherever the room's furniture puts
+   the frame. (The Threshold's recomposition of 2026-10-15 moved the
+   frame to the room's centre; the light followed it, as it must.
+   Until a frame can be measured, the light keeps its first station.)
 
    The fallback chain, each stage whole (CANON §X's test):
      1. WebGL, as below.
@@ -77,6 +91,8 @@ var FRAG=[
 "uniform float uOpen;",
 "uniform float uScroll;",
 "uniform float uSeed;",
+"uniform float uDeep;",
+"uniform vec2 uDoor;",
 "float hash21(vec2 p){ p = fract(p * vec2(234.34, 435.345)); p += dot(p, p + 34.23); return fract(p.x * p.y); }",
 "float vnoise(vec2 p){",
 "  vec2 i = floor(p), f = fract(p);",
@@ -87,6 +103,7 @@ var FRAG=[
 "float fbm(vec2 p){",
 "  float v = 0.0, a = 0.5;",
 "  for(int i = 0; i < 4; i++){ v += a * vnoise(p); p = p * 2.03 + vec2(17.3, 9.1); a *= 0.45; }",
+"  v += uDeep * a * 2.0 * vnoise(p * 2.03 + vec2(17.3, 9.1));",
 "  return v;",
 "}",
 "float starLayer(vec2 p, float scale, float t, float thresh){",
@@ -109,7 +126,7 @@ var FRAG=[
 "  vec2 c = vec2(0.5 + 0.30 * sin(h * 40.0 + t * 0.25), rise);",
 "  float d = length((f - c) * vec2(1.0, 1.35));",
 "  float tw = 0.5 + 0.5 * sin(t * (0.8 + h) + h * 30.0);",
-"  return smoothstep(0.075, 0.0, d) * step(thresh, h) * (0.35 + 0.65 * tw);",
+"  return smoothstep(0.075, 0.0, d) * step(thresh - uDeep * 0.10, h) * (0.35 + 0.65 * tw);",
 "}",
 "vec3 field(float mode, vec2 p, vec2 uv, float t){",
 "  vec3 ink    = vec3(0.016, 0.023, 0.016);",
@@ -127,8 +144,8 @@ var FRAG=[
 "    else if(uPhase < 1.5) tint = mix(forest, vec3(0.16, 0.20, 0.16), 0.6);",
 "    else if(uPhase < 2.5) tint = mix(forest, vec3(0.22, 0.11, 0.07), 0.55);",
 "    col = ink + tint * (fog * 1.05 + fog2 * 0.45) + tint * 0.10;",
-"    float slit = exp(-pow(abs(uv.x - 0.685) * 9.0, 1.6));",
-"    float horizon = exp(-abs(uv.y - 0.155) * 7.0);",
+"    float slit = exp(-pow(abs(uv.x - uDoor.x) * 9.0, 1.6));",
+"    float horizon = exp(-abs(uv.y - uDoor.y) * 7.0);",
 "    float door = slit * (0.35 + 0.65 * horizon) * (0.75 + 0.25 * sin(t * 0.4));",
 "    col += mix(moonl, brass, 0.35) * door * 0.85;",
 "    float pl = exp(-length((uv - uPointer.xy) * vec2(1.4, 1.0)) * 5.5) * uPointer.z;",
@@ -246,7 +263,7 @@ gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_
 var loc=gl.getAttribLocation(prog, "aPos");
 gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 var U={};
-["uRes","uTime","uMode","uModeFrom","uMix","uPointer","uMoon","uPhase","uProgress","uOpen","uScroll","uSeed"].forEach(function(n){ U[n]=gl.getUniformLocation(prog, n); });
+["uRes","uTime","uMode","uModeFrom","uMix","uPointer","uMoon","uPhase","uProgress","uOpen","uScroll","uSeed","uDeep","uDoor"].forEach(function(n){ U[n]=gl.getUniformLocation(prog, n); });
 
 document.documentElement.classList.add("deep-on");
 
@@ -269,6 +286,27 @@ function progress(){
 function doorOpen(){
   var o=document.getElementById("door-open");
   return o && !o.hidden ? 1 : 0;
+}
+/* the door of light's station: the doorframe's own rectangle, measured
+   where it stands (its centre across, its horizon line down the frame).
+   Until a frame can be measured, the light keeps its first station. */
+var door={x:0.685, y:0.155};
+function measureDoor(){
+  var f=document.querySelector(".doorframe-svg");
+  if(!f) return;
+  var r=f.getBoundingClientRect();
+  if(!r || !r.width || !r.height) return;
+  door.x=(r.left+r.width*0.5)/innerWidth;
+  door.y=1-(r.top+r.height*(472/560))/innerHeight;
+}
+/* the visit depth: the recorded visit count, read as the room keeps it.
+   Nothing at the first visit; full depth at the twenty-seventh. */
+function visitDepth(){
+  try{
+    var v=JSON.parse(localStorage.getItem("ninth.visits")||"1");
+    var d=(v-1)/26;
+    return d<0 ? 0 : (d>1 ? 1 : d);
+  }catch(e){ return 0; }
 }
 var mode=CHAMBERS.indexOf(activeChamber()); if(mode<0) mode=0;
 var modeFrom=mode, mix=1, mixStart=0;
@@ -308,6 +346,9 @@ function draw(now){
   gl.uniform1f(U.uOpen, doorOpen());
   gl.uniform1f(U.uScroll, scrollP);
   gl.uniform1f(U.uSeed, (daySeed()%1000)/1000);
+  if(mode===0 || modeFrom===0) measureDoor();
+  gl.uniform2f(U.uDoor, door.x, door.y);
+  gl.uniform1f(U.uDeep, visitDepth());
   gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
 

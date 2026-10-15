@@ -854,3 +854,86 @@ html.still .chamber-word .wl{opacity:1;transform:none;animation:none}
 @media (prefers-reduced-motion: reduce){
   .chamber-word .wl{opacity:1;transform:none;animation:none}
 }
+
+/* ==================================================================
+   THE THRESHOLD, RECOMPOSED (the next pass, 2026-10-15)
+
+   The one room the massive rework did not rearrange: Phase 1's grid
+   (title column left, frame right, fragment closing the column, the
+   map at the frame's foot) survived the Deep intact, and on the
+   narrow tier it collapsed back to the site's first arrangement, the
+   centred stack. This section rearranges the furniture and nothing
+   else. The doorframe takes the centre as the room's architecture;
+   the title stands inside its arch, in the door of light; the glyph
+   leaves the title stack (the ring itself carries it, first door);
+   the welcome moves into the frame, standing in the door of light
+   above the horizon line; the ring map becomes the frame's sill, its floor plan
+   laid across the step; the Cartographer's fragment moves to the
+   right margin, the glyph grammar's witnessed station: someone was
+   here before you, read last, at the edge.
+
+   The narrow composition is specified first and is the base: frame
+   first, the title across its head, the welcome in the frame's
+   light, the map on the sill below, the fragment last at the right
+   margin. The wider tiers only enlarge the frame and lift the
+   fragment out of the flow into the margin itself. The Deep reads
+   the frame's new station and re-anchors its door of light to it
+   (assets/js/deep.js); the room's words, order of meaning, and every
+   behaviour are untouched. Fallback, per the house discipline: strip
+   this section and the room stands in its Phase 2 arrangement,
+   whole; the core beneath both is the same room.
+   ================================================================== */
+#chamber-threshold .threshold-inner{
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;min-height:calc(100svh - 120px);padding-top:1vh;
+}
+#chamber-threshold .threshold-stage{
+  position:relative;width:min(430px,94%);margin:0 auto 96px;
+}
+#chamber-threshold .doorframe-svg{width:100%;height:auto;display:block}
+#chamber-threshold .threshold-title-block{
+  position:absolute;left:6%;right:6%;top:11.5%;margin:0;
+  text-align:center;z-index:2;
+}
+#chamber-threshold .site-title{
+  font-size:clamp(33px,8.8vw,44px);margin:0;line-height:1.04;
+}
+#chamber-threshold .threshold-foot{
+  position:absolute;left:9%;right:9%;top:64%;margin:0;
+  text-align:center;z-index:2;
+}
+#chamber-threshold .threshold-foot .welcome{
+  margin:0 auto;font-size:clamp(17px,4.6vw,20px);max-width:19em;
+}
+#chamber-threshold .threshold-foot .midnight-line{margin:.5em auto 0}
+#chamber-threshold .threshold-stage .ring-map-wrap{
+  position:absolute;left:50%;bottom:0;margin:0;
+  width:min(180px,52%);transform:translate(-50%,46%);
+}
+#chamber-threshold .fragment-threshold{
+  align-self:flex-end;margin:4px 0 0;max-width:min(300px,84%);
+}
+
+/* the middle tier: the frame grows by height; the fragment takes
+   the margin in fact, standing at the frame's lower third */
+@container (min-width:860px){
+  #chamber-threshold .threshold-stage{width:auto;margin-bottom:106px}
+  #chamber-threshold .doorframe-svg{height:min(62vh,640px);width:auto;max-width:100%}
+  #chamber-threshold .site-title{font-size:clamp(44px,5.2cqw,58px)}
+  #chamber-threshold .threshold-foot .welcome{font-size:clamp(19px,2.2cqw,23px)}
+  #chamber-threshold .threshold-stage .ring-map-wrap{width:200px}
+  #chamber-threshold .fragment-threshold{
+    position:absolute;right:0;top:55%;width:230px;max-width:230px;margin:0;
+  }
+}
+
+/* the wide tier: the frame at its full height, the title monumental
+   inside the arch, the fragment at the room's right edge */
+@container (min-width:1180px){
+  #chamber-threshold .threshold-inner{max-width:1280px}
+  #chamber-threshold .threshold-stage{margin-bottom:110px}
+  #chamber-threshold .doorframe-svg{height:min(76vh,800px)}
+  #chamber-threshold .site-title{font-size:clamp(52px,4.6vw,68px)}
+  #chamber-threshold .threshold-stage .ring-map-wrap{width:210px}
+  #chamber-threshold .fragment-threshold{width:250px;max-width:250px;top:56%}
+}

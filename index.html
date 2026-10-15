@@ -141,12 +141,6 @@ html{background:#0B0F0C}
     </svg>
   <div class="grain" aria-hidden="true"></div>
   <div class="chamber-inner threshold-inner">
-    <div class="threshold-title-block">
-      <svg class="glyph-large"><use href="#g-threshold"/></svg>
-      <h1 class="site-title">The 9th Website</h1>
-      <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
-      <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
-    </div>
     <div class="threshold-stage">
       <!-- The Doorframe (Phase 1): drawn in the glyph hand, double-ruled,
            with the Cartographer's ticks down its left upright and one
@@ -164,6 +158,17 @@ html{background:#0B0F0C}
         <circle class="frame-seed" cx="200" cy="40" r="2.6"/>
         <path class="frame-step" d="M18 540h364M48 553h304"/>
       </svg>
+      <!-- The title inside the arch (the recomposition, 2026-10-15):
+           the words stand in the door of light, not beside the frame.
+           The glyph has left the stack; the ring itself carries it. -->
+      <div class="threshold-title-block">
+        <h1 class="site-title">The 9th Website</h1>
+      </div>
+      <div class="threshold-foot">
+        <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
+        <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
+      </div>
+      <!-- the ring map as the frame's sill: its floor plan, laid on the step -->
       <div class="ring-map-wrap">
         <svg class="ring-map" viewBox="0 0 200 200" role="img" aria-label="Nine doors in a ring, and one more, drawn ajar">
           <circle cx="100" cy="100" r="78" class="ring-map-circle"/>

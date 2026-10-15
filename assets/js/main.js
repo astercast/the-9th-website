@@ -114,6 +114,7 @@ function glyphsComplete(){ return otherEightDone() && STORE.get("coda",false); }
 /* ---------- the Ring Circuit ---------- */
 var current="threshold";
 var inited={};
+var enterSeq=0;
 function markVisited(c){
   if(!isVisited(c)){ visited.push(c); STORE.set("visited",visited); }
   document.querySelectorAll(".ring-btn").forEach(function(b){
@@ -126,7 +127,9 @@ function enter(c){
   if(CHAMBERS.indexOf(c)===-1) c="threshold";
   sessionPath.push(c);
   markVisited(c);
+  var seq=++enterSeq, shown=false;
   var show=function(){
+    if(shown || seq!==enterSeq) return; shown=true;
     document.querySelectorAll(".chamber").forEach(function(s){ s.classList.toggle("active", s.getAttribute("data-chamber")===c); });
     current=c; window.scrollTo(0,0);
     if(onChamberEnter) onChamberEnter(c);
@@ -134,7 +137,21 @@ function enter(c){
     if(c==="mirror") drawMirror();
     if(c==="ninth") drawDoor();
   };
-  if(document.startViewTransition && !REDUCED){ document.startViewTransition(show); } else { show(); }
+  if(document.startViewTransition && !REDUCED){
+    document.startViewTransition(show);
+    /* The transition is a courtesy the rendering offers the eye; the
+       reckoning does not wait for it. A starved renderer can hold the
+       transition's update for seconds, and with it the chamber and
+       everything the chamber reckons (the Sealed Draw among them):
+       the drawn gap the massive rework's bisect found on a returning
+       visit. So the same guarded switch is also armed on a short
+       timer. Whichever hand arrives first performs it; the other
+       finds it done; a stale entry (a newer door chosen since) never
+       performs at all. On any machine that can render, the
+       transition's own hand wins by a wide margin and the timer is a
+       formality that finds its work already done. */
+    setTimeout(show,400);
+  } else { show(); }
   try{ history.replaceState(null,"","#"+c); }catch(e){}
 }
 document.querySelectorAll("[data-go]").forEach(function(b){
