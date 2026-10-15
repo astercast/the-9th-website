@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The 9th Website</title>
 <meta name="description" content="Nine chambers in a ring.">
-<meta name="theme-color" content="#07080f">
+<meta name="theme-color" content="#0B0F0C">
 <!-- RELATIVE until deploy: absolutize og:image + twitter:image against the live domain at go-live (see GO_LIVE.md) -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="The 9th Website">
@@ -30,8 +30,8 @@
      no stylesheet or script may be waited on for the first signal that this darkness
      is intentional. Pure CSS: if every script stalls, the veil still lifts itself. -->
 <style>
-html{background:#07080f}
-#veil{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:#07080f;pointer-events:none;transition:opacity .7s ease;animation:veilOut .9s ease 3s forwards}
+html{background:#0B0F0C}
+#veil{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:#0B0F0C;pointer-events:none;transition:opacity .7s ease;animation:veilOut .9s ease 3s forwards}
 #veil svg{animation:veilBreathe 2.2s ease-in-out infinite}
 @keyframes veilBreathe{0%,100%{opacity:.3;transform:scale(.96)}50%{opacity:1;transform:scale(1)}}
 @keyframes veilOut{to{opacity:0;visibility:hidden}}
@@ -69,6 +69,10 @@ html{background:#07080f}
     <symbol id="g-mirror" viewBox="0 0 24 24"><path d="M8 4a9 9 0 0 0 0 16M16 4a9 9 0 0 1 0 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 5v14" stroke="currentColor" stroke-width="1.5" stroke-dasharray="0.1 3.1" stroke-linecap="round"/></symbol>
     <symbol id="g-ninth" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 1.8v2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/></symbol>
     <symbol id="g-mark" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M11 2.5v17M2.5 11h17M15.8 15.8L21 21" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <!-- Phase 1 (the Conservatory): the ink grain and the softened light.
+         Filters are the surface; the rooms stand whole without them. -->
+    <filter id="grain-ink" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0.91 0 0 0 0 0.88 0 0 0 0 0.81 0 0 0 0.85 0"/></filter>
+    <filter id="soften" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="7"/></filter>
   </defs>
 </svg>
 
@@ -130,23 +134,44 @@ html{background:#07080f}
       <circle cx="144" cy="50" r="0.55" opacity="0.18"/>
       <circle cx="6" cy="38" r="0.61" opacity="0.22"/>
     </svg>
+  <div class="grain" aria-hidden="true"></div>
   <div class="chamber-inner threshold-inner">
-    <svg class="glyph-large"><use href="#g-threshold"/></svg>
-    <h1 class="site-title">The 9th Website</h1>
-    <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
-    <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
-    <div class="ring-map-wrap">
-      <svg class="ring-map" viewBox="0 0 200 200" role="img" aria-label="Nine doors in a ring, and one more, drawn ajar">
-        <circle cx="100" cy="100" r="78" class="ring-map-circle"/>
-        <circle cx="100" cy="100" r="70.5" class="ring-map-circle ring-map-inner"/>
-        <circle cx="100" cy="100" r="10" class="ring-map-seal"/>
-        <circle cx="100" cy="100" r="2.6" class="ring-map-seed"/>
-        <g id="ring-map-doors"></g>
-        <g class="ajar" aria-hidden="true">
-          <rect x="97.5" y="176" width="5" height="9" class="ajar-dark"/>
-          <path d="M97.5 176 L93 179.5 L97.5 185" class="ajar-door"/>
+    <div class="threshold-title-block">
+      <svg class="glyph-large"><use href="#g-threshold"/></svg>
+      <h1 class="site-title">The 9th Website</h1>
+      <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
+      <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
+    </div>
+    <div class="threshold-stage">
+      <!-- The Doorframe (Phase 1): drawn in the glyph hand, double-ruled,
+           with the Cartographer's ticks down its left upright and one
+           distant light resting on its horizon. It frames nothing but
+           the place's own sky and authored field. -->
+      <svg class="doorframe-svg" viewBox="0 0 400 560" aria-hidden="true">
+        <path class="frame-rule" d="M40 540 L40 180 A160 140 0 0 1 360 180 L360 540"/>
+        <path class="frame-rule frame-rule-in" d="M62 540 L62 192 A138 116 0 0 1 338 192 L338 540"/>
+        <g class="frame-ticks">
+          <path d="M29 230h11M34 260h6M29 290h11M34 320h6M29 350h11M34 380h6M29 410h11M34 440h6M29 470h11M34 500h6"/>
         </g>
+        <line class="frame-horizon" x1="62" y1="472" x2="338" y2="472"/>
+        <circle class="doorframe-light" cx="200" cy="472" r="26" filter="url(#soften)"/>
+        <circle class="doorframe-light-core" cx="200" cy="472" r="3.2"/>
+        <circle class="frame-seed" cx="200" cy="40" r="2.6"/>
+        <path class="frame-step" d="M18 540h364M48 553h304"/>
       </svg>
+      <div class="ring-map-wrap">
+        <svg class="ring-map" viewBox="0 0 200 200" role="img" aria-label="Nine doors in a ring, and one more, drawn ajar">
+          <circle cx="100" cy="100" r="78" class="ring-map-circle"/>
+          <circle cx="100" cy="100" r="70.5" class="ring-map-circle ring-map-inner"/>
+          <circle cx="100" cy="100" r="10" class="ring-map-seal"/>
+          <circle cx="100" cy="100" r="2.6" class="ring-map-seed"/>
+          <g id="ring-map-doors"></g>
+          <g class="ajar" aria-hidden="true">
+            <rect x="97.5" y="176" width="5" height="9" class="ajar-dark"/>
+            <path d="M97.5 176 L93 179.5 L97.5 185" class="ajar-door"/>
+          </g>
+        </svg>
+      </div>
     </div>
     <p class="fragment fragment-threshold"><svg class="frag-mark"><use href="#g-mark"/></svg>“I did not build the place. I only found the doors already standing, and learned their order by walking it.”</p>
   </div>
@@ -185,11 +210,47 @@ html{background:#07080f}
 
 <!-- III · THE GARDEN -->
 <section class="chamber" id="chamber-garden" data-chamber="garden" aria-label="The Garden">
+  <div class="garden-ribs" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-garden"/></svg>
     <div class="canvas-frame garden-frame bleed">
       <canvas id="garden-canvas" width="1120" height="640" aria-label="A garden growing from the movement of your pointer"></canvas>
       <p class="canvas-fallback">Nine seedlings, waiting.</p>
+    </div>
+    <!-- The Specimen Bed (Phase 1): nine seedlings in one drawn hand,
+         catalogued beneath the living field. In the static page they
+         stand in their authored order at their true measures; the
+         script re-reckons their order, heights, leans, and measures
+         from the Dayseed, as the Garden itself is reckoned. -->
+    <div class="specimen-bed" id="specimen-bed">
+      <svg class="bed-svg" viewBox="0 92 1120 104" aria-hidden="true">
+        <rect class="bed-soil" x="0" y="178" width="1120" height="18"/>
+        <line class="bed-soil-line" x1="0" y1="178" x2="1120" y2="178"/>
+        <path class="bed-tuft" d="M150 178c-1 -5 -3 -8 -5 -10M150 178c0 -6 1 -9 3 -12M470 178c-1 -4 -2 -7 -4 -9M700 178c1 -5 3 -8 5 -10M930 178c0 -5 -1 -8 -3 -11"/>
+        <ellipse class="bed-stone" cx="240" cy="183" rx="6" ry="2.5"/>
+        <ellipse class="bed-stone" cx="820" cy="185" rx="8" ry="3"/>
+        <g class="bed-slot" data-base="40" transform="translate(70,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-.4s"><path class="bed-stem" d="M0 0 C-1 -14 1 -26 0 -38"/><path class="bed-leaf" d="M0 -38 C-13 -45 -17 -34 -13 -25 C-6 -26 -1 -31 0 -38 Z"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+        <g class="bed-slot" data-base="36" transform="translate(185,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-1.7s"><path class="bed-stem" d="M0 0 C1 -12 0 -22 0 -30 M0 -30 C-9 -28 -13 -33 -10 -38 C-8 -41 -4 -39 -5 -36 M0 -24 C7 -23 10 -27 8 -31 C6 -33 3 -31 4 -29"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+        <g class="bed-slot" data-base="54" transform="translate(300,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-3.1s"><path class="bed-stem" d="M0 0 C1 -18 -1 -36 0 -52 M0 -14 L-11 -19 M0 -14 L11 -19 M0 -24 L-9 -29 M0 -24 L9 -29 M0 -34 L-7 -38 M0 -34 L7 -38 M0 -44 L-5 -47 M0 -44 L5 -47"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+        <g class="bed-slot" data-base="32" transform="translate(415,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-.9s"><ellipse class="bed-bulb" cx="0" cy="-4" rx="7" ry="5"/><path class="bed-stem" d="M-2 -8 C-4 -18 -8 -24 -13 -29 M2 -8 C4 -17 8 -22 13 -26"/><circle class="bed-bud" cx="-13" cy="-29" r="2"/><circle class="bed-bud" cx="13" cy="-26" r="2"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+        <g class="bed-slot" data-base="44" transform="translate(530,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-2.4s"><path class="bed-stem" d="M0 0 C-6 -16 -8 -28 -6 -42 M0 0 C6 -14 9 -24 8 -36"/><path class="bed-leaf" d="M-6 -42 C-14 -46 -17 -39 -14 -33 C-8 -34 -6 -37 -6 -42 Z M8 -36 C15 -40 18 -34 15 -28 C10 -29 8 -32 8 -36 Z"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+        <g class="bed-slot" data-base="62" transform="translate(645,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-4.2s"><path class="bed-stem" d="M0 0 C2 -22 1 -44 3 -60 M3 -60 C-13 -53 -18 -37 -14 -21"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+        <g class="bed-slot" data-base="37" transform="translate(760,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-1.2s"><path class="bed-stem" d="M0 0 L-16 -25 M0 0 L-8 -31 M0 0 L0 -34 M0 0 L8 -31 M0 0 L16 -25"/><circle class="bed-bud" cx="-16" cy="-25" r="2"/><circle class="bed-bud" cx="-8" cy="-31" r="2"/><circle class="bed-bud" cx="0" cy="-34" r="2"/><circle class="bed-bud" cx="8" cy="-31" r="2"/><circle class="bed-bud" cx="16" cy="-25" r="2"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+        <g class="bed-slot" data-base="48" transform="translate(875,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-3.8s"><path class="bed-stem" d="M0 0 C1 -16 -1 -28 2 -38 M2 -38 C10 -41 15 -35 12 -29 C10 -24 3 -25 3 -30 C3 -33 7 -34 8 -32"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+        <g class="bed-slot" data-base="50" transform="translate(990,178)"><g class="seedling-grow"><g class="seedling-sway" style="--s:1;--d:-2.9s"><path class="bed-stem" d="M0 0 C1 -18 0 -34 0 -44 M0 -44 C8 -43 12 -38 11 -32 L8 -24 L-2 -24 L-5 -32 C-6 -38 -2 -43 0 -44 Z"/><circle class="bed-dot" cx="3" cy="-31" r="2"/><circle class="bed-dot" cx="0" cy="-2" r="2.2"/></g></g></g>
+      </svg>
+      <ol class="bed-tags">
+        <li class="bed-tag" style="--fx:.0625"><span class="bed-no">№ 1</span><span class="bed-mm">40 mm</span></li>
+        <li class="bed-tag" style="--fx:.1652"><span class="bed-no">№ 2</span><span class="bed-mm">36 mm</span></li>
+        <li class="bed-tag" style="--fx:.2679"><span class="bed-no">№ 3</span><span class="bed-mm">54 mm</span></li>
+        <li class="bed-tag" style="--fx:.3705"><span class="bed-no">№ 4</span><span class="bed-mm">32 mm</span></li>
+        <li class="bed-tag" style="--fx:.4732"><span class="bed-no">№ 5</span><span class="bed-mm">44 mm</span></li>
+        <li class="bed-tag" style="--fx:.5759"><span class="bed-no">№ 6</span><span class="bed-mm">62 mm</span></li>
+        <li class="bed-tag" style="--fx:.6786"><span class="bed-no">№ 7</span><span class="bed-mm">37 mm</span></li>
+        <li class="bed-tag" style="--fx:.7813"><span class="bed-no">№ 8</span><span class="bed-mm">48 mm</span></li>
+        <li class="bed-tag" style="--fx:.884"><span class="bed-no">№ 9</span><span class="bed-mm">50 mm</span></li>
+      </ol>
     </div>
     <p class="whisper" id="garden-whisper">the seed does not argue with the dark; it waits in it — salt, then silver, then the small hours — nine is the number the ring counts when it thinks no one is listening</p>
     <p class="fragment">“On the ninth day of any month, watch the east bed. I have never written down why. Some of my notes are doors too.”</p>

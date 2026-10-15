@@ -333,6 +333,37 @@ function initGarden(){
     for(var i=0;i<3 && pool.length;i++){ picked.push(pool.splice(Math.floor(r()*pool.length),1)[0]); }
     el.textContent=picked.join(" — ");
   }).catch(function(){});
+  /* The Specimen Bed (Phase 1, the Conservatory): the day's garden,
+     catalogued. The nine seedlings stand in the chamber's soil in the
+     static page, in their authored order at their true measures; this
+     block re-reckons them — their order along the bed, their heights
+     and leans, and the measures on their tags — from the Dayseed,
+     through a fresh read of the wheel (seed = D) opened for the bed
+     alone. No existing stream is consumed, shared, or reordered; the
+     flowers above grow exactly as they always have. If the bed is not
+     in the page, the chamber stands as it did. (DESIGN.md §4.) */
+  (function bed(){
+    var host=document.getElementById("specimen-bed"); if(!host) return;
+    var slots=Array.prototype.slice.call(host.querySelectorAll(".bed-slot"));
+    var tags=Array.prototype.slice.call(host.querySelectorAll(".bed-tag"));
+    if(slots.length!==9 || tags.length!==9) return;
+    var r=mulberry32(daySeed());
+    var order=[0,1,2,3,4,5,6,7,8];
+    for(var i=order.length-1;i>0;i--){ var j=Math.floor(r()*(i+1)); var t=order[i]; order[i]=order[j]; order[j]=t; }
+    var xs=[70,185,300,415,530,645,760,875,990];
+    slots.forEach(function(slot,i){
+      var s=0.82+r()*0.5, lean=(r()-.5)*5;
+      var x=xs[order[i]];
+      slot.setAttribute("transform","translate("+x+",178) rotate("+lean.toFixed(2)+")");
+      var sway=slot.querySelector(".seedling-sway");
+      if(sway) sway.style.setProperty("--s", s.toFixed(3));
+      var base=parseFloat(slot.getAttribute("data-base"))||40;
+      var tag=tags[i];
+      tag.style.setProperty("--fx", (x/1120).toFixed(4));
+      var mm=tag.querySelector(".bed-mm");
+      if(mm) mm.textContent=Math.round(base*s)+" mm";
+    });
+  })();
 }
 
 /* ---------- The Constellation of Wishes (The Wishfield) ---------- */

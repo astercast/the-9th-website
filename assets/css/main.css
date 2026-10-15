@@ -4,17 +4,36 @@
 @property --glow-x { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
 @property --glow-y { syntax: '<percentage>'; inherits: false; initial-value: 40%; }
 
+/* The token layer (Phase 1, the Conservatory; DESIGN.md §3). The ground
+   moves from blue-black to ink green; the gold stays the site's own
+   brass and the ink its warm parchment; a third register — the archival
+   mono — is admitted for measurements, counts, and specimen labels. */
 :root{
-  --ink:#ece7dc;
-  --ink-dim:#a89f8d;
+  --ink:#E8E0CE;
+  --ink-dim:#A79C85;
+  --paper:#C9BFA9;
   --gold:#c9a86a;
   --gold-soft:rgba(201,168,106,.55);
-  --abyss:#07080f;
-  --panel:#0d0f1a;
-  --line:rgba(236,231,220,.14);
+  --abyss:#0B0F0C;
+  --forest:#19251C;
+  --panel:#101711;
+  --moss:#66745A;
+  --moss-hi:#93A37E;
+  --moonlight:#A9B4B1;
+  --line:rgba(232,224,206,.14);
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
   --display:Didot,"Bodoni MT","Bodoni 72","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
   --sans:ui-sans-system,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --step-0:1rem;
+  --step-1:1.25rem;
+  --step-2:1.6rem;
+  --step-3:2.2rem;
+  --step-4:3.2rem;
+  --step-5:clamp(40px,6.4vw,70px);
+  --space-1:.5rem; --space-2:1rem; --space-3:1.75rem; --space-4:3rem; --space-5:5rem;
+  --dur-1:.35s; --dur-2:.8s; --ease:ease;
+  --z-head:40; --z-veil:90;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -33,7 +52,7 @@ svg use{pointer-events:none}
   position:fixed;inset:auto 0 0 0;z-index:40;
   display:flex;justify-content:center;align-items:center;gap:14px;
   padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-  background:linear-gradient(to top, rgba(7,8,15,.92), rgba(7,8,15,.55) 70%, transparent);
+  background:linear-gradient(to top, rgba(11,15,12,.92), rgba(11,15,12,.55) 70%, transparent);
 }
 .ring{display:flex;gap:2px}
 /* Door-weight (rotation 23): the ring's glyphs stand as doors, not
@@ -43,7 +62,7 @@ svg use{pointer-events:none}
    weight and presence change. */
 .ring-btn{
   position:relative;width:44px;height:52px;border:1px solid rgba(201,168,106,.42);border-radius:22px 22px 5px 5px;
-  background:rgba(7,8,15,.5);color:var(--ink);transition:color .4s, transform .4s, border-color .4s, background .4s;
+  background:rgba(11,15,12,.5);color:var(--ink);transition:color .4s, transform .4s, border-color .4s, background .4s;
 }
 .ring-btn svg{width:28px;height:28px;fill:none}
 /* VP-0043 (rotation 30): each door's name - the aria-label text itself, no
@@ -55,7 +74,7 @@ svg use{pointer-events:none}
 .ring-name{
   position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);
   font-family:var(--serif);font-size:14px;letter-spacing:.05em;white-space:nowrap;
-  color:var(--gold);background:rgba(7,8,15,.92);border:1px solid rgba(201,168,106,.45);
+  color:var(--gold);background:rgba(11,15,12,.92);border:1px solid rgba(201,168,106,.45);
   padding:2px 10px 3px;border-radius:2px;pointer-events:none;
   opacity:0;visibility:hidden;
 }
@@ -181,7 +200,7 @@ html.js .stop.in{opacity:1;transform:none}
   html.js .stop{animation:stopIn linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
   @keyframes stopIn{from{opacity:.12;transform:translateY(18px)}to{opacity:1;transform:none}}
 }
-.stop-size{font-family:var(--sans);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.stop-size{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
 .stop h3{font-size:clamp(26px,3.6vw,38px);margin:.25em 0 .3em}
 .stop p{max-width:36em;color:#d8d2c4}
 .stop .fragment{margin:26px 0 0}
@@ -215,7 +234,7 @@ html.js .stop.in{opacity:1;transform:none}
 /* ---------- Garden ---------- */
 .garden-frame canvas{background:linear-gradient(to bottom,#0a0f14,#0c130d)}
 .whisper{font-style:italic;color:#b3a88f;text-align:center;max-width:30em;margin:38px auto 0;font-size:.95em;line-height:1.9}
-.oracle-slip{font-family:var(--sans);letter-spacing:.18em;font-size:.78em;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:30px}
+.oracle-slip{font-family:var(--mono);letter-spacing:.18em;font-size:.78em;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:30px}
 
 /* ---------- Constellation ---------- */
 /* Wave 3: the sky moved to the frame itself, so the Wishfield Nebula can
@@ -247,7 +266,7 @@ html.js .stop.in{opacity:1;transform:none}
 @keyframes fallenDrift{from{transform:translate(0,0)}to{transform:translate(7px,5px)}}
 html.still .fallen-word{animation:none}
 .collection{margin-top:26px;border-top:1px solid var(--line);padding-top:18px}
-.collection summary{font-family:var(--sans);font-size:13px;letter-spacing:.16em;color:var(--ink-dim);cursor:pointer}
+.collection summary{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--ink-dim);cursor:pointer}
 .wish-list{columns:2;column-gap:44px;color:#d8d2c4;font-size:.94em}
 .wish-list li{margin:0 0 10px;break-inside:avoid}
 @media(max-width:640px){.wish-list{columns:1}}
@@ -359,7 +378,7 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
     background:#e8e4d4;box-shadow:0 0 44px rgba(232,228,212,.35);overflow:hidden;
   }
   :scope .moon-disc::after{content:"";position:absolute;inset:0;border-radius:50%;background:#080b18;transform:translateX(var(--moon-shadow,30%))}
-  :scope .moon-fact{text-align:center;font-family:var(--sans);letter-spacing:.22em;text-transform:uppercase;font-size:.82em;color:var(--gold)}
+  :scope .moon-fact{text-align:center;font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;font-size:.82em;color:var(--gold)}
   :scope .tide-line{text-align:center;font-style:italic;color:var(--ink-dim);max-width:32em;margin:26px auto}
 }
 /* tide-scope:end */
@@ -374,7 +393,7 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
 .exhibit canvas,.golden-svg{width:100%;height:auto;color:var(--ink-dim)}
 .exhibit figcaption{color:#d8d2c4;font-size:.93em}
 .exhibit figcaption strong{color:var(--ink)}
-.exhibit-state{color:var(--gold);font-family:var(--sans);font-size:.82em;letter-spacing:.1em}
+.exhibit-state{color:var(--gold);font-family:var(--mono);font-size:.82em;letter-spacing:.1em}
 .locked-box{
   position:relative;height:190px;margin:8px auto;width:min(240px,80%);
   background:linear-gradient(160deg,#2a1f16,#17100a);border-radius:6px;
@@ -449,9 +468,9 @@ html.js .letters-all.sealed .letter.drawn .letter-first{color:#f2ecdd;margin:0 0
 .coda{margin-top:130px}
 
 /* numerals stand where sentences stood */
-.door-count{font-family:var(--sans);font-size:clamp(24px,3.4vw,32px);letter-spacing:.34em;color:var(--gold);font-style:normal;margin:30px auto 0}
-.mirror-path{font-family:var(--sans);letter-spacing:.34em;color:var(--gold);font-style:normal;font-size:.95em;min-height:1.4em}
-.moon-fact{font-family:var(--sans);letter-spacing:.22em;text-transform:uppercase;font-size:.82em;color:var(--gold)}
+.door-count{font-family:var(--mono);font-size:clamp(24px,3.4vw,32px);letter-spacing:.34em;color:var(--gold);font-style:normal;margin:30px auto 0}
+.mirror-path{font-family:var(--mono);letter-spacing:.34em;color:var(--gold);font-style:normal;font-size:.95em;min-height:1.4em}
+.moon-fact{font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;font-size:.82em;color:var(--gold)}
 
 /* symbol-only chrome */
 .sound-pill{font-size:15px;line-height:1;padding:7px 11px}
@@ -471,6 +490,184 @@ main{padding-bottom:40px}
 ::view-transition-new(root){animation:vtIn .55s ease both}
 @keyframes vtOut{to{opacity:0}}
 @keyframes vtIn{from{opacity:0}}
+
+/* ---------- Phase 1: the Midnight Conservatory (DESIGN.md) ----------
+   The token layer stands at the head of this file. What follows is the
+   Phase-1 surface for the two representative rooms — the Threshold and
+   the Garden. Frontier techniques, each with its fallback named:
+   container queries (fallback: the narrow composition, complete);
+   scroll-driven animation (fallback: the standing composition);
+   SVG filters for grain and light (fallback: the unfiltered rooms);
+   a kinetic title settle (fallback: the title, still). The core stands
+   beneath every line of this section. */
+
+/* the ink grain: a whisper of material over the two rooms. On the
+   Garden the grain is bounded to the first screen of the room — the
+   filter's paint stays small wherever the chamber runs tall. */
+.grain{
+  position:absolute;inset:0;z-index:3;pointer-events:none;
+  opacity:.065;filter:url(#grain-ink);
+}
+#chamber-garden .grain{inset:0 0 auto 0;height:100lvh}
+
+/* the phase sky, retoned from blue to forest and moonlight */
+body[data-phase="dawn"]{--sky-top:#131C15;--sky-mid:#5F4B43;--sky-low:#C98F5F;--sky-glow:rgba(255,186,120,.24)}
+body[data-phase="day"]{--sky-top:#26332A;--sky-mid:#5F7263;--sky-low:#B0BBA9;--sky-glow:rgba(240,246,220,.18)}
+body[data-phase="dusk"]{--sky-top:#131711;--sky-mid:#54382F;--sky-low:#C0763F;--sky-glow:rgba(255,150,90,.22)}
+body[data-phase="night"]{--sky-top:#060806;--sky-mid:#0C130D;--sky-low:#18251B;--sky-glow:rgba(169,180,177,.13)}
+.midnight-line{color:var(--moonlight)}
+
+/* --- the Threshold as a composition, not a stack --- */
+#chamber-threshold{text-align:left;container-type:inline-size}
+.threshold-inner{
+  max-width:1120px;display:grid;
+  grid-template-areas:"title" "stage" "fragment";
+  row-gap:10px;align-content:center;
+  min-height:calc(100svh - 120px);padding-top:2vh;
+}
+.threshold-title-block{grid-area:title;text-align:center;position:relative;z-index:2}
+.threshold-title-block .glyph-large{margin:0 auto 10px}
+.threshold-title-block .welcome{margin:.6em auto}
+.threshold-stage{grid-area:stage;position:relative;width:min(520px,94%);margin:6px auto 0}
+.doorframe-svg{width:100%;height:auto;display:block}
+.frame-rule{fill:none;stroke:var(--gold);stroke-width:1.2;opacity:.75}
+.frame-rule-in{stroke-width:.7;opacity:.45}
+.frame-ticks path{stroke:var(--ink-dim);stroke-width:1;opacity:.55;fill:none}
+.frame-horizon{stroke:var(--moonlight);stroke-width:.7;opacity:.35}
+.doorframe-light{fill:var(--moonlight);opacity:.5}
+.doorframe-light-core{fill:var(--ink)}
+.frame-seed{fill:var(--gold)}
+.frame-step{fill:none;stroke:var(--gold-soft);stroke-width:1}
+.threshold-inner .ring-map-wrap{margin:20px auto 0;width:min(228px,58vw)}
+.threshold-inner .fragment-threshold{grid-area:fragment;margin:26px auto 0}
+
+/* the title settles: one deep kinetic moment, real text throughout.
+   Transform and opacity only — the settle never touches layout. */
+.site-title{
+  font-size:var(--step-5);
+  animation:titleSettle 1.1s cubic-bezier(.22,.8,.3,1) .15s both;
+}
+@keyframes titleSettle{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:none}
+}
+html.still .site-title{animation:none}
+.doorframe-light{animation:lightBreathe 9s ease-in-out infinite alternate}
+@keyframes lightBreathe{from{opacity:.38}to{opacity:.62}}
+html.still .doorframe-light{animation:none;opacity:.5}
+
+/* the frame sinks a breath as the visitor scrolls past it;
+   without scroll-driven animation it simply stands */
+@supports (animation-timeline: scroll()){
+  .doorframe-svg{animation:frameSink linear both;animation-timeline:scroll(root block);animation-range:0px 55vh}
+  @keyframes frameSink{to{transform:translateY(30px) scale(.982);opacity:.9}}
+  html.still .doorframe-svg{animation:none}
+}
+
+/* the wide composition: the title breaks axis against the frame,
+   the ring map stands at the frame's foot, the fragment closes low.
+   The container is the chamber itself; the query answers its width. */
+@container (min-width:1180px){
+  .threshold-inner{
+    grid-template-columns:minmax(320px,5fr) 6fr;
+    grid-template-areas:"title stage" "fragment stage";
+    column-gap:60px;
+  }
+  .threshold-title-block{text-align:left;align-self:center}
+  .threshold-title-block .glyph-large{margin:0 0 12px}
+  .threshold-title-block .welcome{margin:.6em 0}
+  .threshold-stage{width:100%;max-width:540px;margin:0 auto;text-align:center}
+  .doorframe-svg{height:min(64vh,680px);width:auto;max-width:100%}
+  .threshold-inner .ring-map-wrap{
+    position:absolute;right:-24px;bottom:4px;width:184px;margin:0;
+  }
+  .threshold-inner .fragment-threshold{align-self:end;margin:0 0 4px}
+}
+
+/* the middle tier (tablets, small laptops, split windows): the axis
+   still breaks — a narrower frame, the title set in container units */
+@container (min-width:860px) and (max-width:1179px){
+  .threshold-inner{
+    grid-template-columns:minmax(280px,5fr) 6fr;
+    grid-template-areas:"title stage" "fragment stage";
+    column-gap:40px;
+  }
+  .threshold-title-block{text-align:left;align-self:center}
+  .threshold-title-block .glyph-large{margin:0 0 10px}
+  .threshold-title-block .welcome{margin:.6em 0}
+  .threshold-title-block .site-title{font-size:clamp(34px,4.8cqw,52px)}
+  .threshold-stage{width:100%;max-width:440px;margin:0 auto;text-align:center}
+  .doorframe-svg{height:min(56vh,540px);width:auto;max-width:100%}
+  .threshold-inner .ring-map-wrap{
+    position:absolute;right:-8px;bottom:0;width:148px;margin:0;
+  }
+  .threshold-inner .fragment-threshold{align-self:end;margin:0 0 4px}
+}
+
+/* --- the Garden as a room: grounds, ribs, a mounted frame --- */
+#chamber-garden{
+  background:
+    radial-gradient(120% 55% at 50% -6%, rgba(169,180,177,.09), transparent 60%),
+    linear-gradient(to bottom, var(--forest), var(--abyss) 74%);
+}
+.garden-ribs{
+  position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg, transparent 0 118px, rgba(232,224,206,.05) 118px 119px);
+  -webkit-mask-image:linear-gradient(to bottom, black 55%, transparent 97%);
+  mask-image:linear-gradient(to bottom, black 55%, transparent 97%);
+}
+.garden-frame{
+  border:1px solid rgba(201,168,106,.38);
+  padding:6px;background:rgba(11,15,12,.4);
+}
+.garden-frame canvas{background:linear-gradient(to bottom,#0D130E,#101A10);border-radius:2px}
+
+/* --- the Specimen Bed --- */
+.specimen-bed{margin:30px 0 2px;position:relative}
+.bed-svg{width:100%;height:auto;display:block;overflow:visible}
+.bed-soil{fill:#14100A}
+.bed-soil-line{stroke:var(--gold-soft);stroke-width:.8}
+.bed-tuft{fill:none;stroke:var(--moss);stroke-width:1.4;opacity:.5;stroke-linecap:round}
+.bed-stone{fill:#23231C}
+.bed-stem{fill:none;stroke:var(--moss-hi);stroke-width:3.1;stroke-linecap:round;stroke-linejoin:round}
+.bed-leaf{fill:var(--moss);opacity:.95}
+.bed-bulb{fill:none;stroke:var(--moss-hi);stroke-width:2.2}
+.bed-bud{fill:var(--moss-hi)}
+.bed-dot{fill:var(--gold)}
+.seedling-sway{
+  transform-box:fill-box;transform-origin:50% 100%;
+  animation:bedSway 7.5s ease-in-out infinite alternate;
+  animation-delay:var(--d,0s);
+}
+@keyframes bedSway{
+  from{transform:scale(var(--s,1)) rotate(-1.1deg)}
+  to{transform:scale(var(--s,1)) rotate(1.25deg)}
+}
+html.still .seedling-sway{animation:none;transform:scale(var(--s,1))}
+/* the bed grows in as it enters, where scroll-driven animation lives;
+   without it the bed simply stands, grown — the fallback is the bed */
+@supports (animation-timeline: view()){
+  .seedling-grow{
+    transform-box:fill-box;transform-origin:50% 100%;
+    animation:bedGrow linear both;animation-timeline:view();animation-range:entry 0% entry 55%;
+  }
+  @keyframes bedGrow{from{transform:scale(.35);opacity:.25}to{transform:scale(1);opacity:1}}
+  html.still .seedling-grow{animation:none}
+}
+.bed-tags{list-style:none;margin:8px 0 0;padding:0;position:relative;height:30px}
+.bed-tag{
+  position:absolute;top:0;left:calc(var(--fx)*100%);transform:translateX(-50%);
+  display:flex;gap:7px;white-space:nowrap;
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;color:var(--ink-dim);
+}
+.bed-no{color:var(--ink)}
+.bed-mm{color:var(--gold)}
+@media (max-width:560px){ .bed-mm{display:none} .bed-tag{font-size:10.5px} }
+/* on wide screens the bed steps out of the text column toward the
+   field's own width — specimens, not footnotes */
+@media (min-width:1000px){
+  .specimen-bed{width:920px;margin-left:calc(50% - 460px)}
+}
 
 /* ---------- calm mode ---------- */
 @media (prefers-reduced-motion: reduce){
