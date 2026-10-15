@@ -675,3 +675,182 @@ html.still .seedling-sway{animation:none;transform:scale(var(--s,1))}
   *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
   .sunrise .sun{animation:none;transform:translate(-50%,-120px)}
 }
+
+/* ---------- Phase 2: the Massive Rework · the Deep (2026-10-15) ----------
+   The composition grammar is replaced, whole: no centred column, no
+   bottom bar. One living dark (assets/js/deep.js, a hand-written WebGL
+   field) stands behind every chamber; the ring becomes a spine of
+   doors at the left edge; each chamber's name stands in it once,
+   monumental, cropped by the viewport like architecture; artifacts
+   stage off-axis, each chamber under its own staging rule.
+   The fallback is designed, not broken: where the Deep cannot live
+   (no WebGL, no script), the chambers stand on the strata grounds
+   below · layered CSS in the same worlds · and where script lives
+   but calm is asked, the Deep renders one settled frame.
+   Frontier techniques in this section, each with its fallback named:
+   WebGL shader strata (fallback: the strata grounds below) ·
+   kinetic type by letter-settle (fallback: the word, still) ·
+   the spine layout by media query (fallback: the bottom bar, as it
+   stood) · translucent cabinet glass by plain alpha (no filter, so
+   no cost is hidden). The core · every chamber's content, order, and
+   behaviour · stands beneath all of it, untouched. */
+
+/* the Deep itself */
+#deep{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main{position:relative;z-index:1}
+
+/* the strata grounds (the fallback worlds; the Deep paints over them) */
+#chamber-scale{background:radial-gradient(110% 80% at 16% 90%, rgba(169,180,177,.08), transparent 55%), linear-gradient(to bottom,#060806,#0B0F0C 55%)}
+#chamber-stars{background:radial-gradient(120% 100% at 50% 0%, #0A0F24, #04050C)}
+#chamber-letters{background:radial-gradient(90% 60% at 18% 12%, rgba(216,170,90,.07), transparent 60%), linear-gradient(175deg,#0C0906,#070605)}
+#chamber-tide{background:linear-gradient(to bottom,#04070D,#081426 70%,#04070D)}
+#chamber-cabinet{background:radial-gradient(100% 70% at 50% 0%, rgba(201,168,106,.05), transparent 60%), #080604}
+#chamber-mirror{background:linear-gradient(90deg,#070A12,#0A0E1C 50%,#070A12)}
+#chamber-ninth{background:linear-gradient(to top, rgba(201,168,106,.06), transparent 42%), #050605}
+html.deep-on #chamber-scale, html.deep-on #chamber-stars, html.deep-on #chamber-letters,
+html.deep-on #chamber-tide, html.deep-on #chamber-cabinet, html.deep-on #chamber-mirror,
+html.deep-on #chamber-ninth, html.deep-on #chamber-garden, html.deep-on #chamber-threshold{
+  background:transparent;
+}
+html.deep-on .threshold-sky{display:none}
+html.deep-on .garden-ribs{display:none}
+html.deep-on .exhibit{background:rgba(13,18,14,.86)}
+
+/* ---------- the monumental words ---------- */
+.chamber-word{
+  position:absolute;z-index:0;margin:0;pointer-events:none;user-select:none;
+  font-family:var(--display);font-weight:500;line-height:.92;letter-spacing:.015em;
+  font-size:clamp(84px,15vw,210px);
+  color:rgba(232,224,206,.05);
+  -webkit-text-stroke:1px rgba(232,224,206,.13);
+}
+.chamber-word .wl{display:inline-block;opacity:0;transform:translateY(.16em)}
+.chamber.active .chamber-word .wl{
+  animation:wlRise 1s cubic-bezier(.22,.8,.3,1) both;
+  animation-delay:calc(var(--i)*55ms + 150ms);
+}
+@keyframes wlRise{from{opacity:0;transform:translateY(.16em)}to{opacity:1;transform:none}}
+html.still .chamber-word .wl{opacity:1;transform:none;animation:none}
+#chamber-scale .chamber-word{top:3vh;right:-.06em;text-align:right}
+#chamber-garden .chamber-word{top:2vh;left:.12em}
+#chamber-stars .chamber-word{bottom:5vh;right:-.06em;text-align:right}
+#chamber-letters .chamber-word{top:2.5vh;right:-.06em;text-align:right}
+#chamber-tide .chamber-word{top:3vh;left:.12em}
+#chamber-cabinet .chamber-word{writing-mode:vertical-rl;top:7vh;right:.35em;font-size:clamp(64px,9vw,138px)}
+#chamber-mirror .chamber-word{writing-mode:vertical-rl;top:7vh;left:.35em;font-size:clamp(64px,9vw,138px)}
+#chamber-ninth .chamber-word{top:4vh;left:50%;transform:translateX(-50%);font-size:clamp(72px,11vw,160px);color:rgba(232,224,206,.04)}
+.chamber-inner{z-index:1}
+@media (max-width:899px){
+  .chamber-word{font-size:clamp(54px,16.5vw,92px)}
+  #chamber-cabinet .chamber-word,#chamber-mirror .chamber-word{writing-mode:horizontal-tb;font-size:clamp(54px,16.5vw,92px)}
+  #chamber-cabinet .chamber-word{top:2vh;right:-.06em;left:auto}
+  #chamber-mirror .chamber-word{top:2vh;left:.12em}
+  #chamber-ninth .chamber-word{font-size:clamp(54px,16.5vw,92px)}
+}
+
+/* ---------- the spine: the ring stands at the left edge ---------- */
+@media (min-width:900px){
+  .site-head{
+    inset:0 auto 0 0;width:78px;flex-direction:column;justify-content:center;
+    padding:14px 0;
+    background:linear-gradient(to right, rgba(6,8,6,.88), rgba(6,8,6,.45) 65%, transparent);
+  }
+  .ring{flex-direction:column;gap:7px}
+  .ring-btn:first-child .ring-name,.ring-btn:last-child .ring-name,
+  .ring-name{
+    left:calc(100% + 14px);right:auto;bottom:auto;top:50%;transform:translateY(-50%);
+  }
+  .sound-toggle{position:fixed;top:16px;right:18px;bottom:auto}
+  /* chambers breathe around the spine; the bleed correction keeps
+     full-width scenes exact (the inner's centre moves 37px right) */
+  .chamber{padding-left:104px;padding-right:30px}
+  .bleed{margin-left:calc(50% - 50vw - 37px)}
+}
+
+/* ---------- Threshold: the title takes the wall ---------- */
+@media (min-width:1180px){
+  .threshold-inner{max-width:1280px}
+  .site-title{font-size:clamp(60px,7.2vw,100px)}
+  .threshold-title-block{align-self:end;padding-bottom:3vh;margin-right:-56px;position:relative;z-index:2}
+  .threshold-stage{justify-self:start;margin-left:1vw}
+  .threshold-stage .doorframe{height:min(78vh,820px)}
+}
+
+/* ---------- Scale: the descent staggers; numerals stand behind it ---------- */
+.scale-stops{counter-reset:stop}
+.stop{position:relative;z-index:0}
+.stop::before{
+  counter-increment:stop;content:counter(stop,decimal-leading-zero);
+  position:absolute;right:-6px;top:6px;z-index:-1;
+  font-family:var(--display);font-size:clamp(76px,11vw,160px);line-height:1;
+  color:rgba(232,224,206,.045);pointer-events:none;
+}
+.scale-stops .stop:nth-child(-n+4){--k:0}
+.scale-stops .stop:nth-child(n+5):nth-child(-n+8){--k:1}
+.scale-stops .stop:nth-child(n+9):nth-child(-n+12){--k:2}
+.scale-stops .stop:nth-child(n+13){--k:3}
+@media (min-width:900px){
+  .scale-stops .stop{margin-left:calc(var(--k,0)*3.4vw)}
+  #chamber-scale .chamber-inner{max-width:820px}
+}
+
+/* ---------- Garden: the bed steps over the field's hem ---------- */
+.specimen-bed{margin-top:-40px;z-index:2;
+  background:linear-gradient(to bottom, transparent, rgba(6,8,6,.5) 34%, rgba(6,8,6,.18));
+}
+@media (min-width:900px){
+  #chamber-garden .whisper{text-align:left;margin-left:5vw}
+  #chamber-garden .fragment{margin-left:5vw}
+}
+
+/* ---------- Letters: the drawn letter stands as a sheet; the sealed
+   nine become its index ---------- */
+@media (min-width:1000px){
+  #chamber-letters .chamber-inner{max-width:1120px}
+  .letters-all{display:grid;grid-template-columns:minmax(0,7fr) minmax(230px,4fr);column-gap:4vw;align-items:start}
+  .letters-all .letter{grid-column:2}
+  .letters-all .letter.drawn{
+    grid-column:1;grid-row:1 / span 9;
+    transform:rotate(-1.1deg);
+    border:1px solid var(--gold-soft);
+    background:linear-gradient(168deg, rgba(232,224,206,.06), rgba(232,224,206,.015) 60%);
+    box-shadow:0 34px 70px rgba(0,0,0,.5);
+    padding:clamp(30px,4vw,54px) clamp(20px,3vw,44px);
+  }
+}
+@media (max-width:999px){
+  .letters-all .letter.drawn{
+    border:1px solid var(--gold-soft);
+    background:linear-gradient(168deg, rgba(232,224,206,.05), rgba(232,224,206,.015) 60%);
+    box-shadow:0 24px 50px rgba(0,0,0,.45);
+  }
+}
+
+/* ---------- Cabinet: the case leans; no two shelves level ---------- */
+@media (min-width:900px){
+  #chamber-cabinet .chamber-inner{max-width:1060px}
+  .cabinet-grid{grid-template-columns:1.12fr .88fr;gap:28px;padding-bottom:38px}
+  .cabinet-grid .exhibit:nth-child(even){transform:translateY(38px)}
+}
+
+/* ---------- Mirror: the count stands larger ---------- */
+.mirror-path{font-size:clamp(18px,2.4vw,27px)}
+
+/* ---------- the Ninth: the ring grows; the passage steps aside ---------- */
+@media (min-width:900px){
+  #chamber-ninth .door-ring{width:min(56vmin,540px)}
+  .sunrise{width:min(94vw,1020px)}
+  .door-open .passage{margin-left:5vw}
+  .door-open .passage p{margin-left:0}
+}
+
+/* where a chamber's scene fills its frame, the word stands over the
+   scene · a lintel laid across the glass, not hidden behind it */
+#chamber-garden .chamber-word, #chamber-stars .chamber-word, #chamber-tide .chamber-word,
+#chamber-mirror .chamber-word, #chamber-cabinet .chamber-word{z-index:3}
+#chamber-stars .chamber-word{bottom:auto;top:2vh}
+
+/* calm mode: the words stand still, whole */
+@media (prefers-reduced-motion: reduce){
+  .chamber-word .wl{opacity:1;transform:none;animation:none}
+}

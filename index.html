@@ -41,6 +41,11 @@ html{background:#0B0F0C}
 </head>
 <body data-phase="night">
 
+<!-- The Deep (the Massive Rework): one living dark beneath every chamber,
+     drawn by assets/js/deep.js. Where it cannot live, it is simply not
+     there, and the chambers stand on their own grounds, as they did. -->
+<canvas id="deep" aria-hidden="true"></canvas>
+
 <div id="veil" aria-hidden="true">
   <svg width="96" height="96" viewBox="0 0 100 100">
     <circle cx="50" cy="50" r="36" fill="none" stroke="#c9a86a" stroke-width="1" opacity=".55"/>
@@ -179,6 +184,7 @@ html{background:#0B0F0C}
 
 <!-- II · THE SCALE ROOM -->
 <section class="chamber" id="chamber-scale" data-chamber="scale" aria-label="The Scale Room">
+  <p class="chamber-word" aria-hidden="true">Scale</p>
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-scale"/></svg>
     <ol class="scale-stops">
@@ -210,6 +216,7 @@ html{background:#0B0F0C}
 
 <!-- III · THE GARDEN -->
 <section class="chamber" id="chamber-garden" data-chamber="garden" aria-label="The Garden">
+  <p class="chamber-word" aria-hidden="true">Garden</p>
   <div class="garden-ribs" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="chamber-inner">
@@ -259,6 +266,7 @@ html{background:#0B0F0C}
 
 <!-- IV · THE CONSTELLATION OF WISHES -->
 <section class="chamber" id="chamber-stars" data-chamber="stars" aria-label="The Constellation of Wishes">
+  <p class="chamber-word" aria-hidden="true">Stars</p>
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-stars"/></svg>
     <div class="canvas-frame stars-frame bleed">
@@ -316,6 +324,7 @@ html{background:#0B0F0C}
 
 <!-- V · THE LETTER ROOM -->
 <section class="chamber" id="chamber-letters" data-chamber="letters" aria-label="The Letter Room">
+  <p class="chamber-word" aria-hidden="true">Letters</p>
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-letter"/></svg>
     <div class="letters-all" id="letters-all">
@@ -381,6 +390,7 @@ html{background:#0B0F0C}
 
 <!-- VI · THE TIDE ROOM -->
 <section class="chamber" id="chamber-tide" data-chamber="tide" aria-label="The Tide Room">
+  <p class="chamber-word" aria-hidden="true">Tide</p>
   <div class="chamber-inner tide-inner">
     <svg class="glyph-corner"><use href="#g-tide"/></svg>
     <div class="canvas-frame tide-frame bleed">
@@ -395,6 +405,7 @@ html{background:#0B0F0C}
 
 <!-- VII · THE CABINET -->
 <section class="chamber" id="chamber-cabinet" data-chamber="cabinet" aria-label="The Cabinet">
+  <p class="chamber-word" aria-hidden="true">Cabinet</p>
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-cabinet"/></svg>
     <div class="cabinet-grid">
@@ -440,6 +451,7 @@ html{background:#0B0F0C}
 
 <!-- VIII · THE MIRROR -->
 <section class="chamber" id="chamber-mirror" data-chamber="mirror" aria-label="The Mirror">
+  <p class="chamber-word" aria-hidden="true">Mirror</p>
   <div class="chamber-inner">
     <svg class="glyph-corner"><use href="#g-mirror"/></svg>
     <div class="canvas-frame mirror-frame bleed">
@@ -452,6 +464,7 @@ html{background:#0B0F0C}
 
 <!-- IX · THE NINTH DOOR -->
 <section class="chamber" id="chamber-ninth" data-chamber="ninth" aria-label="The Ninth Door">
+  <p class="chamber-word" aria-hidden="true">Ninth</p>
   <div class="chamber-inner ninth-inner">
     <div class="door-state" id="door-closed">
       <svg class="door-ring" viewBox="0 0 200 200" aria-label="A ring of nine glyphs around a closed door">
@@ -473,5 +486,6 @@ html{background:#0B0F0C}
 </section>
 </main>
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/deep.js" defer></script>
 </body>
 </html>
