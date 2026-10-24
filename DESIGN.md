@@ -415,3 +415,7 @@ The user's verdict on Phase 1 ("it looks really similar to how it did before") r
 **Errata pointer.** §6's measured-weight line carries the Phase 2 record's figures (159,975 B; CSS 44,992 B; JS 74,193 B). The true figures stand in the errata appended to the Phase 2 landing record (159,963 B; CSS 44,986 B; JS 74,187 B) and in WAVELOG's audit entry; §6 stands as written, corrected by reference.
 
 **Measured (this machine, as ever).** Overflow 0 px in all nine chambers at 1440/390/320 after the recomposition; console errors 0. Captures: `~/workspace/progress-archive/the-9th-website/2026-10-15-next-pass/` (`before/`, `after/`, side-by-side composites, the Letters frames with the shelf's new letters standing, and the Garden frames behind the visit-deepening proof).
+
+---
+
+**Addendum (wave 11, 2026-10-23).** The Phase 1 doorframe retires. The arrival is carried now by **The Rose** (CANON §III): the ring map drawn as nine-lobed tracery on a 9 x 9 Threshold, recorded in the canon before it shipped and in WAVELOG's wave-11 entry. The doorframe's sections above stand as the Phase 1 record, superseded by this note; the Deep's door of light is measured from the Rose.

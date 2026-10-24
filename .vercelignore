@@ -1,0 +1,5 @@
+# TN4 (wave 11): screenshots and docs stay out of the deploy.
+# codex.txt is a site artifact and is NOT ignored; api/ functions
+# and their inputs stay.
+screenshots
+*.md

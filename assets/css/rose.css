@@ -1,0 +1,202 @@
+/* ============ 1. TOKENS: The Rose (local fonts only, CANON IX) ============ */
+:root {
+  --night:     #0B0C0A;
+  --gold:      #C9A86A;           /* the site's own gold, unchanged */
+  --gold-hi:   #E3C88F;
+  --gold-soft: color-mix(in oklab, var(--gold) 55%, transparent);
+  --parchment: #E8E0CE;
+  --ash:       #A79C85;
+  --lead:      color-mix(in oklab, var(--gold) 34%, var(--night));
+  --glass:     color-mix(in oklab, var(--gold) 20%, transparent);
+
+  --display: Didot, "Bodoni 72", "Bodoni MT", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --serif:   "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+
+  --fs-title:   clamp(1rem, .8rem + .9vw, 1.5rem);
+  --fs-welcome: clamp(1.05rem, .9rem + .6vw, 1.4rem);
+  --fs-frag:    .9rem;
+
+  /* the measure is nine */
+  --n: calc(100vmin / 9);
+  --gutter: clamp(1rem, .4rem + 2.5vw, 2.5rem);
+
+  --ease-slow: cubic-bezier(.33, 0, .2, 1);
+
+  /* the old names, so every chamber stands on the same stone */
+  --ink: var(--parchment);
+  --ink-dim: var(--ash);
+  --abyss: var(--night);
+  --line: color-mix(in oklab, var(--parchment) 14%, transparent);
+}
+
+/* the place keeps real time: the dark lifts a little by day, never to blue */
+body[data-phase="dawn"]  { --night: #12110E; }
+body[data-phase="day"]   { --night: #16150F; }
+body[data-phase="dusk"]  { --night: #100F0C; }
+body[data-phase="night"] { --night: #0B0C0A; }
+
+body { background: var(--night); color: var(--parchment); }
+
+/* ============ 2. THE RING: glyphs on a hairline sill ============ */
+.site-head {
+  position: fixed; inset: auto 0 0 0;
+  z-index: var(--z-head, 40);
+  display: flex; justify-content: center;
+  padding: 0 var(--gutter) max(.6rem, env(safe-area-inset-bottom));
+  background: linear-gradient(to top, color-mix(in oklab, var(--night) 92%, transparent), transparent);
+  pointer-events: none;
+}
+.ring {
+  display: flex; gap: clamp(.15rem, 1.1vw, .9rem);
+  padding-top: .6rem;
+  border-top: 1px solid var(--lead);
+  pointer-events: auto;
+}
+.ring-btn {
+  position: relative;
+  display: grid; place-items: center;
+  inline-size: 2.75rem; block-size: 2.75rem;
+  padding: 0;
+  color: var(--ash);
+  background: none; border: 0; border-radius: 0; box-shadow: none;
+  transform: none;
+  cursor: pointer;
+}
+.ring-btn svg { inline-size: 1.55rem; block-size: 1.55rem; }
+.ring-btn:hover, .ring-btn:focus-visible { color: var(--gold-hi); background: none; border: 0; transform: none; }
+.ring-btn:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+.ring-btn[aria-current="true"] { color: var(--gold); background: none; border: 0; box-shadow: none; }
+.ring-btn[aria-current="true"]::before {
+  content: "";
+  position: absolute; top: -.65rem; left: 50%; translate: -50% 0;
+  inline-size: 1.25rem; block-size: 1px;
+  background: var(--gold);
+}
+.ring-btn.seen::after {
+  content: "";
+  position: absolute; bottom: .1rem; left: 50%; translate: -50% 0;
+  inline-size: 3px; block-size: 3px;
+  border-radius: 50%;
+  background: var(--gold-soft);
+}
+.sound-pill { border: 0; border-radius: 0; padding: .45rem; color: var(--ash); background: none; }
+.sound-toggle[aria-pressed="true"] .sound-pill { background: none; color: var(--gold); }
+
+/* ============ 3. THE THRESHOLD: a 9 x 9 room ============ */
+#chamber-threshold { position: relative; min-block-size: 100svh; background: var(--night); overflow: hidden; }
+
+.threshold-sky {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(40vmin 40vmin at 66% 50%, color-mix(in oklab, var(--gold) 12%, transparent), transparent 70%),
+    radial-gradient(520px 360px at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in oklab, var(--gold) 9%, transparent), transparent 65%),
+    var(--night);
+}
+.threshold-field { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; }
+.threshold-field circle { fill: var(--gold); }
+
+.threshold-inner {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(9, minmax(0, 1fr));
+  min-block-size: 100svh;
+  max-inline-size: none;
+  margin: 0;
+  padding: calc(var(--n) * .5) var(--gutter) calc(var(--n) * .5 + 4rem);
+  box-sizing: border-box;
+  text-align: start;
+}
+
+.site-title {
+  grid-column: 1 / 4; grid-row: 1 / 2; align-self: start;
+  margin: 0;
+  font: 400 var(--fs-title)/1.2 var(--display);
+  font-variant-caps: all-small-caps;
+  letter-spacing: .22em;
+  color: var(--parchment);
+}
+
+.rose-wrap { grid-column: 4 / 10; grid-row: 1 / 10; place-self: center; inline-size: min(100%, 80svh); }
+.ring-map { display: block; inline-size: 100%; block-size: auto; overflow: visible; }
+
+.threshold-foot { grid-column: 1 / 4; grid-row: 6 / 8; align-self: end; }
+.welcome {
+  margin: 0;
+  max-inline-size: 20ch;
+  font: italic 400 var(--fs-welcome)/1.45 var(--serif);
+  color: var(--parchment);
+  text-align: start;
+}
+.midnight-line { margin: .8rem 0 0; max-inline-size: 22ch; font: italic 400 .95rem/1.45 var(--serif); color: var(--gold-hi); }
+
+/* the fragment stands in the margin: witnessed */
+.fragment-threshold {
+  grid-column: 1 / 4; grid-row: 8 / 10; align-self: end;
+  margin: 0; padding: 0; border: 0;
+  max-inline-size: 26ch;
+  font: italic 400 var(--fs-frag)/1.5 var(--serif);
+  color: var(--ash);
+}
+.frag-mark { inline-size: .9rem; block-size: .9rem; margin-inline-end: .5em; vertical-align: -.1em; color: var(--gold-soft); }
+
+@media (max-aspect-ratio: 1/1) {
+  .threshold-inner { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto 1fr auto; row-gap: 1.5rem; }
+  .site-title, .rose-wrap, .threshold-foot, .fragment-threshold { grid-column: 1; }
+  .site-title { grid-row: 1; }
+  .rose-wrap { grid-row: 2; inline-size: min(100%, 56svh); }
+  .threshold-foot { grid-row: 3; align-self: start; }
+  .fragment-threshold { grid-row: 4; }
+  .threshold-sky {
+    background:
+      radial-gradient(48vmin 48vmin at 50% 34%, color-mix(in oklab, var(--gold) 12%, transparent), transparent 70%),
+      radial-gradient(420px 300px at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in oklab, var(--gold) 9%, transparent), transparent 65%),
+      var(--night);
+  }
+}
+
+/* ============ 4. THE ROSE ============ */
+.rose .lobe, .rose .foil, .rose .mullions { fill: none; stroke: var(--lead); stroke-width: .45; }
+.ring-map-circle { fill: none; stroke: var(--lead); stroke-width: .6; }
+.ring-map-inner { stroke: color-mix(in oklab, var(--lead) 60%, transparent); }
+.ring-map-seal { fill: none; stroke: var(--gold-soft); stroke-width: .8; }
+.ring-map-seed { fill: var(--gold); }
+.ring-map-door { fill: var(--ash); }
+.ring-map-door.lit { fill: var(--gold-hi); }
+.ajar-dark { fill: #000; }
+.ajar-door { fill: none; stroke: var(--gold-soft); stroke-width: 1; }
+
+/* a lobe takes the light when its chamber has been walked (door n lights lobe n) */
+.ring-map:has(#ring-map-doors > :nth-child(1).lit) .lobe:nth-child(1),
+.ring-map:has(#ring-map-doors > :nth-child(2).lit) .lobe:nth-child(2),
+.ring-map:has(#ring-map-doors > :nth-child(3).lit) .lobe:nth-child(3),
+.ring-map:has(#ring-map-doors > :nth-child(4).lit) .lobe:nth-child(4),
+.ring-map:has(#ring-map-doors > :nth-child(5).lit) .lobe:nth-child(5),
+.ring-map:has(#ring-map-doors > :nth-child(6).lit) .lobe:nth-child(6),
+.ring-map:has(#ring-map-doors > :nth-child(7).lit) .lobe:nth-child(7),
+.ring-map:has(#ring-map-doors > :nth-child(8).lit) .lobe:nth-child(8),
+.ring-map:has(#ring-map-doors > :nth-child(9).lit) .lobe:nth-child(9) {
+  fill: var(--glass);
+  stroke: var(--gold);
+}
+
+/* ============ 5. MOTION: slow, and alive ============ */
+@media (prefers-reduced-motion: no-preference) {
+  .rose > * {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: trace 2.4s var(--ease-slow) forwards;
+  }
+  .rose .foil { animation-delay: .5s; }
+  .rose .mullions { animation-delay: 1s; }
+  .rose .lobe { transition: fill 1.2s var(--ease-slow), stroke 1.2s var(--ease-slow); }
+  .ring-map-door.lit { animation: breathe 9s ease-in-out infinite; }
+  .threshold-sky { transition: --glow-x .9s var(--ease-slow), --glow-y .9s var(--ease-slow); }
+  .ring-btn { transition: color .35s var(--ease-slow); }
+}
+@keyframes trace   { to { stroke-dashoffset: 0; } }
+@keyframes breathe { 50% { opacity: .72; } }
+
+/* still study mode (the site's own calm, main.css line 133's hand):
+   the tracery stands drawn, nothing traces, nothing breathes */
+html.still .rose > *, html.still .ring-map-door.lit { animation: none; stroke-dashoffset: 0; }

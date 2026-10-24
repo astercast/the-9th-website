@@ -23,6 +23,7 @@
 <link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/rose.css">
 <script type="speculationrules">
 {"prefetch":[{"source":"list","urls":["data/v1/wishes.json","data/v1/whispers.json","data/v1/letters.json","data/v1/scale.json"]}]}
 </script>
@@ -141,47 +142,48 @@ html{background:#0B0F0C}
     </svg>
   <div class="grain" aria-hidden="true"></div>
   <div class="chamber-inner threshold-inner">
-    <div class="threshold-stage">
-      <!-- The Doorframe (Phase 1): drawn in the glyph hand, double-ruled,
-           with the Cartographer's ticks down its left upright and one
-           distant light resting on its horizon. It frames nothing but
-           the place's own sky and authored field. -->
-      <svg class="doorframe-svg" viewBox="0 0 400 560" aria-hidden="true">
-        <path class="frame-rule" d="M40 540 L40 180 A160 140 0 0 1 360 180 L360 540"/>
-        <path class="frame-rule frame-rule-in" d="M62 540 L62 192 A138 116 0 0 1 338 192 L338 540"/>
-        <g class="frame-ticks">
-          <path d="M29 230h11M34 260h6M29 290h11M34 320h6M29 350h11M34 380h6M29 410h11M34 440h6M29 470h11M34 500h6"/>
+    <h1 class="site-title">The 9th Website</h1>
+    <!-- The Rose (wave 11, CANON §III): the ring map drawn as
+         nine-lobed tracery. Every ring element below the rose group
+         is the map as it already stood; the Phase 1 doorframe is
+         retired, and the rose carries the arrival. -->
+    <div class="rose-wrap">
+      <svg class="ring-map" viewBox="0 0 200 200" role="img" aria-label="Nine doors in a ring, and one more, drawn ajar">
+        <g class="rose" aria-hidden="true">
+          <circle class="lobe" cx="100.0" cy="60.0"  r="15" pathLength="1"/>
+          <circle class="lobe" cx="125.7" cy="69.4"  r="15" pathLength="1"/>
+          <circle class="lobe" cx="139.4" cy="93.1"  r="15" pathLength="1"/>
+          <circle class="lobe" cx="134.6" cy="120.0" r="15" pathLength="1"/>
+          <circle class="lobe" cx="113.7" cy="137.6" r="15" pathLength="1"/>
+          <circle class="lobe" cx="86.3"  cy="137.6" r="15" pathLength="1"/>
+          <circle class="lobe" cx="65.4"  cy="120.0" r="15" pathLength="1"/>
+          <circle class="lobe" cx="60.6" cy="93.1"  r="15" pathLength="1"/>
+          <circle class="lobe" cx="74.3"  cy="69.4"  r="15" pathLength="1"/>
+          <circle class="foil" cx="100.0" cy="41.5"  r="6" pathLength="1"/>
+          <circle class="foil" cx="137.6" cy="55.2"  r="6" pathLength="1"/>
+          <circle class="foil" cx="157.6" cy="89.8"  r="6" pathLength="1"/>
+          <circle class="foil" cx="150.7" cy="129.2" r="6" pathLength="1"/>
+          <circle class="foil" cx="120.0" cy="155.0" r="6" pathLength="1"/>
+          <circle class="foil" cx="80.0"  cy="155.0"  r="6" pathLength="1"/>
+          <circle class="foil" cx="49.3"  cy="129.2" r="6" pathLength="1"/>
+          <circle class="foil" cx="42.4"  cy="89.8"  r="6" pathLength="1"/>
+          <circle class="foil" cx="62.4"  cy="55.2"  r="6" pathLength="1"/>
+          <path class="mullions" pathLength="1" d="M104.4 87.8L124.1 33.8M111.3 93.5L161.1 64.8M112.8 102.3L169.4 112.2M108.4 110.0L145.3 154.0M100.0 113.0L100.0 170.5M91.6 110.0L54.7 154.0M87.2 102.3L30.6 112.2M88.7 93.5L38.9 64.8M95.6 87.8L75.9 33.8"/>
         </g>
-        <line class="frame-horizon" x1="62" y1="472" x2="338" y2="472"/>
-        <circle class="doorframe-light" cx="200" cy="472" r="26" filter="url(#soften)"/>
-        <circle class="doorframe-light-core" cx="200" cy="472" r="3.2"/>
-        <circle class="frame-seed" cx="200" cy="40" r="2.6"/>
-        <path class="frame-step" d="M18 540h364M48 553h304"/>
+        <circle cx="100" cy="100" r="78" class="ring-map-circle"/>
+        <circle cx="100" cy="100" r="70.5" class="ring-map-circle ring-map-inner"/>
+        <circle cx="100" cy="100" r="10" class="ring-map-seal"/>
+        <circle cx="100" cy="100" r="2.6" class="ring-map-seed"/>
+        <g id="ring-map-doors"></g>
+        <g class="ajar" aria-hidden="true">
+          <rect x="97.5" y="176" width="5" height="9" class="ajar-dark"/>
+          <path d="M97.5 176 L93 179.5 L97.5 185" class="ajar-door"/>
+        </g>
       </svg>
-      <!-- The title inside the arch (the recomposition, 2026-10-15):
-           the words stand in the door of light, not beside the frame.
-           The glyph has left the stack; the ring itself carries it. -->
-      <div class="threshold-title-block">
-        <h1 class="site-title">The 9th Website</h1>
-      </div>
-      <div class="threshold-foot">
-        <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
-        <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
-      </div>
-      <!-- the ring map as the frame's sill: its floor plan, laid on the step -->
-      <div class="ring-map-wrap">
-        <svg class="ring-map" viewBox="0 0 200 200" role="img" aria-label="Nine doors in a ring, and one more, drawn ajar">
-          <circle cx="100" cy="100" r="78" class="ring-map-circle"/>
-          <circle cx="100" cy="100" r="70.5" class="ring-map-circle ring-map-inner"/>
-          <circle cx="100" cy="100" r="10" class="ring-map-seal"/>
-          <circle cx="100" cy="100" r="2.6" class="ring-map-seed"/>
-          <g id="ring-map-doors"></g>
-          <g class="ajar" aria-hidden="true">
-            <rect x="97.5" y="176" width="5" height="9" class="ajar-dark"/>
-            <path d="M97.5 176 L93 179.5 L97.5 185" class="ajar-door"/>
-          </g>
-        </svg>
-      </div>
+    </div>
+    <div class="threshold-foot">
+      <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
+      <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
     </div>
     <p class="fragment fragment-threshold"><svg class="frag-mark"><use href="#g-mark"/></svg>“I did not build the place. I only found the doors already standing, and learned their order by walking it.”</p>
   </div>

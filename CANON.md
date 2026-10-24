@@ -110,6 +110,8 @@ Named mechanics of the chambers (cite these names in WAVELOG and study):
 
 - **The Ring Circuit** — navigation by glyph, a journey rather than a menu.
 - **The Kept Light** — the Threshold's light that follows the visitor's hand.
+- **The Rose** — the Threshold's ring map drawn as nine-lobed tracery in the glyph hand: nine lobes, nine foils and nine mullions inside the ring, the seal and the seed unmoved at its heart. A lobe takes the light when its chamber has been visited; the light comes from kept state alone, never from chance, and nothing about it is explained. The darkness stays in the gaps between the lines, present and outnumbered. The Phase 1 doorframe retires in its favour; the Deep's door of light now stands measured from the Rose. *(Named wave 11.)*
+- **The Kept Threshold** — the place, once visited, is kept by the visitor's own browser: the Threshold, its two scripts, its two stylesheets and the four kept data files are held in a cache on this origin alone, so the doors stand even when no road leads here. The keeping answers only requests to this origin and makes none of its own; nothing external is fetched, stored, or answered for (§IX holds absolute). It introduces no chance and explains nothing: a returning visitor simply finds the door standing. *(Named wave 12.)*
 - **The Powers Stair** — the Scale Room's ascent, grain of sand to observable universe.
 - **The Coda Below** — the unmarked room below the smallest thing, past the end of the Stair.
 - **The Dayseed** — the Garden's daily seed; no two days grow the same garden.
@@ -220,6 +222,7 @@ Things visitors do, repeatedly and on purpose. The site rarely names them; the c
 
 - Materials: typography, geometry, light, number. Nothing on this site chases a trend, a framework, or a fashion. Every choice must still make sense in twenty years.
 - No external requests: no fonts, scripts, images, or trackers loaded from elsewhere. The site is one place, self-contained, the way a chapel is.
+- The Kept Threshold (wave 12) serves this law, never breaks it: the service worker is this origin's own file, it caches only what this origin already served, and it intercepts nothing from elsewhere. Permanence is kept locally or not at all.
 - No build step. Hand-written HTML, CSS, JS that a scholar in 2046 can read the way we read a colophon.
 - Provenance: WAVELOG entries are museum records — what was made, why, what it means in the canon, what was verified. Numbers, not adjectives.
 - Performance is a form of respect: heavy scenes wake only when their chamber is entered; the calm mode (prefers-reduced-motion) is complete, not a fallback apology.

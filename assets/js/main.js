@@ -1123,3 +1123,10 @@ function drawDoor(){
   });
 })();
 })();
+
+/* The Kept Threshold (CANON §III, wave 12): register the keeping.
+   Same-origin only; where the platform has no service workers, the
+   place simply behaves as it always has. */
+if ("serviceWorker" in navigator) {
+  try { navigator.serviceWorker.register("/sw.js").catch(function () {}); } catch (e) {}
+}

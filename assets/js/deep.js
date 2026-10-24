@@ -287,17 +287,19 @@ function doorOpen(){
   var o=document.getElementById("door-open");
   return o && !o.hidden ? 1 : 0;
 }
-/* the door of light's station: the doorframe's own rectangle, measured
-   where it stands (its centre across, its horizon line down the frame).
-   Until a frame can be measured, the light keeps its first station. */
+/* the door of light's station: the Rose's own rectangle, measured
+   where it stands (its centre across, its seed at its heart down
+   the window). The Phase 1 doorframe carried this measure until
+   wave 11; the Rose carries it now (CANON §III). Until the window
+   can be measured, the light keeps its first station. */
 var door={x:0.685, y:0.155};
 function measureDoor(){
-  var f=document.querySelector(".doorframe-svg");
+  var f=document.querySelector(".rose-wrap .ring-map");
   if(!f) return;
   var r=f.getBoundingClientRect();
   if(!r || !r.width || !r.height) return;
   door.x=(r.left+r.width*0.5)/innerWidth;
-  door.y=1-(r.top+r.height*(472/560))/innerHeight;
+  door.y=1-(r.top+r.height*0.5)/innerHeight;
 }
 /* the visit depth: the recorded visit count, read as the room keeps it.
    Nothing at the first visit; full depth at the twenty-seventh. */
