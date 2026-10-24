@@ -200,3 +200,24 @@ body { background: var(--night); color: var(--parchment); }
 /* still study mode (the site's own calm, main.css line 133's hand):
    the tracery stands drawn, nothing traces, nothing breathes */
 html.still .rose > *, html.still .ring-map-door.lit { animation: none; stroke-dashoffset: 0; }
+
+/* ============ 6. ROUND 2 (design-consult fixes, 2026-10-24) ============ */
+/* the framed skies melt into the Deep: the bleed frame is the
+   .canvas-frame element itself (one element carries both classes in
+   the markup), so the mask selector is the compound form; the
+   consultation's descendant form would match nothing here. The moon
+   stays whole: the fade is only the outer 6% at each edge. */
+.canvas-frame.bleed {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+
+/* phone: all nine doors fit; the sound mark sits above the row.
+   inline-size/block-size are set alongside width/height because this
+   sheet's own base .ring-btn rule sizes the doors with the logical
+   properties, which take precedence over width/height. */
+@media (max-width: 560px) {
+  .ring { gap: 0; justify-content: center; inline-size: 100% }
+  .ring-btn { width: min(37px, calc((100vw - 8px) / 9)); inline-size: min(37px, calc((100vw - 8px) / 9)); height: 46px; block-size: 46px }
+  .sound-toggle { top: -26px; right: 6px }
+}

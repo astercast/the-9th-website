@@ -348,7 +348,7 @@ function initGarden(){
     var r=mulberry32(daySeed()*13+visits*7);
     var pool=data.whispers.slice(), picked=[];
     for(var i=0;i<3 && pool.length;i++){ picked.push(pool.splice(Math.floor(r()*pool.length),1)[0]); }
-    el.textContent=picked.join(" — ");
+    el.textContent=picked.join(", ");
   }).catch(function(){});
   /* The Specimen Bed (Phase 1, the Conservatory): the day's garden,
      catalogued. The nine seedlings stand in the chamber's soil in the
