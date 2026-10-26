@@ -221,3 +221,69 @@ html.still .rose > *, html.still .ring-map-door.lit { animation: none; stroke-da
   .ring-btn { width: min(37px, calc((100vw - 8px) / 9)); inline-size: min(37px, calc((100vw - 8px) / 9)); height: 46px; block-size: 46px }
   .sound-toggle { top: -26px; right: 6px }
 }
+
+/* ============ 7. THE COMPUTED SKY (bundle 2026-10-24, item 9) ============ */
+/* The true moon, drawn by the module script in index.html into the
+   Threshold's sky (#threshold-sky). Pale gold, and the brightest thing
+   on the page: full-strength colour, a halo, nothing above it but the
+   veil's first breath. It carries no words and takes no pointer. */
+/* The real sky (Proposal D, rebuild wave 1): the catalogue stars over
+   the visitor's own place, drawn by the same module onto a canvas that
+   fills the Threshold's sky, beneath the moon. They are placed by
+   arithmetic and stand still; they do not twinkle. That is the
+   Wishfield's signature, and it is not taken. */
+.sky-stars {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; pointer-events: none;
+}
+.sky-moon {
+  position: absolute; top: 1.1rem; right: 1.2rem;
+  inline-size: 72px; block-size: 72px;
+  color: #ffe9a8;
+  filter: brightness(1.18) drop-shadow(0 0 16px rgba(255, 233, 168, .55)) drop-shadow(0 0 42px rgba(255, 233, 168, .28));
+  pointer-events: none;
+}
+.sky-moon svg { display: block; }
+/* The sky-gift link (rebuild wave 2): a lone glyph beneath the welcome,
+   carrying this sky's address. It says nothing, as the ration requires;
+   its reach is a full hand's breadth, like every control's. */
+.sky-gift {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin-top: 14px;
+  color: var(--gold-soft); opacity: .72; transition: opacity .35s;
+}
+.sky-gift:hover, .sky-gift:focus-visible { opacity: 1; }
+.sky-gift svg { width: 22px; height: 22px; display: block; }
+/* The Mirror's real sky (rebuild wave 2): a canvas standing in the
+   Mirror's frame, behind the journey canvas, holding the catalogue
+   stars of the visitor's own sky. While it stands, the frame itself
+   carries the painted sky the journey canvas once carried, so a visitor
+   without it loses nothing: the same gradient, one layer down. */
+.mirror-sky-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; pointer-events: none;
+}
+.mirror-frame.has-sky { background: radial-gradient(120% 100% at 50% 0%, #0a0e20, #05060f); }
+.mirror-frame.has-sky #mirror-canvas { background: transparent; position: relative; }
+/* Where the Deep lives it replaces the sky's painted gradients, but the
+   sky itself stays standing — transparent — to hold the moon, so the
+   moon is never taken down with the gradients. */
+html.deep-on .threshold-sky { display: block; background: transparent; }
+/* The eclipse shadow: a dark disc the moon's own size, passing over it.
+   Its rest state (no animation support) stands clear of the moon. */
+.sky-eclipse {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: var(--night, #0B0C0A); opacity: .96;
+  transform: translateX(-108%); pointer-events: none;
+}
+.sky-eclipse[data-kind="partial"] { opacity: .88; }
+.sky-eclipse[data-kind="penumbral"] { opacity: .38; }
+.sky-eclipse-rest { transform: translateX(108%); }
+/* The season notch: the door ring turned fifteen degrees, once, over
+   three seconds, and left standing turned for the season's day. In
+   reduced motion the turn is already made; there is no turning. */
+.ring-map, .door-ring { transition: transform 3s ease; transform-origin: 50% 50%; }
+.ring-map.sky-notch, .door-ring.sky-notch { transform: rotate(15deg); }
+@media (prefers-reduced-motion: reduce) {
+  .ring-map, .door-ring { transition: none; }
+}

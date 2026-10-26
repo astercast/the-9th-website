@@ -184,6 +184,7 @@ html{background:#0B0F0C}
     <div class="threshold-foot">
       <p class="welcome" id="welcome-line">You are standing at the edge of a place that was built slowly, on purpose.</p>
       <p class="midnight-line" id="midnight-line" hidden>It is the midnight minute. Some things are only here now.</p>
+      <a class="sky-gift" id="sky-gift" href="./" aria-label="A sky to give"><svg aria-hidden="true"><use href="#g-stars"/></svg></a>
     </div>
     <p class="fragment fragment-threshold"><svg class="frag-mark"><use href="#g-mark"/></svg>“I did not build the place. I only found the doors already standing, and learned their order by walking it.”</p>
   </div>
@@ -217,6 +218,7 @@ html{background:#0B0F0C}
       <svg class="frag-mark coda-mark"><use href="#g-mark"/></svg>
       <p>Below the smallest thing there is a room no one measured. The Cartographer went down past the grain of sand with a candle and a notebook, and came back with the notebook empty and the candle unlit, smiling like a person who has been told a secret in a language made of weather. All that was ever written about the room is this: <em>it is smaller than the sand, and everything fits in it.</em></p>
       <p class="rosetta">On the far wall, in the same hand, smaller, as if for whoever came this far down and no one else, <em>the Method</em>: “Nothing in this place is chance; I only taught it to wear chance’s coat. Every garden, every drawn letter, every scattered line is reckoned from three numbers, the day, counted year-and-month-and-day into one sum; the count of your comings; and the chamber you stand in, turned through one small wheel. The wheel turns thus: begin with your number. Add the adder: one thousand, eight hundred thirty-one million, five hundred sixty-five thousand, eight hundred thirteen. Fold the number on itself at fifteen and mix it, by the mark the reckoning-machines call the crossing; multiply it by itself, made odd. Fold it again at seven and add it to itself; fold it last at fourteen, and let it go as a fraction between nothing and one. By such fractions I chose everything. Learn the wheel, keep the numbers, and every garden ever grown here can be grown again, exactly, by your own hand. That is the whole secret. It was never hidden. It was only below.”</p>
+      <p class="rosetta sky-rosetta">“The sky over the threshold I did not reckon: it stands where your place and your hour put it, by numbers older than the wheel.”</p>
     </div>
   </div>
 </section>
@@ -492,7 +494,596 @@ html{background:#0B0F0C}
   </div>
 </section>
 </main>
+<!-- Rebuild wave 7: the Descent. Heard before the place itself,
+     so that a returning visitor's standing can be written into the
+     address before the address is read, and the fall named before
+     any switch. It adds no words and asks for nothing. -->
+<script src="assets/js/descent.js" defer></script>
 <script src="assets/js/main.js" defer></script>
 <script src="assets/js/deep.js" defer></script>
+<!-- The computed sky (bundle 2026-10-24, item 9): computed, not fetched.
+     The moon is drawn at its true phase and lit side into the Threshold's
+     sky, in the sky's pale gold, the brightest thing on the page. No new
+     words: this script adds no text to the place, ever.
+     The real sky (Proposal D, rebuild wave 1): the stars standing in
+     that same sky are the catalogue stars over the visitor's own place,
+     placed by arithmetic for this moment, and the phase of the day is
+     read from the sun's own altitude. Still no new words.
+     Rebuild wave 2: the wanderers stand in the same sky by the same
+     standard; the sky is drawn on the GPU where the platform offers
+     one (skyrender.js, falling back to the wave-1 drawing); the
+     Threshold carries a wordless sky-gift link; and the Mirror stands
+     before the visitor's real sky (mirrorsky.js).
+     Rebuild wave 5: the sky answers the hand that holds it. Where the
+     device reports its orientation absolutely, and the hand has truly
+     moved, the view's centre follows the direction through the device
+     (windowview.js) across this same reckoned sky; where it does not,
+     the settled frame of waves 1 to 4 stands whole. Still no new
+     words: the window asks for nothing and labels nothing.
+     Rebuild wave 6: the Tide Chord is given a place in the air.
+     The choir's placements are reckoned from this same sky
+     (skysound.js: the wanderers' stations, the view's centre)
+     and published to the sound module whenever the sky is drawn;
+     and while the window stands open, the held sky is kept
+     awake. Still no new words. -->
+<script type="module">
+import { loadSky, moon, moonSVG, eclipseTonight } from "./assets/js/moon.js";
+import { altaz } from "./assets/js/starsky.js";
+import { sunAltaz, sunPhase, starlight } from "./assets/js/sun.js";
+import { planetAltaz } from "./assets/js/planets.js";
+import { createSkyEngine } from "./assets/js/skyrender.js";
+import { watchMirrorSky } from "./assets/js/mirrorsky.js";
+import { extincted, dimming, extinctionFlux, scintillation, galToEq, sampleDensity } from "./assets/js/skyphysics.js";
+import { viewDirection, angularBetween, smoothView, WINDOW_WAKE } from "./assets/js/windowview.js";
+import { placementsFor } from "./assets/js/skysound.js";
+const REDUCED_SKY = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let skyData = null, moonHolder = null, notched = false;
+function renderSky() {
+  if (!skyData) return;
+  const host = document.getElementById("threshold-sky");
+  if (!host) return;
+  if (!moonHolder) {
+    moonHolder = document.createElement("div");
+    moonHolder.className = "sky-moon";
+    moonHolder.setAttribute("aria-hidden", "true");
+    host.appendChild(moonHolder);
+  }
+  const now = skyMoment();
+  moonHolder.innerHTML = moonSVG(moon(now, skyData), 72);
+  /* Eclipse night: a shadow passes over the moon, once across, over
+     240 seconds. In reduced motion there is no pass at all. */
+  const eclipse = eclipseTonight(now, skyData);
+  if (eclipse && !REDUCED_SKY) {
+    const shadow = document.createElement("div");
+    shadow.className = "sky-eclipse";
+    shadow.dataset.kind = eclipse[1];
+    moonHolder.appendChild(shadow);
+    try {
+      shadow.animate(
+        [{ transform: "translateX(-108%)" }, { transform: "translateX(108%)" }],
+        { duration: 240000, easing: "linear", fill: "forwards" }
+      );
+    } catch (e) {
+      shadow.classList.add("sky-eclipse-rest");
+    }
+  }
+  /* Equinox and solstice: within the day that follows the season's
+     instant, the door ring turns one notch — fifteen degrees — once,
+     over three seconds. Nothing is written; the ring simply stands
+     turned for that day. */
+  if (!notched && Array.isArray(skyData.seasons)) {
+    const n = Date.now();
+    const seasonNow = skyData.seasons.some(([t]) => {
+      const at = Date.parse(t);
+      return n >= at && n < at + 24 * 3600 * 1000;
+    });
+    if (seasonNow) {
+      notched = true;
+      document.querySelectorAll(".ring-map, .door-ring").forEach((el) => el.classList.add("sky-notch"));
+    }
+  }
+}
+/* ---------- The real sky: the stars over the visitor, the sun's phase ----------
+   Physics, not chance. The Master Code is not consulted here, and its
+   seeded systems (the Wishfield and its twinkle, the Nebula motes, the
+   Wrong Star) stand exactly as they stood; this sky is a pure function
+   of the moment and the place. The place is an input of record, kept in
+   ninth.place like every other input: the browser's timezone name read
+   against data/zones.json, or the longitude its own clock implies, or
+   (last) Los Angeles, the place this sky was tested from. The data
+   files are fetched only when the dark makes them matter, or idly
+   after the place already stands; first paint waits for none of it. */
+const PHASE_LINES = {
+  dawn: "The light is just arriving, and so are you.",
+  day: "Broad daylight, and the place is still keeping its secrets.",
+  dusk: "You came at the hour when everything is briefly gold.",
+  night: "You came in the dark. The place respects that."
+};
+let place = null, starData = null, starCanvas = null;
+function keptPlace() {
+  try {
+    const p = JSON.parse(localStorage.getItem("ninth.place") || "null");
+    if (p && isFinite(p.lat) && isFinite(p.lon)) return p;
+  } catch (e) {}
+  return null;
+}
+async function resolvePlace() {
+  let zone = "";
+  try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  const kept = keptPlace();
+  if (kept && kept.zone === zone) { place = kept; return; }
+  let found = null;
+  try {
+    const zones = (await (await fetch("data/zones.json")).json()).zones;
+    if (zone && zones[zone]) found = { lat: zones[zone][0], lon: zones[zone][1], zone: zone, from: "zone" };
+  } catch (e) {}
+  if (!found) {
+    const off = -new Date().getTimezoneOffset() / 4;
+    found = { lat: 34.05, lon: isFinite(off) ? off : -118.24, zone: zone, from: "offset" };
+  }
+  place = found;
+  try { localStorage.setItem("ninth.place", JSON.stringify(found)); } catch (e) {}
+}
+function applyPhase(now) {
+  if (!place) return;
+  const phase = sunPhase(now, place.lat, place.lon);
+  if (document.body.getAttribute("data-phase") !== phase)
+    document.body.setAttribute("data-phase", phase);
+  /* A first visit's welcome is one of the four phase lines, chosen by
+     main.js from the clock's rough bands before the sun could be asked.
+     The sun's word governs: if the line standing is a phase line, let
+     it stand as the true phase's line, word for word the same lines. */
+  try {
+    if (JSON.parse(localStorage.getItem("ninth.visits") || "0") === 1) {
+      const w = document.getElementById("welcome-line");
+      if (w && Object.values(PHASE_LINES).indexOf(w.textContent) !== -1)
+        w.textContent = PHASE_LINES[phase];
+    }
+  } catch (e) {}
+}
+/* A star's colour from its B-V: the Ballesteros temperature, a plain
+   blackbody fit, then half-way back to white so the sky stays quiet. */
+function starColour(bv) {
+  const T = 4600 * (1 / (.92 * bv + 1.7) + 1 / (.92 * bv + .62)), t = T / 100;
+  let r, g, b;
+  r = t <= 66 ? 255 : 329.7 * Math.pow(t - 60, -.1332);
+  g = t <= 66 ? 99.47 * Math.log(t) - 161.1 : 288.1 * Math.pow(t - 60, -.0755);
+  b = t >= 66 ? 255 : t <= 19 ? 0 : 138.5 * Math.log(t - 10) - 305;
+  const m = (v) => Math.round(Math.max(0, Math.min(255, v)) * .55 + 255 * .45);
+  return m(r) + "," + m(g) + "," + m(b);
+}
+/* The stereographic view, as the sky was tested: facing south, the eye
+   raised thirty-two degrees. */
+const SKY_R = Math.PI / 180, SKY_VA = 180 * SKY_R, SKY_VE = 32 * SKY_R;
+/* The view's centre (rebuild wave 5): the settled frame of waves 1 to
+   4, unless the window stands open (its wiring stands at the foot of
+   this script), in which case the centre follows the visitor's hand
+   across the same reckoned sky. With the window shut these stand at
+   SKY_VA's and SKY_VE's own numbers, and the drawing is the settled
+   drawing to the pixel: the window moves the eye, never the sky. */
+let viewAz = 180, viewAlt = 32;
+function project(alt, az, w, h) {
+  const a = alt * SKY_R, z = az * SKY_R - viewAz * SKY_R, ve = viewAlt * SKY_R;
+  const x = Math.cos(a) * Math.sin(z),
+        y = Math.sin(a) * Math.cos(ve) - Math.cos(a) * Math.cos(z) * Math.sin(ve),
+        zz = Math.sin(a) * Math.sin(ve) + Math.cos(a) * Math.cos(z) * Math.cos(ve);
+  if (zz < -.9) return null;
+  const k = 2 / (1 + zz) * h * .515;
+  return [w / 2 + x * k, h / 2 - y * k];
+}
+async function ensureStars() {
+  if (starData) return starData;
+  try { starData = (await (await fetch("data/stars.json")).json()).stars; }
+  catch (e) { starData = null; }
+  return starData;
+}
+/* The Milky Way's density (rebuild wave 4): the catalogue's own
+   crowd on the galactic plane, built into data/milkyway.json by
+   scripts/make_milkyway.py and fetched as lazily as the catalogue
+   itself. If it cannot be read, the sky stands without the band,
+   whole, exactly as it stood before the band was drawn. */
+let mwData = null, mwAsked = false;
+async function ensureMilkyWay() {
+  if (mwData || mwAsked) return mwData;
+  mwAsked = true;
+  try {
+    const mw = await (await fetch("data/milkyway.json")).json();
+    if (mw && mw.format === "milkyway/1" && Array.isArray(mw.data)) mwData = mw;
+  } catch (e) { mwData = null; }
+  return mwData;
+}
+/* ---------- The sky-gift, and the given sky (rebuild wave 2) ----------
+   The wordless sky-gift link on the Threshold carries this sky: its
+   address names a place and a moment, and a visitor who arrives by such
+   an address stands under the given sky, its stars, its wanderers and
+   its moon, while the place's own phase and welcome remain their own.
+   The gift is a pure reading of the address; nothing is stored and
+   nothing is sent anywhere. The link itself is a glyph, and says
+   nothing, as the ration requires. */
+function parseGift() {
+  try {
+    const q = new URLSearchParams(location.search).get("sky");
+    if (!q) return null;
+    const parts = q.split(",").map(Number);
+    if (parts.length !== 3 || parts.some((v) => !isFinite(v))) return null;
+    const [la, lo, t] = parts;
+    if (Math.abs(la) > 90 || Math.abs(lo) > 180 || t < 946684800 || t > 4102444800) return null;
+    return { lat: la, lon: lo, at: t * 1000 };
+  } catch (e) { return null; }
+}
+const gift = parseGift();
+function skyPlace() { return gift ? { lat: gift.lat, lon: gift.lon } : place; }
+function skyMoment() { return gift ? new Date(gift.at) : new Date(); }
+function updateGiftLink() {
+  const g = document.getElementById("sky-gift");
+  const p = skyPlace();
+  if (!g || !p) return;
+  const t = Math.floor(skyMoment().getTime() / 1000);
+  g.setAttribute("href", location.pathname + "?sky=" + p.lat.toFixed(4) + "," + p.lon.toFixed(4) + "," + t + "#threshold");
+}
+/* ---------- The wanderers (rebuild wave 2) ----------
+   The planets stand in the same sky, reckoned by planets.js to the same
+   standard as the stars. Each carries its own tint; none carries a name.
+   The drawing values below are presentation only: how large and how
+   bright a wanderer stands, never where it stands. */
+const PLANET_TINT = { mercury: "230,228,225", venus: "255,244,214", mars: "235,175,125", jupiter: "245,230,200", saturn: "240,220,170", uranus: "200,230,225" };
+/* The Milky Way's drawing values (rebuild wave 4): presentation only,
+   like the wanderers' tints. The band is sampled along the galactic
+   plane at these latitude rows; each sample stands as a wide, faint
+   disc whose strength is the catalogue's own density there.
+   MW_ALPHA is tuned from the wave's measured capture: at 0.10 the
+   overlapping samples summed to a wash near 0.4 of the frame's
+   range, a floodlight with its discs still separate; at 0.018 the
+   peak stands near 0.07, below the HDR knee, one continuous
+   whisper with no single sample's edge anywhere near visible. */
+const MW_ROWS = [0, 1.5, -1.5, 3.5, -3.5, 6, -6, 9.5, -9.5];
+const MW_R = 46, MW_ALPHA = 0.018, MW_RGB = "214,224,240";
+/* The sky as entries: one reckoning, three drawings. Every star above
+   the horizon's edge and every wanderer above the horizon, each as
+   [x, y, radius, halo, red, green, blue, alpha] in the sky's own frame,
+   with the day's darkness already in the alpha. Since rebuild wave 4
+   the reckoning also carries the air (skyphysics.js): each star is
+   dimmed and reddened by the air it crosses, the lowest stars shimmer
+   in the moving air, and the Milky Way stands where the catalogue's
+   own density puts it. The GPU engine (skyrender.js) and the Canvas 2D
+   drawing below consume the same entries, so the stages differ only in
+   machinery, never in the sky. tSec is the frame's own instant, for
+   the shimmer; under reduced motion it arrives as -1, the still air. */
+function skyEntries(now, here, w, h, light, tSec) {
+  const entries = new Float32Array((5041 + 16 + 1800) * 8);
+  let n = 0;
+  const push = (x, y, r, halo, rgb, a) => {
+    const o = n * 8, c = rgb.split(",");
+    entries[o] = x; entries[o + 1] = y; entries[o + 2] = r; entries[o + 3] = halo;
+    entries[o + 4] = (+c[0]) / 255; entries[o + 5] = (+c[1]) / 255; entries[o + 6] = (+c[2]) / 255;
+    entries[o + 7] = a * light;
+    n++;
+  };
+  const pushRGB = (x, y, r, halo, cr, cg, cb, a) => {
+    const o = n * 8;
+    entries[o] = x; entries[o + 1] = y; entries[o + 2] = r; entries[o + 3] = halo;
+    entries[o + 4] = cr; entries[o + 5] = cg; entries[o + 6] = cb;
+    entries[o + 7] = a * light;
+    n++;
+  };
+  for (let si = 0; si < starData.length; si++) {
+    const s = starData[si];
+    const p = altaz(s, now, here.lat, here.lon);
+    if (p.alt < -1) continue;
+    const xy = project(p.alt, p.az, w, h);
+    if (!xy || xy[0] < -20 || xy[0] > w + 20 || xy[1] < -20 || xy[1] > h + 20) continue;
+    /* The air (rebuild wave 4): the star as the air leaves it, its
+       magnitude deepened and its colour reddened by the crossing,
+       replacing wave 1's penalty with the physics itself. The
+       catalogue's own colour goes in; the observed colour comes out. */
+    const ex = extincted(s[2], s[3], p.alt), mag = ex.mag;
+    const a = Math.max(.3, Math.min(1, Math.pow(10, -.11 * (mag - 1.0)))),
+          r = Math.max(.7, 3.2 - .42 * mag);
+    const sc = scintillation(si, p.alt, tSec);
+    if (sc.chroma === 0) {
+      push(xy[0], xy[1], r, s[2] < 1.6 ? 1 : 0, starColour(ex.bv), a * sc.gain);
+    } else {
+      /* The shimmer's colour play: the red and blue lean apart
+         around the green, as the bending air leans them. */
+      const c = starColour(ex.bv).split(",");
+      pushRGB(xy[0], xy[1], r, s[2] < 1.6 ? 1 : 0,
+        Math.max(0, (+c[0]) / 255 * (1 + .8 * sc.chroma)), (+c[1]) / 255,
+        Math.max(0, (+c[2]) / 255 * (1 - .8 * sc.chroma)), a * sc.gain);
+    }
+  }
+  for (const p of planetAltaz(now, here.lat, here.lon)) {
+    if (p.alt < 0) continue;
+    const xy = project(p.alt, p.az, w, h);
+    if (!xy || xy[0] < -20 || xy[0] > w + 20 || xy[1] < -20 || xy[1] > h + 20) continue;
+    /* The same air stands over the wanderers and dims them as it
+       dims the stars; their tints are the drawing's own, so no
+       reddening is reckoned for them. */
+    const mag = p.mag + dimming(p.alt);
+    const a = Math.max(.35, Math.min(1, Math.pow(10, -.11 * (mag - 1.0)))),
+          r = Math.max(1.9, 3.4 - .45 * mag);
+    push(xy[0], xy[1], r, 1, PLANET_TINT[p.name] || "255,240,200", a);
+  }
+  /* The Milky Way: not a painting and not a texture. The band is the
+     catalogue's own crowd, sampled along the galactic plane's great
+     circle from the built density (data/milkyway.json): a sample
+     stands where the plane stands, as strong as the density there,
+     dimmed by the same air as the stars, and never shimmering, an
+     extended light averaging the air's cells away. */
+  if (mwData) {
+    for (let li = 0; li < 180; li++) {
+      const l = li * 2;
+      for (const bOff of MW_ROWS) {
+        const D = sampleDensity(mwData, l, bOff) / 255;
+        if (D < 0.05) continue;
+        const eq = galToEq(l, bOff);
+        const p = altaz([eq[0], eq[1], 0, 0, 0, 0], now, here.lat, here.lon);
+        if (p.alt < -0.5) continue;
+        const xy = project(p.alt, p.az, w, h);
+        if (!xy || xy[0] < -280 || xy[0] > w + 280 || xy[1] < -280 || xy[1] > h + 280) continue;
+        push(xy[0], xy[1], MW_R, 1, MW_RGB, MW_ALPHA * D * extinctionFlux(p.alt));
+      }
+    }
+  }
+  return { entries, count: n };
+}
+/* The GPU engine: asked for once the sky first stands, in the house's
+   order (WebGPU, then WebGL2). Until a stage answers, and whenever a
+   stage is lost, the Canvas 2D drawing below carries the sky, exactly
+   as wave 1 left it. A lost stage is struck from the order and the
+   next is asked, once each, in the Nebula's discipline. */
+let skyEngine = null, skyEngineAsking = false, skyStages = ["webgpu", "webgl2"];
+function initSkyEngine() {
+  if (skyEngine || skyEngineAsking || !skyStages.length) return;
+  const host = document.getElementById("threshold-sky");
+  if (!host) return;
+  skyEngineAsking = true;
+  createSkyEngine(host, {
+    order: skyStages.slice(),
+    onLost(stage) {
+      if (skyEngine && skyEngine.stage === stage) skyEngine = null;
+      skyStages = skyStages.filter((s) => s !== stage);
+      skyEngineAsking = false;
+      initSkyEngine();
+      drawStars(skyMoment());
+    },
+  }).then((engine) => {
+    skyEngineAsking = false;
+    if (engine) { skyEngine = engine; drawStars(skyMoment()); }
+  }).catch(() => { skyEngineAsking = false; });
+}
+/* ---------- The placed chord (rebuild wave 6) ----------
+   The Tide Chord given a place in the air: the choir's voices
+   stand at the wanderers' stations, reckoned by skysound.js
+   from this same reckoning (planetAltaz's own positions, the
+   view's own centre, settled or held), so the sound the
+   visitor asked for stands where the drawing stands. The
+   placements are published on the house's hook (the sound
+   module in main.js receives them at window.onSkySound)
+   whenever the sky is drawn, and offered whole at
+   window.ninthSkySoundNow to a chord started between
+   drawings. The reckoning is the sky's own; nothing of it is
+   stored or sent anywhere. */
+const SOUND_VOICES = 5;
+function soundPlacements() {
+  const here = skyPlace();
+  if (!here) return null;
+  return placementsFor(planetAltaz(skyMoment(), here.lat, here.lon), viewAz, viewAlt, SOUND_VOICES);
+}
+window.ninthSkySoundNow = soundPlacements;
+function drawStars(now) {
+  const host = document.getElementById("threshold-sky");
+  const here = skyPlace();
+  const spl = soundPlacements();
+  if (spl && window.onSkySound) window.onSkySound(spl);
+  if (!host || !here || !starData) return;
+  if (!starCanvas) {
+    starCanvas = document.createElement("canvas");
+    starCanvas.className = "sky-stars";
+    host.insertBefore(starCanvas, host.firstChild);
+  }
+  const w = host.clientWidth, h = host.clientHeight;
+  if (!w || !h) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  const W = Math.round(w * dpr), H = Math.round(h * dpr);
+  if (starCanvas.width !== W || starCanvas.height !== H) { starCanvas.width = W; starCanvas.height = H; }
+  /* The window's glide (rebuild wave 5): if the hand is holding the
+     sky, the view eases toward the direction through the device, by
+     the time since the last drawing; a view that has arrived stands
+     exactly on the hand's numbers, so a held device shows a still
+     sky. The canvas carries the view while the window stands, the
+     way the engine's canvas carries its stage: a mark for any
+     harness that asks which sky it is looking at. */
+  const drawMs = performance.now();
+  if (winLive && winTarget) {
+    const dt = winDrawnAt ? Math.min((drawMs - winDrawnAt) / 1000, 0.5) : 0;
+    if (angularBetween({ az: viewAz, alt: viewAlt }, winTarget) < 0.02) {
+      viewAz = winTarget.az; viewAlt = winTarget.alt;
+    } else {
+      const v = smoothView({ az: viewAz, alt: viewAlt }, winTarget, dt);
+      viewAz = v.az; viewAlt = v.alt;
+    }
+    starCanvas.setAttribute("data-view", viewAz.toFixed(2) + "," + viewAlt.toFixed(2));
+  }
+  winDrawnAt = drawMs;
+  const ctx = starCanvas.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  const light = starlight(sunAltaz(now, here.lat, here.lon).alt);
+  if (light <= 0) { if (skyEngine) skyEngine.render({ entries: new Float32Array(0), count: 0, w, h, dpr, t: 0 }); return; }
+  const t = REDUCED_SKY ? 26 : performance.now() / 1000;
+  const { entries, count } = skyEntries(now, here, w, h, light, REDUCED_SKY ? -1 : t);
+  const onGPU = skyEngine && skyEngine.render({ entries, count, w, h, dpr, t });
+  if (!onGPU) {
+    for (let i = 0; i < count; i++) {
+      const o = i * 8, x = entries[o], y = entries[o + 1], r = entries[o + 2], halo = entries[o + 3];
+      const c = Math.round(entries[o + 4] * 255) + "," + Math.round(entries[o + 5] * 255) + "," + Math.round(entries[o + 6] * 255);
+      ctx.fillStyle = "rgba(" + c + "," + entries[o + 7].toFixed(4) + ")";
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+      if (halo) {
+        ctx.fillStyle = "rgba(" + c + "," + (entries[o + 7] * .10).toFixed(4) + ")";
+        ctx.beginPath(); ctx.arc(x, y, r * 4, 0, 7); ctx.fill();
+      }
+    }
+  }
+  /* The horizon: one fine line, nothing painted below it. It is drawn on
+     the wave-1 canvas in every stage, over the GPU's stars as over its
+     own, so the line is the same line whichever machinery stands. */
+  ctx.globalAlpha = light;
+  ctx.strokeStyle = "rgba(120,110,90,.35)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  let f = true;
+  for (let az = 0; az <= 360; az += 2) {
+    const xy = project(0, az, w, h);
+    if (!xy) { f = true; continue; }
+    if (f) ctx.moveTo(xy[0], xy[1]); else ctx.lineTo(xy[0], xy[1]);
+    f = false;
+  }
+  ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+function renderRealSky() {
+  const now = skyMoment();
+  if (!gift) applyPhase(new Date());
+  const here = skyPlace();
+  if (!here) return;
+  updateGiftLink();
+  if (!starData) {
+    if (starlight(sunAltaz(now, here.lat, here.lon).alt) > 0)
+      ensureStars().then(() => {
+        drawStars(skyMoment()); initSkyEngine();
+        ensureMilkyWay().then(() => drawStars(skyMoment()));
+      });
+    return;
+  }
+  drawStars(now);
+  initSkyEngine();
+}
+loadSky("data/sky.json")
+  .then((sky) => {
+    skyData = sky;
+    renderSky();
+    setInterval(() => { renderSky(); renderRealSky(); }, 10 * 60 * 1000);
+  })
+  .catch(() => {});
+/* The Mirror, pinned to the real stars (rebuild wave 2): its backdrop is
+   the visitor's own sky, lazy-loaded on first entry, drawn behind the
+   journey the Mirror has always drawn. The Mirror's own code is
+   untouched; this only stands a truer dark behind it. */
+const mirrorSky = watchMirrorSky({
+  section: document.getElementById("chamber-mirror"),
+  frame: document.querySelector("#chamber-mirror .mirror-frame"),
+  loadCatalogue: () => ensureStars(),
+  getPlace: () => place,
+});
+resolvePlace().then(() => {
+  renderRealSky();
+  if (mirrorSky) mirrorSky.draw();
+  if ("requestIdleCallback" in window) requestIdleCallback(() => { ensureStars(); ensureMilkyWay(); });
+});
+let skyResizeTimer = null;
+window.addEventListener("resize", () => {
+  if (skyResizeTimer) return;
+  skyResizeTimer = setTimeout(() => { skyResizeTimer = null; drawStars(skyMoment()); }, 200);
+});
+/* The air moves (rebuild wave 4): while the Threshold stands in
+   view and the visitor has not asked for stillness, the sky is
+   redrawn on a slow tick, so the lowest stars can shimmer in their
+   air and the motes drift as wave 2 drew them to. Off-screen,
+   hidden, or in reduced motion, no tick runs and the settled frame
+   stands exactly as it always has. */
+let skyInView = false;
+if (!REDUCED_SKY && "IntersectionObserver" in window) {
+  const skyHost = document.getElementById("threshold-sky");
+  if (skyHost) new IntersectionObserver((es) => { skyInView = es[0].isIntersecting; }).observe(skyHost);
+  setInterval(() => { if (skyInView && !document.hidden) drawStars(skyMoment()); }, 120);
+}
+/* ---------- The window (rebuild wave 5) ----------
+   The Threshold's sky answers the device's own orientation: a
+   visitor who lifts and turns a phone moves their window across the
+   same reckoned sky, the catalogue, the wanderers, the band and the
+   horizon all standing where the one reckoning puts them, the eye
+   alone moving. The discipline is the house's, whole:
+   - The window is an addition, never a replacement. It opens only
+     on absolute readings (a relative bearing is not the sky), only
+     once the hand has truly moved (WINDOW_WAKE), and it never opens
+     at all under reduced motion: the visitor who asked for
+     stillness keeps the settled frame untouched, as with the air.
+   - A platform that gates the sensor behind a permission is asked
+     once, on the visitor's first touch anywhere, by the platform's
+     own dialog; the listener stands ready either way, and where the
+     gate stands no reading flows until it is granted. A refusal, or
+     silence, leaves the page exactly as it stood. No word of the
+     place is spent on any of this.
+   - The view is a pure function of the sample stream and the
+     drawing times: the glide (windowview.js) consults no chance,
+     keeps no state but the view itself, and stores nothing.
+   - The glide runs on animation frames while the view is still
+     travelling, and parks itself when the view arrives; a device
+     held still is redrawn only by the air's slow tick above, with
+     the view standing exactly on the hand's numbers.
+   The Master Code is not consulted here either: its seeded systems
+   stand in their own skies, and the Mirror keeps its pinned
+   backdrop and its journey, as wave 4 left them. */
+let winTarget = null, winRef = null, winLive = false, winDrawnAt = 0, winGliding = false;
+function kickWindow() {
+  if (winGliding) return;
+  winGliding = true;
+  requestAnimationFrame(() => {
+    winGliding = false;
+    drawStars(skyMoment());
+    if (winLive && winTarget && !document.hidden &&
+        angularBetween({ az: viewAz, alt: viewAlt }, winTarget) > 0.02) kickWindow();
+  });
+}
+function onOrientation(ev) {
+  if (ev.absolute === false) return;
+  const d = viewDirection(ev.alpha, ev.beta, ev.gamma);
+  if (!d) return;
+  if (!winLive) {
+    if (!winRef) { winRef = d; return; }
+    if (angularBetween(winRef, d) < WINDOW_WAKE) return;
+    winLive = true;
+    viewAz = d.az; viewAlt = d.alt;
+    holdWakeLock();
+  }
+  winTarget = d;
+  kickWindow();
+}
+if (!REDUCED_SKY && typeof DeviceOrientationEvent !== "undefined") {
+  window.addEventListener("deviceorientation", onOrientation);
+  /* A platform that gates the sensor behind a permission is asked
+     once, on the visitor's first touch anywhere, by the platform's
+     own dialog; the listener stands ready either way (where the
+     gate stands, no reading flows until it is granted), and a
+     refusal, or silence, leaves the page exactly as it stood. */
+  if (typeof DeviceOrientationEvent.requestPermission === "function") {
+    window.addEventListener("pointerdown", () => {
+      DeviceOrientationEvent.requestPermission().catch(() => {});
+    }, { once: true });
+  }
+}
+/* ---------- The held sky, kept awake (rebuild wave 6) ----------
+   While the window stands open the visitor is holding the sky
+   up, and a screen that sleeps mid-look ends the looking.
+   Where the platform offers a screen wake lock, it is held for
+   exactly the window's life in front of the visitor: asked
+   when the window wakes, let go by the platform itself when
+   the place is hidden, and asked again on the visitor's return
+   if the window still stands. A refusal, or the API's absence,
+   costs nothing and says nothing: the window stands as wave 5
+   left it. Nothing is kept, and no word is spent. */
+let skyWakeLock = null;
+async function holdWakeLock() {
+  if (skyWakeLock || !("wakeLock" in navigator)) return;
+  try {
+    skyWakeLock = await navigator.wakeLock.request("screen");
+    skyWakeLock.addEventListener("release", () => { skyWakeLock = null; });
+  } catch (e) { skyWakeLock = null; }
+}
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && winLive) holdWakeLock();
+});
+</script>
 </body>
 </html>

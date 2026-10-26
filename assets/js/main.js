@@ -152,8 +152,14 @@ function enter(c){
        formality that finds its work already done. */
     setTimeout(show,400);
   } else { show(); }
-  try{ history.replaceState(null,"","#"+c); }catch(e){}
+  /* Round 3: each chamber is a step in the browser's history, so Back
+     returns to the chamber before and a pasted #chamber link works. */
+  try{ if(location.hash!=="#"+c) history.pushState(null,"","#"+c); }catch(e){}
 }
+window.addEventListener("hashchange",function(){
+  var c=(location.hash||"").slice(1);
+  if(CHAMBERS.indexOf(c)!==-1 && c!==current) enter(c);
+});
 document.querySelectorAll("[data-go]").forEach(function(b){
   b.addEventListener("click",function(){ enter(b.getAttribute("data-go")); });
 });
@@ -342,6 +348,19 @@ function initGarden(){
     var r=cv.getBoundingClientRect();
     makeFlower((e.clientX-r.left)/r.width*W, H, false,false,false); if(REDUCED) render(0);
   });
+  /* Round 3: the garden by keyboard. The arrow keys walk a quiet mark
+     along the soil; Enter or Space plants where it stands. The same
+     flowers from the same reckoning (makeFlower draws from the day's
+     wheel); no new words. */
+  var kx=W/2;
+  cv.setAttribute("tabindex","0");
+  cv.addEventListener("keydown",function(e){
+    if(e.key==="ArrowLeft") kx=Math.max(20,kx-40);
+    else if(e.key==="ArrowRight") kx=Math.min(W-20,kx+40);
+    else if(e.key==="Enter"||e.key===" "){ if(flowers.length<600){ makeFlower(kx,H,false,false,false); if(REDUCED) render(0); } }
+    else return;
+    e.preventDefault();
+  });
   /* The Scattered Leaves: authored pieces, chance arrangement — never the same sentence twice */
   leaves().then(function(data){
     var el=document.getElementById("garden-whisper"); if(!el||!data.whispers) return;
@@ -470,7 +489,44 @@ function initStars(){
       } else { readEl.classList.remove("show"); }
       if(REDUCED) render(0);
     });
-    cv.addEventListener("pointerleave",function(){ readEl.classList.remove("show"); });
+    cv.addEventListener("pointerleave",function(e){
+      /* a finger lifting is not a pointer leaving; only the mouse hides it here */
+      if(e.pointerType && e.pointerType!=="mouse") return;
+      readEl.classList.remove("show");
+    });
+    /* Round 3: the wishes by touch and by keyboard. Same stars, same
+       readout, no new words. A tap reads the nearest star within a
+       fingertip; the arrow keys walk the stars left to right, always in
+       the same order (nothing here is chance). */
+    function showStar(s){
+      hover=s;
+      if(s){
+        readEl.textContent = s.wish===null ? "This one is not a wish." : s.wish;
+        readEl.classList.toggle("wishless", s.wish===null);
+        readEl.classList.add("show");
+      } else { readEl.classList.remove("show"); }
+      if(REDUCED) render(0);
+    }
+    cv.addEventListener("pointerdown",function(e){
+      if(e.pointerType==="mouse") return;
+      var r=cv.getBoundingClientRect(), k=W/r.width;
+      var x=(e.clientX-r.left)*k, y=(e.clientY-r.top)*k, best=null, bd=26*k;
+      stars.forEach(function(s){ var d=Math.hypot(s.x-x,s.y-y); if(d<bd){ bd=d; best=s; } });
+      showStar(best);
+    });
+    var walk=stars.slice().sort(function(a,b){ return (a.x-b.x) || (a.y-b.y); }), at=-1;
+    cv.setAttribute("tabindex","0");
+    cv.addEventListener("keydown",function(e){
+      var k=e.key, n=walk.length;
+      if(k==="ArrowRight"||k==="ArrowDown") at=(at+1)%n;
+      else if(k==="ArrowLeft"||k==="ArrowUp") at=((at<=0? n : at)-1);
+      else if(k==="Home") at=0;
+      else if(k==="End") at=n-1;
+      else if(k==="Escape"){ at=-1; showStar(null); return; }
+      else return;
+      e.preventDefault(); showStar(walk[at]);
+    });
+    cv.addEventListener("blur",function(){ at=-1; showStar(null); });
   }
 }
 
@@ -1064,63 +1120,199 @@ function drawDoor(){
    Synodic Reckoning, above); above it one overtone — the root multiplied
    by a whole number the Seed Reckoning chooses (seed = D×31 + V×19) —
    sounds only in that room. Silence is the fallback: the pad is off
-   unless the visitor asks, and every room is whole without it. */
+   unless the visitor asks, and every room is whole without it.
+   Rebuild wave 6: the chord is placed. Each voice sounds from a
+   station in the reckoned sky — the wanderers' own stations,
+   brightest first, the overtone at the root's — reckoned by
+   skysound.js from the same positions the renderer draws and
+   published by the sky (window.onSkySound; the current frame is
+   offered at window.ninthSkySoundNow), so the ear and the eye are
+   never told two different skies. A voice with no wanderer to
+   stand on gathers to the view's centre, as the whole chord did
+   before this wave. The voices are generated two ways, in the
+   house's order: on the audio thread itself (pad-worklet.js,
+   the platform's AudioWorklet) where the platform offers one,
+   and by wave 8's oscillators where it does not; the chord, the
+   gates and the gesture are the same either way. The placing
+   likewise degrades in order: the platform's HRTF ear, then a
+   flat stereo bearing, then the plain centred pad. Under the
+   visitor's stillness (REDUCED) the places are set once and
+   never chased. The visitor's word on the sound is kept
+   (ninth.sound) and honoured absolutely: nothing kept ever
+   starts the sound unasked — the gesture on the mark is the
+   only door, on every visit, whatever the keeping says. */
 (function sound(){
   var btn=document.getElementById("sound-toggle"); if(!btn) return;
   var BASE=[196.00,246.94,293.66,392.00];   /* the resting chord: G–B–D–G */
   var DARK=[146.83,174.61,220.00,293.66];   /* the dark chord: D–F–A–D */
-  var actx=null, nodes=[], partials=[], over=null, overMult=2;
+  var actx=null, master=null, nodes=[], voices=[], over=null, overMult=2;
+  var padNode=null, spatialKind="plain", startGen=0;
+  var lastPlacements=null, placedOnce=false;
   function tideChord(){
     var illum=moonPhase(new Date()).illum;
     return BASE.map(function(f,i){
       return Math.exp(Math.log(DARK[i]) + illum*(Math.log(f)-Math.log(DARK[i])));
     });
   }
+  /* One voice's tail: its own gain (the earth's muffling at its
+     station's altitude), then its place — the HRTF ear where the
+     platform holds one, a flat bearing where it holds only that,
+     nothing where it holds neither — then the master. */
+  function chainTail(v, wire){
+    var sg=actx.createGain(); sg.gain.value=1; wire(sg); v.sg=sg;
+    var head=sg; v.pan=null;
+    if(spatialKind==="hrtf"){
+      var p=actx.createPanner(); p.panningModel="HRTF";
+      p.distanceModel="inverse"; p.refDistance=1; p.rolloffFactor=1;
+      sg.connect(p); v.pan=p; head=p;
+    } else if(spatialKind==="stereo"){
+      var sp=actx.createStereoPanner(); sg.connect(sp); v.pan=sp; head=sp;
+    }
+    head.connect(master);
+  }
+  function applyStations(pl){
+    if(!actx || !pl) return;
+    if(REDUCED && placedOnce) return;   /* stillness: placed once, never chased */
+    placedOnce=true;
+    var t=actx.currentTime;
+    voices.forEach(function(v,i){
+      var p=pl[i]; if(!p || !v.sg) return;
+      v.sg.gain.setTargetAtTime(p.gain, t, .35);
+      if(!v.pan) return;
+      if(spatialKind==="hrtf"){
+        v.pan.positionX.setTargetAtTime(p.x, t, .35);
+        v.pan.positionY.setTargetAtTime(p.y, t, .35);
+        v.pan.positionZ.setTargetAtTime(p.z, t, .35);
+      } else if(spatialKind==="stereo"){
+        v.pan.pan.setTargetAtTime(p.pan, t, .35);
+      }
+    });
+  }
+  /* The sky publishes the choir's placements here (the page's sky
+     script); the sound keeps the last frame it was given, so a
+     chord started between frames stands placed from the frame
+     the sky offers on request, or centred until the next frame. */
+  window.onSkySound=function(pl){ lastPlacements=pl; applyStations(pl); };
   function applyMode(inTide){
     if(!actx) return;
     var t=actx.currentTime;
     var chord=inTide? tideChord() : BASE;
-    partials.forEach(function(p,i){ p.osc.frequency.setTargetAtTime(chord[i], t, 1.2); });
+    voices.forEach(function(v,i){ if(i<4) v.setFreq(chord[i], t); });
     if(over){
-      if(inTide) over.osc.frequency.setTargetAtTime(chord[0]*overMult, t, 1.2);
-      over.gate.gain.setTargetAtTime(inTide? .12 : 0, t, inTide? 1.5 : .8);
+      over.setFreq(chord[0]*overMult, t);
+      over.setGate(inTide? .12 : 0, inTide? 1.5 : .8, t);
     }
   }
   onChamberEnter=function(c){ applyMode(c==="tide"); };
-  function stop(){
-    nodes.forEach(function(n){ try{ n.stop?n.stop():n.disconnect(); }catch(e){} });
-    nodes=[]; partials=[]; over=null;
-    if(actx){ actx.close(); actx=null; }
-  }
-  btn.addEventListener("click",function(){
-    var on=btn.getAttribute("aria-pressed")==="true";
-    if(on){ stop(); btn.setAttribute("aria-pressed","false"); btn.setAttribute("aria-label","Ambient sound, off"); return; }
-    var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
-    actx=new AC();
-    var master=actx.createGain(); master.gain.value=.05; master.connect(actx.destination);
+  function buildOsc(swellRate){
     BASE.forEach(function(f,i){
       var o=actx.createOscillator(), gn=actx.createGain();
       o.type="sine"; o.frequency.value=f;
       gn.gain.value=0; gn.gain.linearRampToValueAtTime(.25/(i+1.4), actx.currentTime+2.5+i*.7);
       var lfo=actx.createOscillator(), lg=actx.createGain();
       lfo.frequency.value=.05+i*.017; lg.gain.value=.05; lfo.connect(lg); lg.connect(gn.gain);
-      o.connect(gn); gn.connect(master); o.start(); lfo.start();
-      nodes.push(o,lfo); partials.push({osc:o});
+      o.connect(gn); o.start(); lfo.start();
+      nodes.push(o,lfo);
+      var v={ setFreq:function(fr,t){ o.frequency.setTargetAtTime(fr, t, 1.2); } };
+      chainTail(v, function(sg){ gn.connect(sg); });
+      voices.push(v);
     });
     /* the reckoned overtone: root multiplied by 2, 3 or 4 as the
        Reckoning draws, swelling at a reckoned rate, gated by the room */
-    var rng=mulberry32(daySeed()*31 + visits*19);
-    overMult=[2,3,4][Math.floor(rng()*3)];
     var oo=actx.createOscillator(), swell=actx.createGain(), gate=actx.createGain();
     oo.type="sine"; oo.frequency.value=BASE[0]*overMult;
     swell.gain.value=.55; gate.gain.value=0;
     var olfo=actx.createOscillator(), olg=actx.createGain();
-    olfo.frequency.value=.03+rng()*.04; olg.gain.value=.45; olfo.connect(olg); olg.connect(swell.gain);
-    oo.connect(swell); swell.connect(gate); gate.connect(master); oo.start(); olfo.start();
-    nodes.push(oo,olfo); over={osc:oo, gate:gate};
-    btn.setAttribute("aria-pressed","true"); btn.setAttribute("aria-label","Ambient sound, on");
-    if(current==="tide") applyMode(true);
+    olfo.frequency.value=swellRate; olg.gain.value=.45; olfo.connect(olg); olg.connect(swell.gain);
+    oo.connect(swell); swell.connect(gate); oo.start(); olfo.start();
+    nodes.push(oo,olfo);
+    over={ setFreq:function(fr,t){ oo.frequency.setTargetAtTime(fr, t, 1.2); },
+           setGate:function(g,tau,t){ gate.gain.setTargetAtTime(g, t, tau); } };
+    chainTail(over, function(sg){ gate.connect(sg); });
+    voices.push(over);
+  }
+  function buildWorklet(swellRate){
+    padNode=new AudioWorkletNode(actx, "ninth-pad",
+      { numberOfInputs:0, numberOfOutputs:5, outputChannelCount:[1,1,1,1,1] });
+    nodes.push(padNode);
+    BASE.forEach(function(f,i){
+      padNode.port.postMessage({ type:"start", voice:i,
+        cfg:{ freq:f, base:.25/(i+1.4), attack:2.5+i*.7, depth:.05, rate:.05+i*.017 } });
+      var v={ setFreq:function(fr){ padNode.port.postMessage({ type:"freq", voice:i, value:fr }); } };
+      chainTail(v, function(sg){ padNode.connect(sg, i); });
+      voices.push(v);
+    });
+    padNode.port.postMessage({ type:"start", voice:4,
+      cfg:{ freq:BASE[0]*overMult, base:.55, attack:0, depth:.45, rate:swellRate } });
+    over={ setFreq:function(fr){ padNode.port.postMessage({ type:"freq", voice:4, value:fr }); },
+           setGate:function(g,tau){ padNode.port.postMessage({ type:"gate", voice:4, value:g, tau:tau }); } };
+    chainTail(over, function(sg){ padNode.connect(sg, 4); });
+    voices.push(over);
+  }
+  function stop(){
+    startGen++;
+    nodes.forEach(function(n){ try{ n.stop?n.stop():n.disconnect(); }catch(e){} });
+    nodes=[]; voices=[]; over=null; padNode=null; placedOnce=false;
+    if(actx){ actx.close(); actx=null; }
+  }
+  btn.addEventListener("click",function(){
+    var on=btn.getAttribute("aria-pressed")==="true";
+    if(on){ stop(); btn.setAttribute("aria-pressed","false"); btn.setAttribute("aria-label","Ambient sound, off"); btn.removeAttribute("data-voice"); btn.removeAttribute("data-spatial"); STORE.set("sound","off"); return; }
+    var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
+    actx=new AC();
+    master=actx.createGain(); master.gain.value=.05; master.connect(actx.destination);
+    /* the Reckoning's two draws, in wave 8's order: the overtone's
+       multiple first, then its swell rate — the same draws on
+       either generation path, so the chord is the chord. */
+    var rng=mulberry32(daySeed()*31 + visits*19);
+    overMult=[2,3,4][Math.floor(rng()*3)];
+    var swellRate=.03+rng()*.04;
+    /* the placing stage, probed before it is built upon */
+    spatialKind="plain";
+    try{ var probe=actx.createPanner(); if(probe && "panningModel" in probe) spatialKind="hrtf"; }catch(e){}
+    if(spatialKind==="plain"){ try{ if(actx.createStereoPanner()) spatialKind="stereo"; }catch(e){} }
+    var gen=++startGen;
+    var finish=function(kind){
+      if(gen!==startGen || !actx) return;
+      btn.setAttribute("data-voice", kind);
+      btn.setAttribute("data-spatial", spatialKind);
+      btn.setAttribute("aria-pressed","true"); btn.setAttribute("aria-label","Ambient sound, on");
+      STORE.set("sound","on");
+      var pl=(window.ninthSkySoundNow && window.ninthSkySoundNow()) || lastPlacements;
+      if(pl) applyStations(pl);
+      if(current==="tide") applyMode(true);
+    };
+    if(actx.audioWorklet && typeof AudioWorkletNode!=="undefined"){
+      actx.audioWorklet.addModule("assets/js/pad-worklet.js").then(function(){
+        if(gen!==startGen || !actx) return;
+        buildWorklet(swellRate); finish("worklet");
+      }).catch(function(){
+        if(gen!==startGen || !actx) return;
+        buildOsc(swellRate); finish("oscillator");
+      });
+    } else { buildOsc(swellRate); finish("oscillator"); }
   });
+})();
+
+/* ---------- the durable ledger (rebuild wave 6) ----------
+   What the place keeps — the visits, the walked ring, the Ghost
+   Ledger's paths, the place of record, the sound's last word —
+   lives in the visitor's own keeping (ninth.*), as it has since
+   wave 1, and no part of it is ever sent anywhere. This wave asks
+   the platform to keep it durably: where the Storage API offers
+   persistence, a returning visitor's keeping is asked to be held
+   against the platform's eviction — once, silently, no word
+   spent on the asking. Where the platform does not offer it, or
+   refuses, the keeping stands exactly as it has stood, merely
+   less armoured. */
+(function durable(){
+  if(!("storage" in navigator) || !navigator.storage || !navigator.storage.persist) return;
+  if(!(visits>1 || ghosts.length)) return;
+  try{
+    navigator.storage.persisted().then(function(p){
+      if(!p) navigator.storage.persist().catch(function(){});
+    }).catch(function(){});
+  }catch(e){}
 })();
 })();
 

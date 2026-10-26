@@ -3,6 +3,17 @@
 
 @property --glow-x { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
 @property --glow-y { syntax: '<percentage>'; inherits: false; initial-value: 40%; }
+/* The Descent (rebuild wave 7): --fall-p is the transition's own
+   progress, registered so the platform interpolates it as a number
+   and the snapshots' travel is derived from it; --descent-steps is
+   the fall's length in chambers, set on the root by descent.js;
+   --word-sink is the monumental word's scroll-driven drift. Where
+   @property is unknown the first two animate as discrete flips and
+   the third stands at its initial value: the rooms degrade to the
+   plain crossfade and the still word, their meaning whole. */
+@property --fall-p { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --descent-steps { syntax: '<number>'; inherits: true; initial-value: 1; }
+@property --word-sink { syntax: '<length>'; inherits: false; initial-value: 0px; }
 
 /* The token layer (Phase 1, the Conservatory; DESIGN.md §3). The ground
    moves from blue-black to ink green; the gold stays the site's own
@@ -491,6 +502,24 @@ main{padding-bottom:40px}
 @keyframes vtOut{to{opacity:0}}
 @keyframes vtIn{from{opacity:0}}
 
+/* The Descent (rebuild wave 7): when descent.js has named the step,
+   the crossfade above becomes a fall (or its return, a rise) of the
+   step's own length — one and a half percent of the frame per
+   chamber travelled, the room left behind drifting against the
+   fall and the room arrived at settling out of it, both derived
+   from the one registered progress --fall-p. The name is the only
+   gate: "still", or no name at all, and the plain crossfade stands
+   exactly as it stood, the fallback whole beneath the direction. */
+html[data-descent="fall"]::view-transition-old(root),
+html[data-descent="rise"]::view-transition-old(root){animation:vtFallP .45s ease both}
+html[data-descent="fall"]::view-transition-new(root),
+html[data-descent="rise"]::view-transition-new(root){animation:vtFallP .55s ease both}
+@keyframes vtFallP{from{--fall-p:0}to{--fall-p:1}}
+html[data-descent="fall"]::view-transition-old(root){transform:translateY(calc(var(--fall-p) * var(--descent-steps) * -1.5%));opacity:calc(1 - var(--fall-p))}
+html[data-descent="fall"]::view-transition-new(root){transform:translateY(calc((1 - var(--fall-p)) * var(--descent-steps) * 1.5%));opacity:var(--fall-p)}
+html[data-descent="rise"]::view-transition-old(root){transform:translateY(calc(var(--fall-p) * var(--descent-steps) * 1.5%));opacity:calc(1 - var(--fall-p))}
+html[data-descent="rise"]::view-transition-new(root){transform:translateY(calc((1 - var(--fall-p)) * var(--descent-steps) * -1.5%));opacity:var(--fall-p)}
+
 /* ---------- Phase 1: the Midnight Conservatory (DESIGN.md) ----------
    The token layer stands at the head of this file. What follows is the
    Phase-1 surface for the two representative rooms — the Threshold and
@@ -724,6 +753,19 @@ html.deep-on .exhibit{background:rgba(13,18,14,.86)}
   color:rgba(232,224,206,.05);
   -webkit-text-stroke:1px rgba(232,224,206,.13);
 }
+/* The Descent (rebuild wave 7): the word rides the registered
+   --word-sink, which the scroll-driven block below moves as the
+   visitor reads down a tall room — the descent continuing inside
+   the chamber. At rest the property stands at its initial value
+   and the word stands exactly where it always stood. */
+.chamber-word{transform:translateY(var(--word-sink))}
+@supports (animation-timeline: scroll()){
+  @media (prefers-reduced-motion: no-preference){
+    .chamber.active .chamber-word{animation:wordSink linear both;animation-timeline:scroll(root block);animation-range:0px 70vh}
+    @keyframes wordSink{from{--word-sink:0px}to{--word-sink:-3.4vh}}
+    html.still .chamber.active .chamber-word{animation:none}
+  }
+}
 .chamber-word .wl{display:inline-block;opacity:0;transform:translateY(.16em)}
 .chamber.active .chamber-word .wl{
   animation:wlRise 1s cubic-bezier(.22,.8,.3,1) both;
@@ -739,6 +781,8 @@ html.still .chamber-word .wl{opacity:1;transform:none;animation:none}
 #chamber-cabinet .chamber-word{writing-mode:vertical-rl;top:7vh;right:.35em;font-size:clamp(64px,9vw,138px)}
 #chamber-mirror .chamber-word{writing-mode:vertical-rl;top:7vh;left:.35em;font-size:clamp(64px,9vw,138px)}
 #chamber-ninth .chamber-word{top:4vh;left:50%;transform:translateX(-50%);font-size:clamp(72px,11vw,160px);color:rgba(232,224,206,.04)}
+/* the Ninth's word keeps its centring and gains the sink (wave 7) */
+#chamber-ninth .chamber-word{transform:translateX(-50%) translateY(var(--word-sink))}
 .chamber-inner{z-index:1}
 @media (max-width:899px){
   .chamber-word{font-size:clamp(54px,16.5vw,92px)}
@@ -937,3 +981,9 @@ html.still .chamber-word .wl{opacity:1;transform:none;animation:none}
   #chamber-threshold .threshold-stage .ring-map-wrap{width:210px}
   #chamber-threshold .fragment-threshold{width:250px;max-width:250px;top:56%}
 }
+
+/* Round 3: the two canvases that answer to the keyboard show where the
+   keyboard is, in the place's own gold. */
+#garden-canvas:focus-visible,#stars-canvas:focus-visible{outline:1px solid var(--gold);outline-offset:-6px}
+/* the phone ring stands on a firmer dark, so text passing beneath it stays readable */
+@media (max-width:560px){ .site-head{background:linear-gradient(to top, rgba(11,15,12,.98), rgba(11,15,12,.9) 62%, transparent)} }
